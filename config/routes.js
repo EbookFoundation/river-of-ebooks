@@ -47,6 +47,11 @@ module.exports.routes = {
     action: 'publish'
   },
 
+  'GET /api/books': {
+    controller: 'books',
+    action: 'list'
+  },
+
 
   //  ╦ ╦╔═╗╔╗ ╦ ╦╔═╗╔═╗╦╔═╔═╗
   //  ║║║║╣ ╠╩╗╠═╣║ ║║ ║╠╩╗╚═╗
