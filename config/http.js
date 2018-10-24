@@ -9,6 +9,15 @@
  * https://sailsjs.com/config/http
  */
 
+const rateLimit = require('express-rate-limit')
+const rateLimiter = rateLimit({
+  windowMs: 10 * 60 * 1000, // 10 minutes
+  max: 100, // limit each IP to 100 requests per windowMs
+  skip (req, res) {
+    return !req.path.startsWith('/api')
+  }
+})
+
 module.exports.http = {
 
   /****************************************************************************
@@ -29,17 +38,18 @@ module.exports.http = {
     *                                                                          *
     ***************************************************************************/
 
-    // order: [
-    //   'cookieParser',
-    //   'session',
-    //   'bodyParser',
-    //   'compress',
-    //   'poweredBy',
-    //   'router',
-    //   'www',
-    //   'favicon',
-    // ],
-
+    order: [
+      'rateLimit',
+      'cookieParser',
+      'session',
+      'bodyParser',
+      'compress',
+      'poweredBy',
+      'router',
+      'www',
+      'favicon'
+    ],
+    rateLimit: rateLimiter,
 
     /***************************************************************************
     *                                                                          *
