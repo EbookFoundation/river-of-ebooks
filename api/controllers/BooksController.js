@@ -31,5 +31,25 @@ module.exports = {
         error: e.message
       })
     }
+  },
+
+  list: async function (req, res) {
+    try {
+      const body = req.allParams()
+      if (!body) throw new Error('Missing parameters')
+
+      const books = await Book.find(body)
+
+      if (!books.length) {
+        return res.status(404).json({
+          error: 'No books matching those parameters were found.'
+        })
+      }
+      return res.json(books)
+    } catch (e) {
+      return res.status(500).json({
+        error: e.message
+      })
+    }
   }
 }

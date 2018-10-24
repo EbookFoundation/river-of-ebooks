@@ -26,10 +26,6 @@ module.exports.routes = {
     view: 'pages/homepage'
   },
 
-  'GET /test': {
-    view: 'pages/test'
-  },
-
   /***************************************************************************
   *                                                                          *
   * More custom routes here...                                               *
@@ -49,6 +45,11 @@ module.exports.routes = {
   'POST /api/publish': {
     controller: 'books',
     action: 'publish'
+  },
+
+  'GET /api/books': {
+    controller: 'books',
+    action: 'list'
   },
 
 
