@@ -26,10 +26,6 @@ module.exports.routes = {
     view: 'pages/homepage'
   },
 
-  'GET /test': {
-    view: 'pages/test'
-  },
-
   /***************************************************************************
   *                                                                          *
   * More custom routes here...                                               *
