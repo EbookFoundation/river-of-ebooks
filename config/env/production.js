@@ -237,10 +237,9 @@ module.exports = {
     * > Be sure to use the right protocol!  ("http://" vs. "https://")         *
     *                                                                          *
     ***************************************************************************/
-    // onlyAllowOrigins: [
-    //   'https://example.com',
-    //   'https://staging.example.com',
-    // ],
+    onlyAllowOrigins: [
+      'https://ec2-18-219-76-43.us-east-2.compute.amazonaws.com',
+    ],
 
     /***************************************************************************
     *                                                                          *
