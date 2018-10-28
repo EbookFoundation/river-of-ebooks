@@ -1,8 +1,14 @@
+<% var key, item %>
+<% htmlWebpackPlugin.options.links = htmlWebpackPlugin.options.links || [] %>
 <!DOCTYPE html>
 <html>
   <head>
     <meta charset="UTF-8">
-    <title>Sails React</title>
+    <title>RoE - Login</title>
+    <% for (item of htmlWebpackPlugin.options.links) {
+      if (typeof item === 'string' || item instanceof String) { item = { href: item, rel: 'stylesheet' } } %>
+      <link<% for (key in item) { %> <%= key %>="<%= item[key] %>"<% } %> /><%
+    } %>
   </head>
   <body>
     <div id="root"></div>
