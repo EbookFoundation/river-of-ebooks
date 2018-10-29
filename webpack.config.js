@@ -1,5 +1,4 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin')
-// const SassWebpackPlugin = require('sass-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const path = require('path')
 
@@ -38,6 +37,5 @@ module.exports = {
     new MiniCssExtractPlugin({
       filename: '[name].css'
     })
-    // new SassWebpackPlugin(['assets/styles/login.scss'], process.env.NODE_ENV)
   ]
 }
