@@ -64,7 +64,7 @@
         top: 0;
         font-size: 0.7rem;
         line-height: 14px;
-        color: $accent-1;
+        color: $accent-2;
       }
       .underline:before {
         width: 100%;
@@ -75,12 +75,12 @@
     &.invalid:active + .reacts-to,
     &.invalid.has-content + .reacts-to {
       label {
-        color: #e53935;
+        color: $red;
       }
     }
     &.invalid + .reacts-to {
       .underline {
-        background: #e53935;
+        background: $red;
       }
     }
   }

@@ -24,8 +24,13 @@ class Carousel extends React.Component {
   }
 }
 
+function handleClick (e, fn) {
+  e.preventDefault()
+  fn(e)
+}
+
 const CarouselItem = props => (
-  <div className='carousel-item'>
+  <form className='carousel-item' onSubmit={(e) => handleClick(e, props.onButtonClick)}>
     <header className='modal-header'>
       <h1>{props.header}</h1>
       {props.headerExtraContent}
@@ -34,7 +39,7 @@ const CarouselItem = props => (
     <span className='carousel-error'>{props.error}</span>
     <div className='button-row'>
       <a href='#' onClick={props.onSmallButtonClick}>{props.smallButton}</a>
-      <button className='btn btn-primary' onClick={props.onButtonClick} >
+      <button className='btn btn-primary' type='submit' >
         {props.button}
       </button>
     </div>
@@ -42,7 +47,7 @@ const CarouselItem = props => (
     <footer className='footer-row'>
       <a href='#'>{props.footer}</a>
     </footer>}
-  </div>
+  </form>
 )
 
 export default Carousel

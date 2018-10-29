@@ -5,7 +5,7 @@ import Carousel, {CarouselItem} from './containers/Carousel'
 import UnderlineInput from './components/UnderlineInput'
 import reducer from './reducers/login'
 
-import {setEmail, setPassword, setCarousel} from './actions/login'
+import {setEmail, setPassword, setCarousel, checkEmail, checkPassword} from './actions/login'
 
 import STYLE from '../styles/login.scss'
 
@@ -14,12 +14,13 @@ class App extends React.Component {
     super()
     this.state = {
       carouselPosition: 1,
-      emailError: null,
-      passwordError: null,
+      emailError: '',
+      passwordError: '',
       user: {
         email: '',
         password: ''
-      }
+      },
+      working: false
     }
 
     this.dispatch = this.dispatch.bind(this)
@@ -74,8 +75,8 @@ class App extends React.Component {
   render () {
     return (
       <div className='root-container flex-container flex-center'>
-        <section className='window'>
-          <Progress />
+        <section className={'window' + (this.state.working ? ' working' : '')}>
+          <Progress bound />
           <Carousel position={this.state.carouselPosition} >
             <CarouselItem
               header='Sign up'
@@ -92,7 +93,7 @@ class App extends React.Component {
               inputs={this.getEmailInputs()}
               error={this.state.emailError}
               button='Next'
-              onButtonClick={() => this.dispatch(setCarousel(2))}
+              onButtonClick={() => this.dispatch(checkEmail(this.state.user.email))}
               smallButton='Create account'
               onSmallButtonClick={() => this.dispatch(setCarousel(0))}
               footer='Sign in with your Google account' />
@@ -103,9 +104,18 @@ class App extends React.Component {
               inputs={this.getPasswordInputs()}
               error={this.state.passwordError}
               button='Sign in'
-              onButtonClick={() => null}
+              onButtonClick={() => this.dispatch(checkPassword(this.state.user.email, this.state.user.password))}
               smallButton='Forgot password?'
               onSmallButtonClick={() => this.dispatch(setCarousel(3))} />
+
+            <CarouselItem
+              header='Password recovery'
+              inputs={this.getEmailInputs()}
+              error={this.state.emailError}
+              button='Send recovery email'
+              onButtonClick={() => null}
+              smallButton='Log in'
+              onSmallButtonClick={() => this.dispatch(setCarousel(1))} />
           </Carousel>
         </section>
       </div>

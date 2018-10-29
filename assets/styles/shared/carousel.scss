@@ -29,6 +29,7 @@
 
         h1 {
           font-weight: normal;
+          font-size: 1.5rem;
           margin: 0;
         }
         .account-banner {
@@ -70,6 +71,11 @@
             line-height: initial;
           }
         }
+      }
+      .carousel-error {
+        color: $red;
+        display: inline-block;
+        font-size: 0.9rem;
       }
       footer {
         text-align: right;

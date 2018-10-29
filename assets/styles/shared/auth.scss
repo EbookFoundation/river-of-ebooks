@@ -22,4 +22,29 @@
   padding: 40px 0;
   overflow: hidden;
   border-radius: 3px;
+
+  &:before {
+    opacity: 0;
+    z-index: 2;
+    position: absolute;
+    content: '';
+    height: 100%;
+    width: 100%;
+    top: 4px;
+    left: 0;
+    background: rgba(255,255,255,.50);
+    transition: .2s opacity $transition;
+    pointer-events: none;
+  }
+
+  &.working {
+    & > .progress {
+      top: 0;
+      height: 4px;
+    }
+    &:before {
+      opacity: 1;
+      pointer-events: initial;
+    }
+  }
 }

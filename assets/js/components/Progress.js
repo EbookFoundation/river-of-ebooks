@@ -1,8 +1,8 @@
 import React from 'react'
 
 const Progress = props => (
-  <div className="progress">
-    <div className="indeterminate"></div>
+  <div className={'progress' + (props.bound ? ' bound' : '')}>
+    <div className='indeterminate' />
   </div>
 )
 

@@ -21,6 +21,23 @@ const reducer = (state = {}, action) => {
       return {
         carouselPosition: data
       }
+    case Actions.set_working:
+      return {
+        working: data
+      }
+    case Actions.set_error:
+      switch (data.type) {
+        case 'email':
+          return {
+            emailError: data.error
+          }
+        default: return {}
+      }
+    case Actions.clear_error:
+      return {
+        emailError: '',
+        passwordError: ''
+      }
   }
 }
 
