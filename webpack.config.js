@@ -31,7 +31,7 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({
       template: 'assets/templates/login.html',
-      links: [{ rel: 'stylesheet', type: 'text/css', href: 'login.css' }],
+      links: process.env.NODE_ENV === 'production' ? [{ rel: 'stylesheet', type: 'text/css', href: 'login.css' }] : [],
       filename: path.join(__dirname, '/.tmp/public/login.html')
     }),
     new MiniCssExtractPlugin({

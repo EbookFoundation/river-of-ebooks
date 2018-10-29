@@ -6,7 +6,6 @@ import Progress from './components/Progress'
 import Carousel, {CarouselItem} from './containers/Carousel'
 import UnderlineInput from './components/UnderlineInput'
 import reducer from './reducers/login'
-
 import {setEmail, setPassword, setCarousel, checkEmail, checkPassword} from './actions/login'
 
 import STYLE from '../styles/login.scss'

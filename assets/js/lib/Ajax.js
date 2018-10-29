@@ -88,6 +88,9 @@ export default class Ajax {
         if (xhr.status === 405) {
           reject(new AjaxError('405 Method Not Allowed', data, xhr))
           return
+        } else if (xhr.status === 404) {
+          reject(new AjaxError('404 Not Found', data, xhr))
+          return
         }
 
         try {

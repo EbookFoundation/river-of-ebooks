@@ -77,7 +77,6 @@ export const checkPassword = (email, password) => async (dispatch, getState) => 
     dispatch(setLoggedIn(res))
     //  dispatch(setWorking(false))
   } catch (e) {
-    console.log(e.toString())
     dispatch(setError({
       type: 'password',
       error: e.toString()

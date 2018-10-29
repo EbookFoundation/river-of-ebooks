@@ -33,6 +33,10 @@ const reducer = (state = {}, action) => {
           return {
             emailError: data.error
           }
+        case 'password':
+          return {
+            passwordError: data.error
+          }
         default: return {}
       }
     case Actions.clear_error:
