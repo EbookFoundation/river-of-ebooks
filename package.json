@@ -49,6 +49,8 @@
     "build:prod": "webpack --mode production",
     "clean": "rimraf .tmp && mkdirp .tmp/public",
     "lift": "sails lift",
+    "forever": "sudo NODE_ENV='production' ./node_modules/.bin/forever start app.js",
+    "stop": "./node_modules/.bin/forever stopall",
     "test": "npm run lint && npm run custom-tests && echo 'Done.'",
     "lint": "eslint . --max-warnings=0 --report-unused-disable-directives && echo '✔  Your .js files look good.'",
     "debug": "node --inspect app.js"
