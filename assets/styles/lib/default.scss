@@ -1,7 +1,97 @@
+@import 'vars';
+
 html,
-body {
+body,
+#root,
+.root-container {
   height: 100%;
   width: 100%;
   margin: 0;
   padding: 0;
+  background: $background-1;
+  font-family: sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.flex-container {
+  display: flex;
+
+  &.flex-center {
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+  }
+  &.flex-horizintal {
+    flex-direction: row;
+  }
+  &.flex-vertical {
+    flex-direction: column;
+  }
+  .flex {
+    flex: 1;
+  }
+}
+
+.btn {
+  position: relative;
+  height: 36px;
+  padding: 0 20px;
+  background: $accent-2;
+  color: white;
+  border: none;
+  border-radius: 3px;
+  outline: none;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  box-shadow: $shadow-1;
+  transition: box-shadow .15s ease-in-out;
+  cursor: pointer;
+  user-select: none;
+
+  &:focus{
+    outline: initial;
+  }
+  &:hover {
+    box-shadow: $shadow-3;
+  }
+  &:active {
+    box-shadow: $shadow-2;
+  }
+  &.btn-with-icon {
+    padding: 0 20px 0 0;
+
+    i {
+      font-size: 1.5em;
+      height: 30px;
+      width: 30px;
+      vertical-align: middle;
+      margin: 0 10px;
+    }
+  }
+  &.btn-social-signin {
+    text-transform: none;
+
+    &.btn-google {
+      background: #dd4b39;
+    }
+  }
+  &.btn-clear {
+    background: transparent;
+    color: $text-dark-1;
+    box-shadow: none;
+    border: 1px solid $accent-2;
+
+    &:hover {
+      box-shadow: $shadow-2;
+    }
+  }
+  & + .btn {
+    margin-left: 6px;
+  }
+}
+a:hover {
+  text-decoration: underline !important;
 }

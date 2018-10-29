@@ -1,0 +1,121 @@
+@import '../lib/vars';
+
+.carousel-container {
+  position: relative;
+  height: 100%;
+  width: 100%;
+  overflow-x: hidden;
+  padding: 0 0 20px 0;
+  opacity: 1;
+  transition: opacity .2s $transition;
+
+  .carousel {
+    position: absolute;
+    height: 100%;
+    display: flex;
+
+    .carousel-item {
+      // width: $auth-width;
+      flex: 1;
+      height: 100%;
+      display: inline-block;
+      // float: left;
+      margin: 0 40px;
+      position: relative;
+
+      header {
+        height: 128px;
+
+        h1 {
+          font-weight: normal;
+          margin: 0;
+        }
+        .account-banner {
+          height: 50px;
+          margin-top: 10px;
+          line-height: 50px;
+          display: flex;
+
+          img {
+            height: 50px;
+            width: 50px;
+            border-radius: 50%;
+            vertical-align: middle;
+          }
+          .info-stack {
+            flex: 1;
+            padding: 0 10px;
+            height: 100%;
+            line-height: 16px;
+            .name {
+              display: inline-block;
+              color: $text-dark-1;
+              width: 100%;
+            }
+            .email {
+              display: inline-block;
+              color: $text-dark-2;
+              width: 100%;
+            }
+            .hidden {
+              display: none;
+            }
+          }
+          a {
+            color: $accent-2;
+            text-decoration: none;
+          }
+          p {
+            line-height: initial;
+          }
+        }
+      }
+      footer {
+        text-align: right;
+        position: absolute;
+        bottom: 20px;
+        width: 100%;
+        margin: 0;
+        color: $text-dark-2;
+
+        .btn {
+          margin-left: 20px;
+        }
+        a {
+          color: $accent-2;
+          text-decoration: none;
+        }
+      }
+      .button-row {
+        height: 50px;
+        line-height: 50px;
+        width: 100%;
+        text-align: right;
+
+        a {
+          color: $accent-2;
+          text-decoration: none;
+          float: left;
+        }
+      }
+      &.working {
+        pointer-events: none;
+
+        .input-carousel {
+          opacity: 0.5;
+        }
+        .progress {
+          height: 4px;
+        }
+      }
+      @media screen and (max-width: 600px) {
+        & {
+          width: 100%;
+          height: 100%;
+          // border-radius: 0;
+          box-shadow: none;
+        }
+      }
+    }
+  }
+}

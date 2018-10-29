@@ -1,0 +1,24 @@
+@import '../lib/vars';
+
+#root:after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 45%;
+  background: $accent-1;
+  z-index: 0;
+}
+
+.window {
+  position: relative;
+  height: 500px;
+  width: $auth-width;
+  background: $background-2;
+  box-shadow: $shadow-0;
+  z-index: 1;
+  padding: 40px 0;
+  overflow: hidden;
+  border-radius: 3px;
+}
