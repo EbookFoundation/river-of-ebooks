@@ -28,6 +28,9 @@ module.exports.routes = {
   '/login': {
     view: 'pages/login'
   },
+  '/register': {
+    view: 'pages/login'
+  },
 
   /***************************************************************************
   *                                                                          *
@@ -39,7 +42,6 @@ module.exports.routes = {
   * not match any of those, it is matched against static assets.             *
   *                                                                          *
   ***************************************************************************/
-
 
   //  ╔═╗╔═╗╦  ╔═╗╔╗╔╔╦╗╔═╗╔═╗╦╔╗╔╔╦╗╔═╗
   //  ╠═╣╠═╝║  ║╣ ║║║ ║║╠═╝║ ║║║║║ ║ ╚═╗
