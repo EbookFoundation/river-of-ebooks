@@ -33,8 +33,8 @@ const CarouselItem = props => (
     {props.inputs}
     <span className='carousel-error'>{props.error}</span>
     <div className='button-row'>
-      <a href='#'>{props.smallButton}</a>
-      <button className='btn btn-primary'>
+      <a href='#' onClick={props.onSmallButtonClick}>{props.smallButton}</a>
+      <button className='btn btn-primary' onClick={props.onButtonClick} >
         {props.button}
       </button>
     </div>
