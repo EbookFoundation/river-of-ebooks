@@ -23,7 +23,7 @@ module.exports.routes = {
   ***************************************************************************/
 
   '/': {
-    view: 'pages/homepage'
+    view: 'pages/index'
   },
   '/login': {
     view: 'pages/login'
