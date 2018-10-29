@@ -1,3 +1,5 @@
+'use strict'
+
 import React from 'react'
 
 import STYLE from '../../styles/shared/underlineinput.scss'

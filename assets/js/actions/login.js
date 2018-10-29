@@ -1,3 +1,7 @@
+'use strict'
+
+import Ajax from '../lib/Ajax'
+
 const ACTIONS = {
   set_working: 'set_working',
   set_user: 'set_user',
@@ -38,8 +42,14 @@ export const clearError = () => ({
   type: ACTIONS.clear_error
 })
 
+export const setLoggedIn = (data) => (dispatch, getState) => {
+  document.localStorage.setItem('roe-token', JSON.stringify(data))
+  window.location.href = '/app'
+}
+
 export const checkEmail = email => (dispatch, getState) => {
   // dispatch(setWorking(true))
+  dispatch(clearError())
   if (/^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/.test(email)) {
     dispatch(setCarousel(2))
   } else {
@@ -51,10 +61,27 @@ export const checkEmail = email => (dispatch, getState) => {
   // dispatch(setWorking(false))
 }
 
-export const checkPassword = (email, password) => (dispatch, getState) => {
+export const checkPassword = (email, password) => async (dispatch, getState) => {
   dispatch(setWorking(true))
 
   // do email + password check
-
-  dispatch(setWorking(false))
+  try {
+    const res = await Ajax.post({
+      url: '/api/token',
+      data: {
+        grant_type: 'credentials',
+        email,
+        password
+      }
+    })
+    dispatch(setLoggedIn(res))
+    //  dispatch(setWorking(false))
+  } catch (e) {
+    console.log(e.toString())
+    dispatch(setError({
+      type: 'password',
+      error: e.toString()
+    }))
+    dispatch(setWorking(false))
+  }
 }

@@ -1,3 +1,5 @@
+'use strict'
+
 import Actions from '../actions/login'
 
 const reducer = (state = {}, action) => {
