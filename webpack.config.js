@@ -1,5 +1,6 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin')
-const SassWebpackPlugin = require('sass-webpack-plugin')
+// const SassWebpackPlugin = require('sass-webpack-plugin')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const path = require('path')
 
 module.exports = {
@@ -19,8 +20,12 @@ module.exports = {
         exclude: /node_modules/
       },
       {
-        use: ['style-loader', 'css-loader'],
-        test: /\.css$/
+        test: /\.scss$/,
+        use: [
+          process.env.NODE_ENV !== 'production' ? 'style-loader' : MiniCssExtractPlugin.loader,
+          'css-loader',
+          'sass-loader'
+        ]
       }
     ]
   },
@@ -30,6 +35,9 @@ module.exports = {
       links: [{ rel: 'stylesheet', type: 'text/css', href: 'login.css' }],
       filename: path.join(__dirname, '/.tmp/public/login.html')
     }),
-    new SassWebpackPlugin(['assets/styles/login.scss'], process.env.NODE_ENV),
+    new MiniCssExtractPlugin({
+      filename: '[name].css'
+    })
+    // new SassWebpackPlugin(['assets/styles/login.scss'], process.env.NODE_ENV)
   ]
-};
+}
