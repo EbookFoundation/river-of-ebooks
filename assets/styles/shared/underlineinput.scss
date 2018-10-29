@@ -1,0 +1,87 @@
+@import '../lib/vars';
+
+.underlined-input,
+.underlined-input-readonly {
+  width: 100%;
+  height: 46px;
+  padding: 14px 0 0 0;
+  margin: 0 0 8px 0;
+  line-height: 26px;
+  position: relative;
+
+  $transition-time: .3s;
+
+  input {
+    position: absolute;
+    background: transparent;
+    border: none;
+    outline: none;
+    height: 26px;
+    width: 100%;
+    font-size: 1rem;
+    bottom: 0;
+
+    & + .reacts-to {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 46px;
+      pointer-events: none;
+
+      label {
+        position: absolute;
+        top: 20px;
+        font-size: 0.95rem;
+        color: $black-2;
+        pointer-events: none;
+        transition: all $transition-time $transition;
+      }
+      .underline {
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        height: 1px;
+        background: $black-4;
+
+        &:before {
+          content: '';
+          position: absolute;
+          left: 50%;
+          top: 0;
+          width: 0;
+          height: 2px;
+          background: $accent-2;
+          transition: left $transition-time $transition,
+                      width $transition-time $transition;
+        }
+      }
+    }
+    &:focus + .reacts-to,
+    &:active + .reacts-to,
+    &.has-content + .reacts-to {
+      label {
+        top: 0;
+        font-size: 0.7rem;
+        line-height: 14px;
+        color: $accent-2;
+      }
+      .underline:before {
+        width: 100%;
+        left: 0;
+      }
+    }
+    &.invalid:focus + .reacts-to,
+    &.invalid:active + .reacts-to,
+    &.invalid.has-content + .reacts-to {
+      label {
+        color: $red;
+      }
+    }
+    &.invalid + .reacts-to {
+      .underline {
+        background: $red;
+      }
+    }
+  }
+}
