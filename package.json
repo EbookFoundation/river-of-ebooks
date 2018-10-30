@@ -18,7 +18,8 @@
     "sails-hook-sockets": "^1.4.0"
   },
   "devDependencies": {
-    "@sailshq/eslint": "^4.19.3"
+    "@sailshq/eslint": "^4.19.3",
+    "mocha": "^5.2.0"
   },
   "scripts": {
     "start": "sudo NODE_ENV='production' ./node_modules/.bin/forever start app.js",
