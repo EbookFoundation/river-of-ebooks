@@ -25,6 +25,12 @@ async function hashPassword (passport) {
 
 module.exports = {
   attributes: {
+    id: {
+      type: 'string',
+      unique: true,
+      autoIncrement: true,
+      columnName: '_id'
+    },
     // local, oauth2, etc
     protocol: {
       type: 'string',
@@ -40,11 +46,6 @@ module.exports = {
     user: {
       model: 'User',
       required: true
-    },
-
-    // methods
-    validatePassword: async function (password) {
-      return bcrypt.compare(password, this.password)
     }
   },
 
@@ -60,5 +61,10 @@ module.exports = {
   */
   beforeUpdate: async function (passport) {
     return hashPassword(passport)
+  },
+
+  // methods
+  validatePassword: async function (password, passport) {
+    return bcrypt.compare(password, passport.password)
   }
 }

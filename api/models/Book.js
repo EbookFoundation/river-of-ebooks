@@ -12,6 +12,12 @@ module.exports = {
     //  ╔═╗╦═╗╦╔╦╗╦╔╦╗╦╦  ╦╔═╗╔═╗
     //  ╠═╝╠╦╝║║║║║ ║ ║╚╗╔╝║╣ ╚═╗
     //  ╩  ╩╚═╩╩ ╩╩ ╩ ╩ ╚╝ ╚═╝╚═╝
+    id: {
+      type: 'string',
+      unique: true,
+      autoIncrement: true,
+      columnName: '_id'
+    },
     title: {type: 'string', required: true},
     author: {type: 'string'},
     isbn: {type: 'string'},

@@ -14,11 +14,13 @@ module.exports = {
     id: {
       type: 'string',
       unique: true,
+      autoIncrement: true,
       columnName: '_id'
     },
     email: {
       type: 'string',
-      unique: true
+      unique: true,
+      required: true
     },
     password: 'string'
 
