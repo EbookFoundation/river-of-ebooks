@@ -1,7 +1,44 @@
 /**
  * Authentication Controller
  */
+// some also from https://github.com/trailsjs/sails-auth
+
 module.exports = {
+
+  /**
+  * check if the given email has a corresponding user
+  */
+  emailExists: async function (req, res) {
+    const user = await User.findOne({
+      email: req.param('email')
+    })
+    if (!user) {
+      return res.status(404).json({
+        error: 'user does not exist'
+      })
+    } else {
+      return res.json({
+        status: 'ok'
+      })
+    }
+  },
+  /**
+  * opposite of emailExists
+  */
+  emailAvailable: async function (req, res) {
+    const user = await User.findOne({
+      email: req.param('email')
+    })
+    if (user) {
+      return res.status(401).json({
+        error: 'that email address is not available'
+      })
+    } else {
+      return res.json({
+        status: 'ok'
+      })
+    }
+  },
 
   /**
    * Log out a user and return them to the homepage
@@ -36,8 +73,9 @@ module.exports = {
    * @param {Object} req
    * @param {Object} res
    */
-  provider: function (req, res) {
-    sails.services.passport.endpoint(req, res)
+  provider: async function (req, res) {
+    const passportHelper = await sails.helpers.passport()
+    passportHelper.endpoint(req, res)
   },
 
   /**
@@ -46,7 +84,7 @@ module.exports = {
    * This endpoint handles everything related to creating and verifying Pass-
    * ports and users, both locally and from third-aprty providers.
    *
-   * Passport exposes a login() function on req (also aliased as logIn()) that
+   * Passport exposes a login() function on req that
    * can be used to establish a login session. When the login operation
    * completes, user will be assigned to req.user.
    *
@@ -56,8 +94,9 @@ module.exports = {
    * @param {Object} req
    * @param {Object} res
    */
-  callback: function (req, res) {
-    var action = req.param('action')
+  callback: async function (req, res) {
+    const action = req.param('action')
+    const passportHelper = await sails.helpers.passport()
 
     function negotiateError (err) {
       if (action === 'register') {
@@ -69,11 +108,13 @@ module.exports = {
       } else {
         // make sure the server always returns a response to the client
         // i.e passport-local bad username/email or password
-        res.send(403, err)
+        res.status(403).json({
+          'error': err.toString()
+        })
       }
     }
 
-    sails.services.passport.callback(req, res, function (err, user, info, status) {
+    passportHelper.callback(req, res, function (err, user, info, status) {
       if (err || !user) {
         sails.log.warn(user, err, info, status)
         if (!err && info) {
@@ -90,11 +131,9 @@ module.exports = {
 
         req.session.authenticated = true
 
-        // Upon successful login, optionally redirect the user if there is a
-        // `next` query param
+        // redirect if there is a 'next' param
         if (req.query.next) {
-          var url = sails.services.authservice.buildCallbackNextUrl(req)
-          res.status(302).set('Location', url)
+          res.status(302).set('Location', req.query.next)
         }
 
         sails.log.info('user', user, 'authenticated successfully')
@@ -109,7 +148,8 @@ module.exports = {
    * @param {Object} req
    * @param {Object} res
    */
-  disconnect: function (req, res) {
-    sails.services.passport.disconnect(req, res)
+  disconnect: async function (req, res) {
+    const passportHelper = await sails.helpers.passport()
+    passportHelper.disconnect(req, res)
   }
 }

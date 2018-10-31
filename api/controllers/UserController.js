@@ -9,23 +9,25 @@ module.exports = {
   /**
    * @override
    */
-  create: function (req, res, next) {
-    sails.services.passport.protocols.local.register(req.body, function (err, user) {
+  create: async function (req, res, next) {
+    const passportHelper = await sails.helpers.passport()
+    passportHelper.protocols.local.register(req.body, function (err, user) {
       if (err) return res.negotiate(err)
 
-      res.ok(user)
+      res.json(user)
     })
   },
 
-  update: function (req, res, next) {
-    sails.services.passport.protocols.local.update(req.body, function (err, user) {
+  update: async function (req, res, next) {
+    const passportHelper = await sails.helpers.passport()
+    passportHelper.protocols.local.update(req.body, function (err, user) {
       if (err) return res.negotiate(err)
 
-      res.ok(user)
+      res.json(user)
     })
   },
 
   me: function (req, res) {
-    res.ok(req.user)
+    res.json(req.user)
   }
 }
