@@ -50,8 +50,10 @@ module.exports.routes = {
   'POST /register': 'UserController.create',
   'POST /logout': 'AuthController.logout',
 
-  'POST /auth/local': 'AuthController.callback',
-  'POST /auth/local/:action': 'AuthController.callback',
+  'POST /auth/email_exists': 'AuthController.emailExists',
+  'POST /auth/email_available': 'AuthController.emailAvailable',
+  // 'POST /auth/local': 'AuthController.callback',
+  // 'POST /auth/local/:action': 'AuthController.callback',
 
   'POST /auth/:provider': 'AuthController.callback',
   'POST /auth/:provider/:action': 'AuthController.callback',
@@ -63,6 +65,7 @@ module.exports.routes = {
   'POST /api/publish': 'BooksController.publish',
 
   'GET /api/books': 'BooksController.list',
+  'GET /api/me': 'UserController.me',
 
 
   //  ╦ ╦╔═╗╔╗ ╦ ╦╔═╗╔═╗╦╔═╔═╗

@@ -36,7 +36,55 @@ module.exports.protocols = {
           return next(null, user, passport)
         }
       } catch (e) {
-        return next(e, false)
+        return next(e)
+      }
+    },
+    register: async function (user, next) {
+      try {
+        const token = generateToken()
+        const password = user.password
+        delete user.password
+
+        const newUser = User.create(user)
+        try {
+          await Passport.create({
+            protocol: 'local',
+            password,
+            user: newUser.id,
+            accessToken: token
+          })
+        } catch (e) {
+          await User.destroy(newUser.id)
+          throw e
+        }
+        return next(null, newUser)
+      } catch (e) {
+        return next(e)
+      }
+    },
+    update: async function (user, next) {
+      throw new Error('not implemented')
+    },
+    connect: async function (req, res, next) {
+      try {
+        const user = req.user
+        const password = req.param('password')
+
+        const pass = await Passport.findOne({
+          protocol: 'local',
+          user: user.id
+        })
+        if (!pass) {
+          await Passport.create({
+            protocol: 'local',
+            password,
+            user: user.id
+          })
+        } else {
+          return next(null, user)
+        }
+      } catch (e) {
+        return next(e)
       }
     }
   }

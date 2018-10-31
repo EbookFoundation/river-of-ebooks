@@ -22,6 +22,7 @@ module.exports = async function (req, res, next) {
         })
       }
 
+      if (!req.locals) req.locals = {}
       req.locals.user = req.user
       next()
     })

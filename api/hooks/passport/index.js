@@ -6,8 +6,6 @@ if (!passportHook) {
       initialize: async function (cb) {
         const helper = await sails.helpers.passport()
         helper.loadStrategies()
-        /*sails.after('hook:helpers:loaded', function () {
-        })*/
         return cb()
       }
     }
