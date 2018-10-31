@@ -11,9 +11,10 @@ module.exports = {
     //  ╔═╗╦═╗╦╔╦╗╦╔╦╗╦╦  ╦╔═╗╔═╗
     //  ╠═╝╠╦╝║║║║║ ║ ║╚╗╔╝║╣ ╚═╗
     //  ╩  ╩╚═╩╩ ╩╩ ╩ ╩ ╚╝ ╚═╝╚═╝
-    _id: {
+    id: {
       type: 'string',
-      unique: true
+      unique: true,
+      columnName: '_id'
     },
     email: {
       type: 'string',
