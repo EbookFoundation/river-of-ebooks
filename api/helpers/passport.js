@@ -1,14 +1,27 @@
-// api/helpers/passportload.js
-const passport = require('passport')
+// api/helpers/passport.js
 const url = require('url')
 
 module.exports = {
-  friendlyName: 'Load Passport',
-  description: 'Load the Passport configuration',
+  friendlyName: 'Load PassportHelper',
+  description: 'Load a PassportHelper instance',
   inputs: {},
-  fn: async function () {
+  exits: {
+    success: {
+      outputFriendlyName: 'Passport helper',
+      outputDescription: 'A PassportHelper instance'
+    }
+  },
+  fn: async function (inputs, exits) {
+    return exits.success(new PassportHelper())
+  }
+}
+
+function PassportHelper () {
+  const passport = require('passport')
+  this.loadStrategies = function () {
     const strategies = sails.config.passport
     const protocols = sails.config.protocols
+
     for (const key in strategies) {
       let options = {passReqToCallback: true}
       let Strategy = strategies[key].strategy
@@ -40,5 +53,8 @@ module.exports = {
         passport.use(new Strategy(options, protocols[protocol].login))
       }
     }
+  }
+  this.getPassport = function () {
+    return passport
   }
 }
