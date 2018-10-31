@@ -12,7 +12,7 @@ module.exports = {
     //  ╠═╝╠╦╝║║║║║ ║ ║╚╗╔╝║╣ ╚═╗
     //  ╩  ╩╚═╩╩ ╩╩ ╩ ╩ ╚╝ ╚═╝╚═╝
     id: {
-      type: 'string',
+      type: 'number',
       unique: true,
       autoIncrement: true,
       columnName: '_id'
@@ -21,8 +21,7 @@ module.exports = {
       type: 'string',
       unique: true,
       required: true
-    },
-    password: 'string'
+    }
 
     //  ╔═╗╔╦╗╔╗ ╔═╗╔╦╗╔═╗
     //  ║╣ ║║║╠╩╗║╣  ║║╚═╗

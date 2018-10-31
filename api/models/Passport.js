@@ -26,7 +26,7 @@ async function hashPassword (passport) {
 module.exports = {
   attributes: {
     id: {
-      type: 'string',
+      type: 'number',
       unique: true,
       autoIncrement: true,
       columnName: '_id'
