@@ -15,12 +15,15 @@
     "passport": "^0.4.0",
     "passport-github2": "^0.1.11",
     "passport-google-oauth20": "^1.0.0",
+    "passport-local": "^1.0.0",
     "react": "^16.6.0",
     "react-dom": "^16.6.0",
     "sails": "^1.0.2",
+    "sails-auth": "^2.1.1",
     "sails-hook-grunt": "^3.0.2",
     "sails-hook-orm": "^2.1.1",
-    "sails-hook-sockets": "^1.4.0"
+    "sails-hook-sockets": "^1.4.0",
+    "sails-permissions": "^2.1.8"
   },
   "devDependencies": {
     "@sailshq/eslint": "^4.19.3",
