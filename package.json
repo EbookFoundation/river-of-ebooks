@@ -9,6 +9,8 @@
     "@sailshq/lodash": "^3.10.3",
     "@sailshq/socket.io-redis": "^5.2.0",
     "async": "2.0.1",
+    "base64url": "^3.0.0",
+    "bcrypt": "^3.0.2",
     "express-rate-limit": "^3.2.1",
     "forever": "^0.15.3",
     "grunt": "^1.0.3",
@@ -19,11 +21,9 @@
     "react": "^16.6.0",
     "react-dom": "^16.6.0",
     "sails": "^1.0.2",
-    "sails-auth": "^2.1.1",
     "sails-hook-grunt": "^3.0.2",
     "sails-hook-orm": "^2.1.1",
-    "sails-hook-sockets": "^1.4.0",
-    "sails-permissions": "^2.1.8"
+    "sails-hook-sockets": "^1.4.0"
   },
   "devDependencies": {
     "@sailshq/eslint": "^4.19.3",
@@ -46,7 +46,7 @@
     "webpack-dev-server": "^3.1.10"
   },
   "scripts": {
-    "start": "npm run open:client",
+    "start": "npm-run-all --parallel open:client lift",
     "start:debug": "npm-run-all --parallel open:client debug",
     "start:prod": "npm-run-all --parallel build:prod lift",
     "open:client": "webpack-dev-server --mode development",
@@ -70,5 +70,10 @@
   "license": "",
   "engines": {
     "node": ">=8.10"
+  },
+  "standard": {
+    "globals": [
+      "sails"
+    ]
   }
 }
