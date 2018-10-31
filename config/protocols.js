@@ -2,7 +2,7 @@
 const crypto = require('crypto')
 const base64URL = require('base64url')
 
-module.exports = {
+module.exports.protocols = {
   local: {
     /**
      * Validate a login request
@@ -31,7 +31,7 @@ module.exports = {
           user: user.id
         })
         if (passport) {
-          const res = await passport.validatePassword(password)
+          const res = await Passport.validatePassword(password, passport)
           if (!res) throw new Error('incorrect password')
           return next(null, user, passport)
         }
