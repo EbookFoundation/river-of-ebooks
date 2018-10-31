@@ -43,9 +43,10 @@ module.exports.protocols = {
       try {
         const token = generateToken()
         const password = user.password
+        if (!password.length) throw new Error('password cannot be blank')
         delete user.password
 
-        const newUser = User.create(user)
+        const newUser = await User.create(user).fetch()
         try {
           await Passport.create({
             protocol: 'local',

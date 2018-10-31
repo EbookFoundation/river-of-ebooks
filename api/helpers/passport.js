@@ -111,7 +111,7 @@ function PassportHelper () {
 
     if (!req.user) {
       if (!passport) {  // new user signing up, create a new user
-        user = await User.create(userAttrs)
+        user = await User.create(userAttrs).fetch()
         await Passport.create({
           ...q,
           user: user.id
