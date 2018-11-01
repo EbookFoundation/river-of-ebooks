@@ -10,7 +10,7 @@
 
 const http = require('http')
 
-const methods = ['login', 'logout', 'isAuthenticated', 'isUnauthenticated']
+const methods = ['login', 'logIn', 'logout', 'logOut', 'isAuthenticated', 'isUnauthenticated']
 
 module.exports = async function (req, res, next) {
   const passport = (await sails.helpers.passport()).getPassport()
