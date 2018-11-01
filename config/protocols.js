@@ -56,9 +56,8 @@ module.exports.protocols = {
             user: newUser.id,
             accessToken: token
           })
-          return next(null, newUser)
+          return next(null, token)
         } catch (e) {
-          console.log(newUser)
           await User.destroy(newUser.id)
           throw e
         }

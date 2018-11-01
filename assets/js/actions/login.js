@@ -46,7 +46,7 @@ export const clearError = () => ({
 })
 
 export const setLoggedIn = (data) => (dispatch, getState) => {
-  document.localStorage.setItem('roe-token', JSON.stringify(data))
+  window.localStorage.setItem('roe-token', JSON.stringify(data))
   window.location.href = '/app'
 }
 
@@ -98,4 +98,38 @@ export const checkPassword = (email, password) => async (dispatch, getState) => 
     }))
     dispatch(setWorking(false))
   }
+}
+
+export const signup = (email, password) => async (dispatch, getState) => {
+  dispatch(setWorking(true))
+  dispatch(clearError())
+  if (/^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/.test(email)) {
+    try {
+      await Ajax.post({
+        url: '/auth/email_available',
+        data: {
+          email
+        }
+      })
+      await Ajax.post({
+        url: '/register',
+        data: {
+          email,
+          password
+        }
+      })
+      dispatch(setCarousel(2))
+    } catch (e) {
+      dispatch(setError({
+        type: 'email',
+        error: e.toString()
+      }))
+    }
+  } else {
+    dispatch(setError({
+      type: 'email',
+      error: 'Please enter a valid email address.'
+    }))
+  }
+  dispatch(setWorking(false))
 }

@@ -84,4 +84,9 @@
       }
     }
   }
+
+  & + .underlined-input,
+  & + .underlined-input-readonly {
+    margin-top: 8px
+  }
 }
