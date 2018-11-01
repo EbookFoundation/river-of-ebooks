@@ -33,12 +33,12 @@ module.exports.protocols = {
         if (passport) {
           const res = await Passport.validatePassword(password, passport)
           if (!res) throw new Error('incorrect password')
-          return next(null, user, passport)
+          return next(null, user)
         } else {
           throw new Error('that account does not have password login enabled')
         }
       } catch (e) {
-        return next(e)
+        return next(e, false)
       }
     },
     register: async function (user, next) {

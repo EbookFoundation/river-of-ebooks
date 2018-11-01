@@ -49,7 +49,7 @@ module.exports.routes = {
   //  ╩ ╩╩  ╩  ╚═╝╝╚╝═╩╝╩  ╚═╝╩╝╚╝ ╩ ╚═╝
 
   'POST /register': 'UserController.create',
-  'POST /logout': 'AuthController.logout',
+  'GET /logout': 'AuthController.logout',
 
   'POST /auth/email_exists': 'AuthController.emailExists',
   'POST /auth/email_available': 'AuthController.emailAvailable',

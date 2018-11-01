@@ -17,11 +17,21 @@ module.exports.policies = {
   *                                                                          *
   ***************************************************************************/
 
-  '*': [
-    'passport'
-  ],
+  '*': true,
+
+  UserController: {
+    '*': true,
+    update: [ 'sessionAuth' ],
+    me: [ 'sessionAuth' ]
+  },
 
   AuthController: {
-    '*': [ 'passport' ]
+    '*': true,
+    logout: [ 'sessionAuth' ],
+    disconnect: [ 'sessionAuth' ]
+  },
+
+  TargetController: {
+    '*': [ 'sessionAuth' ]
   }
 }
