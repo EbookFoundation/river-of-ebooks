@@ -104,7 +104,7 @@ export default class Ajax {
         } catch (e) {
           reject(new AjaxError(e.toString(), data, xhr))
         } finally {
-          reject(new AjaxError(xhr.status, data, xhr))
+          reject(new AjaxError(data, xhr.status, xhr))
         }
       }
 

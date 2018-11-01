@@ -22,15 +22,16 @@ module.exports.routes = {
   *                                                                          *
   ***************************************************************************/
 
-  '/': {
+  'GET /': {
     view: 'pages/index'
   },
-  '/login': {
+  'GET /login': {
     view: 'pages/login'
   },
-  '/register': {
+  'GET /register': {
     view: 'pages/login'
   },
+  'GET /app': 'TargetController.show',
 
   /***************************************************************************
   *                                                                          *
@@ -47,15 +48,25 @@ module.exports.routes = {
   //  ╠═╣╠═╝║  ║╣ ║║║ ║║╠═╝║ ║║║║║ ║ ╚═╗
   //  ╩ ╩╩  ╩  ╚═╝╝╚╝═╩╝╩  ╚═╝╩╝╚╝ ╩ ╚═╝
 
-  'POST /api/publish': {
-    controller: 'books',
-    action: 'publish'
-  },
+  'POST /register': 'UserController.create',
+  'GET /logout': 'AuthController.logout',
 
-  'GET /api/books': {
-    controller: 'books',
-    action: 'list'
-  },
+  'POST /auth/email_exists': 'AuthController.emailExists',
+  'POST /auth/email_available': 'AuthController.emailAvailable',
+  // 'POST /auth/local': 'AuthController.callback',
+  // 'POST /auth/local/:action': 'AuthController.callback',
+
+  'POST /auth/:provider': 'AuthController.callback',
+  'POST /auth/:provider/:action': 'AuthController.callback',
+
+  'GET /auth/:provider': 'AuthController.provider',
+  'GET /auth/:provider/callback': 'AuthController.callback',
+  'GET /auth/:provider/:action': 'AuthController.callback',
+
+  'POST /api/publish': 'BooksController.publish',
+
+  'GET /api/books': 'BooksController.list',
+  'GET /api/me': 'UserController.me',
 
 
   //  ╦ ╦╔═╗╔╗ ╦ ╦╔═╗╔═╗╦╔═╔═╗
