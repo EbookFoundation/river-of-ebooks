@@ -34,6 +34,8 @@ module.exports.protocols = {
           const res = await Passport.validatePassword(password, passport)
           if (!res) throw new Error('incorrect password')
           return next(null, user, passport)
+        } else {
+          throw new Error('that account does not have password login enabled')
         }
       } catch (e) {
         return next(e)
@@ -54,11 +56,12 @@ module.exports.protocols = {
             user: newUser.id,
             accessToken: token
           })
+          return next(null, newUser)
         } catch (e) {
+          console.log(newUser)
           await User.destroy(newUser.id)
           throw e
         }
-        return next(null, newUser)
       } catch (e) {
         return next(e)
       }

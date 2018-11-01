@@ -31,6 +31,7 @@ module.exports.routes = {
   'GET /register': {
     view: 'pages/login'
   },
+  'GET /app': 'TargetController.show',
 
   /***************************************************************************
   *                                                                          *

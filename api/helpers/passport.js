@@ -1,5 +1,6 @@
 // api/helpers/passport.js
 // from https://github.com/trailsjs/sails-auth/blob/master/api/services/passport.js
+
 const url = require('url')
 
 module.exports = {
@@ -17,8 +18,19 @@ module.exports = {
   }
 }
 
+const passport = require('passport')
+passport.serializeUser(function (user, next) {
+  next(null, user.id)
+})
+passport.deserializeUser(function (id, next) {
+  return User.findOne({id: id})
+    .then(function (user) {
+      next(null, user || null)
+      return user
+    }).catch(next)
+})
+
 function PassportHelper () {
-  const passport = require('passport')
   this.protocols = sails.config.protocols
 
   this.loadStrategies = function () {
@@ -110,7 +122,7 @@ function PassportHelper () {
     let user
 
     if (!req.user) {
-      if (!passport) {  // new user signing up, create a new user
+      if (!passport) { // new user signing up, create a new user
         user = await User.create(userAttrs).fetch()
         await Passport.create({
           ...q,

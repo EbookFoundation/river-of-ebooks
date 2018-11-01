@@ -52,15 +52,17 @@ module.exports = {
   /**
   * callback run before creating a Passport
   */
-  beforeCreate: async function (passport) {
-    return hashPassword(passport)
+  beforeCreate: async function (passport, next) {
+    await hashPassword(passport)
+    return next()
   },
 
   /**
   * callback run before updating
   */
-  beforeUpdate: async function (passport) {
-    return hashPassword(passport)
+  beforeUpdate: async function (passport, next) {
+    await hashPassword(passport)
+    return next()
   },
 
   // methods

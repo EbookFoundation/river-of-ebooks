@@ -108,7 +108,7 @@ module.exports = {
       } else {
         // make sure the server always returns a response to the client
         // i.e passport-local bad username/email or password
-        res.status(403).json({
+        res.status(401).json({
           'error': err.toString()
         })
       }
