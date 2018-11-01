@@ -17,6 +17,21 @@ module.exports.policies = {
   *                                                                          *
   ***************************************************************************/
 
-  // '*': true,
+  '*': true,
 
-};
+  UserController: {
+    '*': true,
+    update: [ 'sessionAuth' ],
+    me: [ 'sessionAuth' ]
+  },
+
+  AuthController: {
+    '*': true,
+    logout: [ 'sessionAuth' ],
+    disconnect: [ 'sessionAuth' ]
+  },
+
+  TargetController: {
+    '*': [ 'sessionAuth' ]
+  }
+}

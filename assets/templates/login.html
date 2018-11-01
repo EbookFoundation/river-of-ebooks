@@ -9,6 +9,7 @@
       if (typeof item === 'string' || item instanceof String) { item = { href: item, rel: 'stylesheet' } } %>
       <link<% for (key in item) { %> <%= key %>="<%= item[key] %>"<% } %> /><%
     } %>
+    <meta name="viewport" content="initial-scale=1, width=device-width, maximum-scale=1, minimum-scale=1, user-scalable=no" />
   </head>
   <body>
     <div id="root"></div>

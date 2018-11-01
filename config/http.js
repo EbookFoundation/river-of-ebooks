@@ -42,6 +42,8 @@ module.exports.http = {
       'rateLimit',
       'cookieParser',
       'session',
+      'passportInit',
+      'passportSession',
       'bodyParser',
       'compress',
       'poweredBy',
@@ -50,6 +52,8 @@ module.exports.http = {
       'favicon'
     ],
     rateLimit: rateLimiter,
+    passportInit: require('passport').initialize(),
+    passportSession: require('passport').session(),
 
     /***************************************************************************
     *                                                                          *
