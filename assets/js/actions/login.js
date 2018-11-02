@@ -28,10 +28,13 @@ export const setPassword = pass => ({
   data: pass
 })
 
-export const setCarousel = pos => ({
-  type: ACTIONS.set_carousel,
-  data: pos
-})
+export const setCarousel = pos => (dispatch, getState) => {
+  dispatch(clearError())
+  dispatch({
+    type: ACTIONS.set_carousel,
+    data: pos
+  })
+}
 
 export const setError = data => ({
   type: ACTIONS.set_error,
@@ -43,22 +46,35 @@ export const clearError = () => ({
 })
 
 export const setLoggedIn = (data) => (dispatch, getState) => {
-  document.localStorage.setItem('roe-token', JSON.stringify(data))
+  window.localStorage.setItem('roe-token', JSON.stringify(data))
   window.location.href = '/app'
 }
 
-export const checkEmail = email => (dispatch, getState) => {
-  // dispatch(setWorking(true))
+export const checkEmail = email => async (dispatch, getState) => {
+  dispatch(setWorking(true))
   dispatch(clearError())
   if (/^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/.test(email)) {
-    dispatch(setCarousel(2))
+    try {
+      const res = await Ajax.post({
+        url: '/auth/email_exists',
+        data: {
+          email
+        }
+      })
+      dispatch(setCarousel(2))
+    } catch (e) {
+      dispatch(setError({
+        type: 'email',
+        error: 'An account with that email does not exist.'
+      }))
+    }
   } else {
     dispatch(setError({
       type: 'email',
       error: 'Please enter a valid email address.'
     }))
   }
-  // dispatch(setWorking(false))
+  dispatch(setWorking(false))
 }
 
 export const checkPassword = (email, password) => async (dispatch, getState) => {
@@ -67,10 +83,9 @@ export const checkPassword = (email, password) => async (dispatch, getState) => 
   // do email + password check
   try {
     const res = await Ajax.post({
-      url: '/api/token',
+      url: '/auth/local',
       data: {
-        grant_type: 'credentials',
-        email,
+        identifier: email,
         password
       }
     })
@@ -83,4 +98,38 @@ export const checkPassword = (email, password) => async (dispatch, getState) => 
     }))
     dispatch(setWorking(false))
   }
+}
+
+export const signup = (email, password) => async (dispatch, getState) => {
+  dispatch(setWorking(true))
+  dispatch(clearError())
+  if (/^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/.test(email)) {
+    try {
+      await Ajax.post({
+        url: '/auth/email_available',
+        data: {
+          email
+        }
+      })
+      await Ajax.post({
+        url: '/register',
+        data: {
+          email,
+          password
+        }
+      })
+      dispatch(setCarousel(2))
+    } catch (e) {
+      dispatch(setError({
+        type: 'email',
+        error: e.toString()
+      }))
+    }
+  } else {
+    dispatch(setError({
+      type: 'email',
+      error: 'Please enter a valid email address.'
+    }))
+  }
+  dispatch(setWorking(false))
 }

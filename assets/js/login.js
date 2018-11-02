@@ -6,7 +6,7 @@ import Progress from './components/Progress'
 import Carousel, {CarouselItem} from './containers/Carousel'
 import UnderlineInput from './components/UnderlineInput'
 import reducer from './reducers/login'
-import {setEmail, setPassword, setCarousel, checkEmail, checkPassword} from './actions/login'
+import {setEmail, setPassword, setCarousel, checkEmail, checkPassword, signup} from './actions/login'
 
 import STYLE from '../styles/login.scss'
 
@@ -55,7 +55,7 @@ class App extends React.Component {
   getPasswordInputs () {
     return [
       <UnderlineInput
-        key={0}
+        key={1}
         type='password'
         name='password'
         placeholder='Password'
@@ -81,10 +81,10 @@ class App extends React.Component {
           <Carousel position={this.state.carouselPosition} >
             <CarouselItem
               header='Sign up'
-              inputs={this.getEmailInputs()}
+              inputs={this.getEmailInputs().concat(this.getPasswordInputs())}
               error={this.state.emailError}
               button='Sign up'
-              onButtonClick={() => null}
+              onButtonClick={() => this.dispatch(signup(this.state.user.email, this.state.user.password))}
               smallButton='Have an account?'
               onSmallButtonClick={() => this.dispatch(setCarousel(1))}
               footer='Sign up with your Google account' />
