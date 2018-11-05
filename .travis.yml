@@ -12,4 +12,7 @@ deploy:
   env: "example-app-environment"
   bucket_name: "the-target-S3-bucket"
 
-#script: node testfile
+before_script:
+  - npm install
+
+script: sails lift
