@@ -1,6 +1,6 @@
-'use strict'
+'use strict';
 
-import React from 'react'
+import React from 'react';
 
 const Progress = props => (
   <div className={'progress' + (props.bound ? ' bound' : '')}>
