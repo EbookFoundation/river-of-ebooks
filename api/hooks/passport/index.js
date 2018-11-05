@@ -1,5 +1,6 @@
 let passportHook = sails.hooks.passport;
 
+
 if (!passportHook) {
   passportHook = function (sails) {
     return {
