@@ -1,18 +1,18 @@
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcrypt')
 
 async function hashPassword (passport) {
   try {
-    var config = sails.config.auth.bcrypt;
-    var salt = config.rounds;
+    var config = sails.config.auth.bcrypt
+    var salt = config.rounds
     if (passport.password) {
-      const hash = await bcrypt.hash(passport.password, salt);
-      passport.password = hash;
+      const hash = await bcrypt.hash(passport.password, salt)
+      passport.password = hash
     }
-    return passport;
+    return passport
   } catch (e) {
-    delete passport.password;
-    sails.log.error(e);
-    throw e;
+    delete passport.password
+    sails.log.error(e)
+    throw e
   }
 }
 
@@ -52,20 +52,20 @@ module.exports = {
   * callback run before creating a Passport
   */
   beforeCreate: async function (passport, next) {
-    await hashPassword(passport);
-    return next();
+    await hashPassword(passport)
+    return next()
   },
 
   /**
   * callback run before updating
   */
   beforeUpdate: async function (passport, next) {
-    await hashPassword(passport);
-    return next();
+    await hashPassword(passport)
+    return next()
   },
 
   // methods
   validatePassword: async function (password, passport) {
-    return bcrypt.compare(password, passport.password);
+    return bcrypt.compare(password, passport.password)
   }
-};
+}

@@ -9,8 +9,7 @@
  *   https://sailsjs.com/anatomy/tasks/config/copy.js
  *
  */
-module.exports = function(grunt) {
-
+module.exports = function (grunt) {
   grunt.config.set('copy', {
     dev: {
       files: [{
@@ -35,8 +34,8 @@ module.exports = function(grunt) {
         src: ['**/*'],
         dest: '.tmp/public/dist'
       }]
-    },
-  });
+    }
+  })
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   // This Grunt plugin is part of the default asset pipeline in Sails,
@@ -61,5 +60,4 @@ module.exports = function(grunt) {
   // grunt.loadNpmTasks('grunt-contrib-copy');
   // ```
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-};
+}

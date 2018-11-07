@@ -1,7 +1,7 @@
 // api/helpers/passport.js
 // from https://github.com/trailsjs/sails-auth/blob/master/api/services/passport.js
 
-const url = require('url');
+const url = require('url')
 
 module.exports = {
   friendlyName: 'Load PassportHelper',
@@ -14,158 +14,158 @@ module.exports = {
     }
   },
   fn: async function (inputs, exits) {
-    return exits.success(new PassportHelper());
+    return exits.success(new PassportHelper())
   }
-};
+}
 
-const passport = require('passport');
+const passport = require('passport')
 passport.serializeUser((user, next) => {
-  next(null, user.id);
-});
+  next(null, user.id)
+})
 passport.deserializeUser((id, next) => {
   return User.findOne({id: id})
     .then((user) => {
-      next(null, user);
-      return user;
-    }).catch(next);
-});
+      next(null, user)
+      return user
+    }).catch(next)
+})
 
 function PassportHelper () {
-  this.protocols = sails.config.protocols;
+  this.protocols = sails.config.protocols
 
   this.loadStrategies = function () {
-    const strategies = sails.config.passport;
+    const strategies = sails.config.passport
 
     for (const key in strategies) {
-      let options = {passReqToCallback: true};
-      let Strategy = strategies[key].strategy;
+      let options = {passReqToCallback: true}
+      let Strategy = strategies[key].strategy
       if (key === 'local') {
         _.extend(options, {
           usernameField: 'identifier'
-        });
-        passport.use(new Strategy(options, this.protocols.local.login));
+        })
+        passport.use(new Strategy(options, this.protocols.local.login))
       } else {
-        const protocol = strategies[key].protocol;
-        const callbackURL = strategies[key].callback;
-        let baseURL = '';
+        const protocol = strategies[key].protocol
+        const callbackURL = strategies[key].callback
+        let baseURL = ''
         if (sails.config.appUrl && sails.config.appUrl !== null) {
-          baseURL = sails.config.appUrl;
+          baseURL = sails.config.appUrl
         } else {
-          sails.log.warn('Please add \'appUrl\' to configuration');
-          baseURL = sails.getBaseurl();
+          sails.log.warn('Please add \'appUrl\' to configuration')
+          baseURL = sails.getBaseurl()
         }
 
         switch (protocol) {
           case 'oauth2':
-            options.callbackURL = url.resolve(baseURL, callbackURL);
-            break;
+            options.callbackURL = url.resolve(baseURL, callbackURL)
+            break
           // other protocols (openid, etc can go here)
         }
 
-        _.extend(options, strategies[key].options);
+        _.extend(options, strategies[key].options)
 
-        passport.use(new Strategy(options, this.protocols[protocol].login));
+        passport.use(new Strategy(options, this.protocols[protocol].login))
       }
     }
-  };
+  }
   this.endpoint = function (req, res) {
-    const strategies = sails.config.passport;
-    const provider = req.param('provider');
+    const strategies = sails.config.passport
+    const provider = req.param('provider')
 
-    if (!_.has(strategies, provider)) {return res.redirect('/login');}
+    if (!_.has(strategies, provider)) { return res.redirect('/login') }
 
-    passport.authenticate(provider, {})(req, res, req.next);
-  };
+    passport.authenticate(provider, {})(req, res, req.next)
+  }
   // a callback helper to split by req
   this.callback = function (req, res, next) {
-    var provider = req.param('provider', 'local');
-    var action = req.param('action');
+    var provider = req.param('provider', 'local')
+    var action = req.param('action')
 
     if (provider === 'local' && action !== undefined) {
       if (action === 'register' && !req.user) {
-        this.protocols.local.register(req, res, next);
+        this.protocols.local.register(req, res, next)
       } else if (action === 'connect' && req.user) {
-        this.protocols.local.connect(req, res, next);
+        this.protocols.local.connect(req, res, next)
       } else if (action === 'disconnect' && req.user) {
-        this.protocols.local.disconnect(req, res, next);
+        this.protocols.local.disconnect(req, res, next)
       } else {
-        return next(new Error('Invalid action'));
+        return next(new Error('Invalid action'))
       }
     } else {
       if (action === 'disconnect' && req.user) {
-        this.disconnect(req, res, next);
+        this.disconnect(req, res, next)
       } else {
-        passport.authenticate(provider, next)(req, res, req.next);
+        passport.authenticate(provider, next)(req, res, req.next)
       }
     }
-  };
+  }
   this.connect = async function (req, q, profile, next) {
-    let userAttrs = {};
-    let provider = profile.provider || req.param('provider');
+    let userAttrs = {}
+    let provider = profile.provider || req.param('provider')
 
-    req.session.tokens = q.tokens;
-    q.provider = provider;
+    req.session.tokens = q.tokens
+    q.provider = provider
 
     if (!provider) {
-      return next(new Error('No provider identified'));
+      return next(new Error('No provider identified'))
     }
 
     // if the profile object from passport has an email, use it
-    if (profile.emails && profile.emails[0]) {userAttrs.email = profile.emails[0].value;}
-    if (!userAttrs.email) {return next(new Error('No email available'));}
+    if (profile.emails && profile.emails[0]) { userAttrs.email = profile.emails[0].value }
+    if (!userAttrs.email) { return next(new Error('No email available')) }
 
     const pass = await Passport.findOne({
       provider,
       identifier: q.identifier.toString()
-    });
+    })
 
-    let user;
+    let user
 
     if (!req.user) {
       if (!passport) { // new user signing up, create a new user
-        user = await User.create(userAttrs).fetch();
+        user = await User.create(userAttrs).fetch()
         await Passport.create({
           ...q,
           user: user.id
-        });
-        return next(null, user);
+        })
+        return next(null, user)
       } else { // existing user logging in
         if (_.has(q, 'tokens') && q.tokens !== passport.tokens) {
-          passport.tokens = q.tokens;
+          passport.tokens = q.tokens
         }
-        await passport.save();
-        user = User.findOne(passport.user);
-        return next(null, user);
+        await passport.save()
+        user = User.findOne(passport.user)
+        return next(null, user)
       }
     } else { // user logged in and trying to add new Passport
       if (!passport) {
         await Passport.create({
           ...q,
           user: req.user.id
-        });
-        return next(null, req.user);
+        })
+        return next(null, req.user)
       } else { // no action, user already logged in and passport exists
-        return next(null, user);
+        return next(null, user)
       }
     }
-  };
+  }
   this.disconnect = async function (req, res, next) {
     try {
-      const user = req.user;
-      const provider = req.param('provider');
+      const user = req.user
+      const provider = req.param('provider')
 
       const pass = Passport.findOne({
         provider,
         user: user.id
-      });
-      await Passport.destroy(pass.id);
-      next(null, user);
-      return user;
+      })
+      await Passport.destroy(pass.id)
+      next(null, user)
+      return user
     } catch (e) {
-      return next(e);
+      return next(e)
     }
-  };
+  }
   this.getPassport = function () {
-    return passport;
-  };
+    return passport
+  }
 }

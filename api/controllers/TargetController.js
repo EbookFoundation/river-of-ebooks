@@ -3,6 +3,6 @@ module.exports = {
     res.view('pages/temp', {
       email: req.user.email
 
-    });
+    })
   }
-};
+}
