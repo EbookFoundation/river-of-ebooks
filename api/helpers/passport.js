@@ -114,7 +114,7 @@ function PassportHelper () {
     if (profile.emails && profile.emails[0]) { userAttrs.email = profile.emails[0].value }
     if (!userAttrs.email) { return next(new Error('No email available')) }
 
-    const pass = await Passport.findOne({
+    const passport = await Passport.findOne({
       provider,
       identifier: q.identifier.toString()
     })

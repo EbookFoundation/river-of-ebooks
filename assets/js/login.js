@@ -8,7 +8,7 @@ import UnderlineInput from './components/UnderlineInput'
 import reducer from './reducers/login'
 import {setEmail, setPassword, setCarousel, checkEmail, checkPassword, signup} from './actions/login'
 
-import STYLE from '../styles/login.scss'
+import '../styles/login.scss'
 
 class App extends React.Component {
   constructor () {

@@ -55,7 +55,7 @@ export const checkEmail = email => async (dispatch, getState) => {
   dispatch(clearError())
   if (/^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/.test(email)) {
     try {
-      const res = await Ajax.post({
+      await Ajax.post({
         url: '/auth/email_exists',
         data: {
           email
@@ -82,7 +82,7 @@ export const checkPassword = (email, password) => async (dispatch, getState) => 
 
   // do email + password check
   try {
-    const res = await Ajax.post({
+    await Ajax.post({
       url: '/auth/local',
       data: {
         identifier: email,

@@ -1,7 +1,7 @@
 'use strict'
 
 import React from 'react'
-import STYLE from '../../styles/shared/carousel.scss'
+import '../../styles/shared/carousel.scss'
 
 class Carousel extends React.Component {
   constructor () {
