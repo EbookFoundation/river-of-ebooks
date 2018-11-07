@@ -24,7 +24,7 @@ module.exports.protocols = {
         const user = await User.findOne({
           email: identifier
         })
-        if (!user) throw new Error('an account with that email was not found')
+        if (!user) { throw new Error('an account with that email was not found') }
 
         const passport = await Passport.findOne({
           protocol: 'local',
@@ -32,7 +32,7 @@ module.exports.protocols = {
         })
         if (passport) {
           const res = await Passport.validatePassword(password, passport)
-          if (!res) throw new Error('incorrect password')
+          if (!res) { throw new Error('incorrect password') }
           return next(null, user)
         } else {
           throw new Error('that account does not have password login enabled')
@@ -45,7 +45,7 @@ module.exports.protocols = {
       try {
         const token = generateToken()
         const password = user.password
-        if (!password.length) throw new Error('password cannot be blank')
+        if (!password.length) { throw new Error('password cannot be blank') }
         delete user.password
 
         const newUser = await User.create(user).fetch()

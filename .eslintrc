@@ -28,6 +28,7 @@
 
   "parserOptions": {
     "ecmaVersion": 8,
+    "sourceType": "module",
     "ecmaFeatures": {
       "experimentalObjectRestSpread": true
     }
@@ -42,6 +43,7 @@
     "_": true,
     "async": true
     // …and any others (e.g. `"Organization": true`)
+    //["error", "unix"]
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   },
 
@@ -63,7 +65,7 @@
       "ObjectExpression": 1,
       "ignoredNodes": ["ConditionalExpression"]
     }],
-    "linebreak-style":              ["error", "unix"],
+    "linebreak-style":              0,
     "no-dupe-keys":                 ["error"],
     "no-duplicate-case":            ["error"],
     "no-extra-semi":                ["warn"],

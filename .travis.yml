@@ -1,4 +1,5 @@
 language: node_js
+warnings_are_errors: false
 node_js:
   - "node"
 deploy:
@@ -11,4 +12,7 @@ deploy:
   env: "example-app-environment"
   bucket_name: "the-target-S3-bucket"
 
-#script: node testfile
+before_script:
+  - npm install
+
+script: npm run lint && npm run custom-tests && echo 'Done.'
