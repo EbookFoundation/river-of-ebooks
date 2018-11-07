@@ -53,7 +53,7 @@ export const setLoggedIn = (data) => (dispatch, getState) => {
 export const checkEmail = email => async (dispatch, getState) => {
   dispatch(setWorking(true))
   dispatch(clearError())
-  if (/^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/.test(email)) {
+  if (/^([a-zA-Z0-9_\-.]+)@([a-zA-Z0-9_\-.]+)\.([a-zA-Z]{2,5})$/.test(email)) {
     try {
       await Ajax.post({
         url: '/auth/email_exists',
@@ -82,7 +82,7 @@ export const checkPassword = (email, password) => async (dispatch, getState) => 
 
   // do email + password check
   try {
-    await Ajax.post({
+    const res = await Ajax.post({
       url: '/auth/local',
       data: {
         identifier: email,
@@ -103,7 +103,7 @@ export const checkPassword = (email, password) => async (dispatch, getState) => 
 export const signup = (email, password) => async (dispatch, getState) => {
   dispatch(setWorking(true))
   dispatch(clearError())
-  if (/^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/.test(email)) {
+  if (/^([a-zA-Z0-9_\-.]+)@([a-zA-Z0-9_\-.]+)\.([a-zA-Z]{2,5})$/.test(email)) {
     try {
       await Ajax.post({
         url: '/auth/email_available',

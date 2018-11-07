@@ -18,7 +18,7 @@ class Carousel extends React.Component {
   render () {
     return (
       <section className='carousel-container'>
-        <div className='carousel' style={{width: this.getWidth(), left: this.getOffset()}}>
+        <div className='carousel' style={{ width: this.getWidth(), left: this.getOffset() }}>
           {this.props.children}
         </div>
       </section>
