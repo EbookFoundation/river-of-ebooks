@@ -17,10 +17,10 @@ module.exports = {
       unique: true,
       autoIncrement: true
     },
-    title: {type: 'string', required: true},
-    author: {type: 'string'},
-    isbn: {type: 'string'},
-    version: {type: 'string'}
+    title: { type: 'string', required: true },
+    author: { type: 'string' },
+    isbn: { type: 'string' },
+    version: { type: 'string' }
 
     //  ╔═╗╔╦╗╔╗ ╔═╗╔╦╗╔═╗
     //  ║╣ ║║║╠╩╗║╣  ║║╚═╗

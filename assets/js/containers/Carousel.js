@@ -1,7 +1,7 @@
 'use strict'
 
 import React from 'react'
-import STYLE from '../../styles/shared/carousel.scss'
+import '../../styles/shared/carousel.scss'
 
 class Carousel extends React.Component {
   constructor () {
@@ -18,7 +18,7 @@ class Carousel extends React.Component {
   render () {
     return (
       <section className='carousel-container'>
-        <div className='carousel' style={{width: this.getWidth(), left: this.getOffset()}}>
+        <div className='carousel' style={{ width: this.getWidth(), left: this.getOffset() }}>
           {this.props.children}
         </div>
       </section>
