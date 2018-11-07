@@ -34,4 +34,4 @@ module.exports.policies = {
   TargetController: {
     '*': [ 'sessionAuth' ]
   }
-}
+};

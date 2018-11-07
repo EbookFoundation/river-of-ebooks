@@ -366,4 +366,4 @@ module.exports = {
 
   }
 
-}
+};

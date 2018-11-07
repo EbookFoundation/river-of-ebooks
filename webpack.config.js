@@ -1,10 +1,10 @@
-const HtmlWebpackPlugin = require('html-webpack-plugin')
-const MiniCssExtractPlugin = require('mini-css-extract-plugin')
-const webpack = require('webpack')
-const path = require('path')
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const webpack = require('webpack');
+const path = require('path');
 
 module.exports = (env, argv) => {
-  const mode = argv.mode || 'development'
+  const mode = argv.mode || 'development';
 
   return {
     mode: mode || 'development',
@@ -45,5 +45,5 @@ module.exports = (env, argv) => {
         'process.env.NODE_ENV': JSON.stringify(mode)
       })
     ]
-  }
-}
+  };
+};
