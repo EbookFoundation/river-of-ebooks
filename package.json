@@ -59,7 +59,8 @@
     "stop": "sudo ./node_modules/.bin/forever stopall",
     "test": "npm run lint && npm run custom-tests && echo 'Done.'",
     "lint": "standard && echo '✔  Your .js files look good.'",
-    "debug": "node --inspect app.js"
+    "debug": "node --inspect app.js",
+    "custom-tests": "echo 'Nothing yet'"
   },
   "main": "app.js",
   "repository": {
