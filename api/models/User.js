@@ -14,8 +14,7 @@ module.exports = {
     id: {
       type: 'number',
       unique: true,
-      autoIncrement: true,
-      columnName: '_id'
+      autoIncrement: true
     },
     email: {
       type: 'string',
@@ -33,4 +32,4 @@ module.exports = {
 
   }
 
-};
+}

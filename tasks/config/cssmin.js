@@ -11,14 +11,13 @@
  *   https://sailsjs.com/anatomy/tasks/config/cssmin.js
  *
  */
-module.exports = function(grunt) {
-
+module.exports = function (grunt) {
   grunt.config.set('cssmin', {
     dist: {
       src: ['.tmp/public/concat/production.css'],
       dest: '.tmp/public/min/production.min.css'
     }
-  });
+  })
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   // This Grunt plugin is part of the default asset pipeline in Sails,
@@ -43,5 +42,4 @@ module.exports = function(grunt) {
   // grunt.loadNpmTasks('grunt-contrib-cssmin');
   // ```
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-};
+}

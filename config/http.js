@@ -9,14 +9,14 @@
  * https://sailsjs.com/config/http
  */
 
-const rateLimit = require('express-rate-limit');
+const rateLimit = require('express-rate-limit')
 const rateLimiter = rateLimit({
   windowMs: 10 * 60 * 1000, // 10 minutes
   max: 100, // limit each IP to 100 requests per windowMs
   skip (req, res) {
-    return !req.path.startsWith('/api');
+    return !req.path.startsWith('/api')
   }
-});
+})
 
 module.exports.http = {
 
@@ -53,7 +53,7 @@ module.exports.http = {
     ],
     rateLimit: rateLimiter,
     passportInit: require('passport').initialize(),
-    passportSession: require('passport').session(),
+    passportSession: require('passport').session()
 
     /***************************************************************************
     *                                                                          *
@@ -69,4 +69,4 @@ module.exports.http = {
     //   return middlewareFn;
     // })(),
   }
-};
+}

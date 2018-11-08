@@ -11,15 +11,15 @@ module.exports = {
   emailExists: async function (req, res) {
     const user = await User.findOne({
       email: req.param('email')
-    });
+    })
     if (!user) {
       return res.status(404).json({
         error: 'user does not exist'
-      });
+      })
     } else {
       return res.json({
         status: 'ok'
-      });
+      })
     }
   },
   /**
@@ -28,15 +28,15 @@ module.exports = {
   emailAvailable: async function (req, res) {
     const user = await User.findOne({
       email: req.param('email')
-    });
+    })
     if (user) {
       return res.status(401).json({
         error: 'that email address is not available'
-      });
+      })
     } else {
       return res.json({
         status: 'ok'
-      });
+      })
     }
   },
 
@@ -55,15 +55,15 @@ module.exports = {
    * @param {Object} res
    */
   logout: function (req, res) {
-    req.logout();
-    delete req.user;
-    delete req.session.passport;
-    req.session.authenticated = false;
+    req.logout()
+    delete req.user
+    delete req.session.passport
+    req.session.authenticated = false
 
     if (!req.isSocket) {
-      res.redirect(req.query.next || '/');
+      res.redirect(req.query.next || '/')
     } else {
-      res.ok();
+      res.ok()
     }
   },
 
@@ -74,8 +74,8 @@ module.exports = {
    * @param {Object} res
    */
   provider: async function (req, res) {
-    const passportHelper = await sails.helpers.passport();
-    passportHelper.endpoint(req, res);
+    const passportHelper = await sails.helpers.passport()
+    passportHelper.endpoint(req, res)
   },
 
   /**
@@ -95,51 +95,51 @@ module.exports = {
    * @param {Object} res
    */
   callback: async function (req, res) {
-    const action = req.param('action');
-    const passportHelper = await sails.helpers.passport();
+    const action = req.param('action')
+    const passportHelper = await sails.helpers.passport()
 
     function negotiateError (err) {
       if (action === 'register') {
-        res.redirect('/register');
+        res.redirect('/register')
       } else if (action === 'login') {
-        res.redirect('/login');
+        res.redirect('/login')
       } else if (action === 'disconnect') {
-        res.redirect('back');
+        res.redirect('back')
       } else {
         // make sure the server always returns a response to the client
         // i.e passport-local bad username/email or password
         res.status(401).json({
           'error': err.toString()
-        });
+        })
       }
     }
 
     passportHelper.callback(req, res, (err, user, info, status) => {
       if (err || !user) {
-        sails.log.warn(user, err, info, status);
+        sails.log.warn(user, err, info, status)
         if (!err && info) {
-          return negotiateError(info);
+          return negotiateError(info)
         }
-        return negotiateError(err);
+        return negotiateError(err)
       }
 
       req.login(user, (err) => {
         if (err) {
-          sails.log.warn(err);
-          return negotiateError(err);
+          sails.log.warn(err)
+          return negotiateError(err)
         }
 
-        req.session.authenticated = true;
+        req.session.authenticated = true
 
         // redirect if there is a 'next' param
         if (req.query.next) {
-          res.status(302).set('Location', req.query.next);
+          res.status(302).set('Location', req.query.next)
         }
 
-        sails.log.info('user', user, 'authenticated successfully');
-        return res.json(user);
-      });
-    });
+        sails.log.info('user', user, 'authenticated successfully')
+        return res.json(user)
+      })
+    })
   },
 
   /**
@@ -149,7 +149,7 @@ module.exports = {
    * @param {Object} res
    */
   disconnect: async function (req, res) {
-    const passportHelper = await sails.helpers.passport();
-    passportHelper.disconnect(req, res);
+    const passportHelper = await sails.helpers.passport()
+    passportHelper.disconnect(req, res)
   }
-};
+}

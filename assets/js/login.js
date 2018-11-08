@@ -3,12 +3,12 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import Progress from './components/Progress'
-import Carousel, {CarouselItem} from './containers/Carousel'
+import Carousel, { CarouselItem } from './containers/Carousel'
 import UnderlineInput from './components/UnderlineInput'
 import reducer from './reducers/login'
-import {setEmail, setPassword, setCarousel, checkEmail, checkPassword, signup} from './actions/login'
+import { setEmail, setPassword, setCarousel, checkEmail, checkPassword, signup } from './actions/login'
 
-import STYLE from '../styles/login.scss'
+import '../styles/login.scss'
 
 class App extends React.Component {
   constructor () {
