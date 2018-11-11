@@ -9,7 +9,8 @@ module.exports = (env, argv) => {
   return {
     mode: mode || 'development',
     entry: {
-      login: './assets/js/login.js'
+      login: './assets/js/login.js',
+      targets: './assets/js/targets.js'
     },
     output: {
       path: path.join(__dirname, '/.tmp/public'),
@@ -36,7 +37,14 @@ module.exports = (env, argv) => {
       new HtmlWebpackPlugin({
         template: 'assets/templates/login.html',
         links: mode === 'production' ? [{ rel: 'stylesheet', type: 'text/css', href: 'login.css' }] : [],
-        filename: path.join(__dirname, '/.tmp/public/login.html')
+        filename: path.join(__dirname, '/.tmp/public/login.html'),
+        chunks: ['login']
+      }),
+      new HtmlWebpackPlugin({
+        template: 'assets/templates/targets.html',
+        links: mode === 'production' ? [{ rel: 'stylesheet', type: 'text/css', href: 'targets.css' }] : [],
+        filename: path.join(__dirname, '/.tmp/public/targets.html'),
+        chunks: ['targets']
       }),
       new MiniCssExtractPlugin({
         filename: '[name].css'
