@@ -18,11 +18,11 @@ module.exports = {
       autoIncrement: true
     },
     source: { type: 'string' },
+    storage: { type: 'string' },
     title: { type: 'string', required: true },
     author: { type: 'string' },
     version: { type: 'string' },
-    isbn: { type: 'string' },
-    publishDate: { type: 'string' }
+    isbn: { type: 'string' }
 
     //  ╔═╗╔╦╗╔╗ ╔═╗╔╦╗╔═╗
     //  ║╣ ║║║╠╩╗║╣  ║║╚═╗
