@@ -58,7 +58,7 @@ module.exports = {
       //  ```
       // --------------------------------------------------------------------------
       adapter: 'sails-postgresql',
-      url: sails.config.DATASTORE_URL
+      url: process.env.SAILS_DATASTORE_URL
 
       /****************************************************************************
       *                                                                           *
