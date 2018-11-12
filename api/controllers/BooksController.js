@@ -22,6 +22,7 @@ module.exports = {
       if (!body) throw new Error('Missing body')
       if (!body.title || !body.author || !body.version || !body.opds) throw new Error('Body is not formatted correctly')
       const data = {
+        source: host,
         title: body.title,
         author: body.author,
         version: body.version

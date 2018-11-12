@@ -17,6 +17,7 @@ module.exports = {
       unique: true,
       autoIncrement: true
     },
+    source: { type: 'string' },
     title: { type: 'string', required: true },
     author: { type: 'string' },
     version: { type: 'string' },
