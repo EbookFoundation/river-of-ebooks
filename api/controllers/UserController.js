@@ -16,7 +16,6 @@ module.exports = {
         return res.status(500).json({
           error: err.toString() })
       }
-
       res.json(user)
     })
   },
@@ -29,7 +28,6 @@ module.exports = {
           error: err.toString()
         })
       }
-
       res.json(user)
     })
   },

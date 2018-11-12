@@ -54,8 +54,8 @@ module.exports = {
   list: async function (req, res) {
     try {
       const body = req.allParams()
-      const numPerPage = 50
       if (!body) throw new HttpError(400, 'Missing parameters')
+      const numPerPage = 50
       const page = body.page || 1
 
       const books = await Book.find(body).sort('createdAt DESC').skip(page * numPerPage - numPerPage).limit(numPerPage)
