@@ -11,12 +11,6 @@ const HttpError = require('../errors/HttpError')
 module.exports = {
   publish: async function (req, res) {
     try {
-      /*
-      title,
-      author,
-      version,
-      opds
-      */
       const body = req.body
       const host = req.hostname
       let result
@@ -41,11 +35,10 @@ module.exports = {
 
       req.file('opds').upload(sails.config.skipperConfig, async function (err, uploaded) {
         if (err) {
-          await result.destroy()
+          await Book.destroy({ id: result.id })
           throw new HttpError(500, err.message)
         }
-        result.storage = uploaded.fd
-        await result.save()
+        await Book.update({ id: result.id }, { storage: uploaded[0].fd })
         return res.json({
           ...result
         })
@@ -61,10 +54,11 @@ module.exports = {
   list: async function (req, res) {
     try {
       const body = req.allParams()
-      if (!body) { throw new HttpError(400, 'Missing parameters') }
+      const numPerPage = 50
+      if (!body) throw new HttpError(400, 'Missing parameters')
+      const page = body.page || 1
 
-      const books = await Book.find(body)
-
+      const books = await Book.find(body).sort('createdAt DESC').skip(page * numPerPage - numPerPage).limit(numPerPage)
       if (!books.length) throw new HttpError(404, 'No books matching those parameters were found.')
 
       return res.json(books)
