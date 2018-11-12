@@ -8,23 +8,38 @@
 module.exports = {
   publish: async function (req, res) {
     try {
+      /*
+      title,
+      author,
+      version,
+      opds
+      */
       const body = req.body
       const host = req.hostname
       let result
 
-      if (!host) { throw new Error('Missing hostname') }
-      if (!body) { throw new Error('Missing body') }
-
-      const bookExists = await Book.findOne(body)
+      if (!host) throw new Error('Missing hostname')
+      if (!body) throw new Error('Missing body')
+      if (!body.title || !body.author || !body.version || !body.opds) throw new Error('Body is not formatted correctly')
+      const data = {
+        title: body.title,
+        author: body.author,
+        version: body.version
+      }
+      const bookExists = await Book.findOne(data)
 
       if (bookExists) {
         throw new Error('Version already exists')
       } else {
-        result = await Book.create(body)
+        result = await Book.create(body).fetch()
       }
 
-      return res.json({
-        ...result
+      req.file('opds').upload(sails.config.skipperConfig, function (err, uploaded) {
+        if (err) throw err
+        console.log(uploaded)
+        return res.json({
+          ...result
+        })
       })
     } catch (e) {
       return res.status(400).json({
