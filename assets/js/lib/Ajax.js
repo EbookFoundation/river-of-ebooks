@@ -13,52 +13,45 @@ class AjaxError extends Error {
 
 export default class Ajax {
   static async get (opts) {
-    return Ajax.ajax({
-      ...(opts || {}),
-      method: 'get'
-    })
+    if (!opts) opts = {}
+    opts.method = 'get'
+    return Ajax.ajax(opts)
   }
   static async post (opts) {
-    return Ajax.ajax({
-      ...(opts || {}),
-      method: 'post'
-    })
+    if (!opts) opts = {}
+    opts.method = 'post'
+    return Ajax.ajax(opts)
   }
   static async put (opts) {
-    return Ajax.ajax({
-      ...(opts || {}),
-      method: 'put'
-    })
+    if (!opts) opts = {}
+    opts.method = 'put'
+    return Ajax.ajax(opts)
   }
   static async patch (opts) {
-    return Ajax.ajax({
-      ...(opts || {}),
-      method: 'patch'
-    })
+    if (!opts) opts = {}
+    opts.method = 'patch'
+    return Ajax.ajax(opts)
   }
   static async delete (opts) {
-    return Ajax.ajax({
-      ...(opts || {}),
-      method: 'delete'
-    })
+    if (!opts) opts = {}
+    opts.method = 'delete'
+    return Ajax.ajax(opts)
   }
   static async head (opts) {
-    return Ajax.ajax({
-      ...(opts || {}),
-      method: 'head'
-    })
+    if (!opts) opts = {}
+    opts.method = 'head'
+    return Ajax.ajax(opts)
   }
   static async options (opts) {
-    return Ajax.ajax({
-      ...(opts || {}),
-      method: 'options'
-    })
+    if (!opts) opts = {}
+    opts.method = 'options'
+    return Ajax.ajax(opts)
   }
   static ajax (opts) {
     return new Promise((resolve, reject) => {
-      if (!opts) { reject(new Error('Missing required options parameter.')) }
+      if (!opts) reject(new Error('Missing required options parameter.'))
       if (opts.method) {
-        if (!['get', 'post', 'put', 'patch', 'delete', 'head', 'options'].includes(opts.method.toLowerCase())) { reject(new Error('opts.method must be one of: GET, POST, PUT, PATCH, DELETE, HEAD, OPTIONS.')) }
+        if (!['get', 'post', 'put', 'patch', 'delete', 'head', 'options'].includes(opts.method.toLowerCase())) reject(new Error('opts.method must be one of: GET, POST, PUT, PATCH, DELETE, HEAD, OPTIONS.'))
         opts.method = opts.method.toUpperCase()
       }
 
@@ -81,7 +74,7 @@ export default class Ajax {
       }
 
       xhr.onload = () => {
-        if (xhr.status !== 200) { return xhr.onerror() }
+        if (xhr.status !== 200) return xhr.onerror()
         var data = xhr.response
         resolve({
           data,
@@ -117,9 +110,9 @@ export default class Ajax {
 
       xhr.open(opts.method || 'GET', opts.url + qs || window.location.href)
       if (opts.headers) {
-        for (let key in opts.headers) { xhr.setRequestHeader(key, opts.headers[key]) }
+        for (let key in opts.headers) xhr.setRequestHeader(key, opts.headers[key])
       }
-      if (ajaxcfg.access_token && !(opts.headers || {}).Authorization) { xhr.setRequestHeader('Authorization', 'Bearer ' + ajaxcfg.access_token) }
+      if (ajaxcfg.access_token && !(opts.headers || {}).Authorization) xhr.setRequestHeader('Authorization', 'Bearer ' + ajaxcfg.access_token)
       xhr.send(fd)
     })
   }
@@ -139,8 +132,8 @@ export default class Ajax {
       }
       // try original request
       xhr.onload = () => {
-        if (xhr.status !== 200) { return xhr.onerror() }
-        if (ajaxcfg.refresh) { ajaxcfg.refresh(xhr.response) }
+        if (xhr.status !== 200) return xhr.onerror()
+        if (ajaxcfg.refresh) ajaxcfg.refresh(xhr.response)
         var json = JSON.parse(xhr.response)
         ajaxcfg.access_token = json.access_token
         ajaxcfg.refresh_token = json.refresh_token
@@ -156,11 +149,11 @@ export default class Ajax {
     })
   }
   static setTokenData (tokens) {
-    if (!tokens) { throw new Error('Missing tokens.') }
-    if (!tokens.access_token && !tokens.refresh_token && !tokens.refresh_url) { throw new Error('Missing at least one of: access_token, refresh_token, refresh_url.') }
-    if (tokens.access_token) { ajaxcfg.access_token = tokens.access_token }
-    if (tokens.refresh_token) { ajaxcfg.refresh_token = tokens.refresh_token }
-    if (tokens.refresh_url) { ajaxcfg.refresh_url = tokens.refresh_url }
+    if (!tokens) throw new Error('Missing tokens.')
+    if (!tokens.access_token && !tokens.refresh_token && !tokens.refresh_url) throw new Error('Missing at least one of: access_token, refresh_token, refresh_url.')
+    if (tokens.access_token) ajaxcfg.access_token = tokens.access_token
+    if (tokens.refresh_token) ajaxcfg.refresh_token = tokens.refresh_token
+    if (tokens.refresh_url) ajaxcfg.refresh_url = tokens.refresh_url
     return true
   }
   static onRefresh (func) {

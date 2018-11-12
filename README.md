@@ -26,3 +26,4 @@ Note:  Generators are usually run using the globally-installed `sails` CLI (comm
 -->
 
 [![Build Status](https://travis-ci.org/miacona96/RoE-pipe.svg?branch=master)](https://travis-ci.org/miacona96/RoE-pipe)
+

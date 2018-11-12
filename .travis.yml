@@ -1,5 +1,4 @@
 language: node_js
-warnings_are_errors: false
 node_js:
   - "node"
 deploy:
@@ -12,7 +11,4 @@ deploy:
   env: "example-app-environment"
   bucket_name: "the-target-S3-bucket"
 
-before_script:
-  - npm install
-
-script: npm test
+#script: node testfile
