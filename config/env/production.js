@@ -57,17 +57,19 @@ module.exports = {
       //  sails_datastores__default__url=mysql://admin:myc00lpAssw2D@db.example.com:3306/my_prod_db
       //  ```
       // --------------------------------------------------------------------------
+      adapter: 'sails-postgresql',
+      url: sails.config.DATASTORE_URL
 
       /****************************************************************************
-      *                                                                           *
+      *                                                                           *
       * More adapter-specific options                                             *
-      *                                                                           *
+      *                                                                           *
       * > For example, for some hosted PostgreSQL providers (like Heroku), the    *
       * > extra `ssl: true` option is mandatory and must be provided.             *
-      *                                                                           *
-      * More info:                                                                *
-      * https://sailsjs.com/config/datastores                                     *
-      *                                                                           *
+      *                                                                           *
+      * More info:                                                                *
+      * https://sailsjs.com/config/datastores                                     *
+      *                                                                           *
       ****************************************************************************/
       // ssl: true,
 
@@ -238,8 +240,8 @@ module.exports = {
     *                                                                          *
     ***************************************************************************/
     onlyAllowOrigins: [
-      'https://ec2-18-219-76-43.us-east-2.compute.amazonaws.com',
-    ],
+      'https://ec2-18-219-76-43.us-east-2.compute.amazonaws.com'
+    ]
 
     /***************************************************************************
     *                                                                          *

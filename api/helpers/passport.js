@@ -19,12 +19,12 @@ module.exports = {
 }
 
 const passport = require('passport')
-passport.serializeUser(function (user, next) {
+passport.serializeUser((user, next) => {
   next(null, user.id)
 })
-passport.deserializeUser(function (id, next) {
-  return User.findOne({id: id})
-    .then(function (user) {
+passport.deserializeUser((id, next) => {
+  return User.findOne({ id: id })
+    .then((user) => {
       next(null, user)
       return user
     }).catch(next)
@@ -37,7 +37,7 @@ function PassportHelper () {
     const strategies = sails.config.passport
 
     for (const key in strategies) {
-      let options = {passReqToCallback: true}
+      let options = { passReqToCallback: true }
       let Strategy = strategies[key].strategy
       if (key === 'local') {
         _.extend(options, {
@@ -72,7 +72,7 @@ function PassportHelper () {
     const strategies = sails.config.passport
     const provider = req.param('provider')
 
-    if (!_.has(strategies, provider)) return res.redirect('/login')
+    if (!_.has(strategies, provider)) { return res.redirect('/login') }
 
     passport.authenticate(provider, {})(req, res, req.next)
   }
@@ -89,7 +89,7 @@ function PassportHelper () {
       } else if (action === 'disconnect' && req.user) {
         this.protocols.local.disconnect(req, res, next)
       } else {
-        next(new Error('Invalid action'))
+        return next(new Error('Invalid action'))
       }
     } else {
       if (action === 'disconnect' && req.user) {
@@ -111,10 +111,10 @@ function PassportHelper () {
     }
 
     // if the profile object from passport has an email, use it
-    if (profile.emails && profile.emails[0]) userAttrs.email = profile.emails[0].value
-    if (!userAttrs.email) return next(new Error('No email available'))
+    if (profile.emails && profile.emails[0]) { userAttrs.email = profile.emails[0].value }
+    if (!userAttrs.email) { return next(new Error('No email available')) }
 
-    const pass = await Passport.findOne({
+    const passport = await Passport.findOne({
       provider,
       identifier: q.identifier.toString()
     })
@@ -128,25 +128,24 @@ function PassportHelper () {
           ...q,
           user: user.id
         })
-        next(null, user)
       } else { // existing user logging in
         if (_.has(q, 'tokens') && q.tokens !== passport.tokens) {
           passport.tokens = q.tokens
         }
         await passport.save()
         user = User.findOne(passport.user)
-        next(null, user)
       }
+      return next(null, user)
     } else { // user logged in and trying to add new Passport
       if (!passport) {
         await Passport.create({
           ...q,
           user: req.user.id
         })
-        next(null, req.user)
       } else { // no action, user already logged in and passport exists
-        next(null, user)
+
       }
+      return next(null, req.user)
     }
   }
   this.disconnect = async function (req, res, next) {
@@ -162,7 +161,7 @@ function PassportHelper () {
       next(null, user)
       return user
     } catch (e) {
-      next(e)
+      return next(e)
     }
   }
   this.getPassport = function () {

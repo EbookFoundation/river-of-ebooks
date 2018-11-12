@@ -114,7 +114,7 @@ module.exports = {
       }
     }
 
-    passportHelper.callback(req, res, function (err, user, info, status) {
+    passportHelper.callback(req, res, (err, user, info, status) => {
       if (err || !user) {
         sails.log.warn(user, err, info, status)
         if (!err && info) {
@@ -123,7 +123,7 @@ module.exports = {
         return negotiateError(err)
       }
 
-      req.login(user, function (err) {
+      req.login(user, (err) => {
         if (err) {
           sails.log.warn(err)
           return negotiateError(err)

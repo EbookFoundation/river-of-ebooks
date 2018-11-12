@@ -9,8 +9,7 @@
  *   https://sailsjs.com/anatomy/tasks/config/babel.js
  *
  */
-module.exports = function(grunt) {
-
+module.exports = function (grunt) {
   grunt.config.set('babel', {
     dist: {
       options: {
@@ -25,7 +24,7 @@ module.exports = function(grunt) {
         }
       ]
     }
-  });
+  })
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   // This Grunt plugin is part of the default asset pipeline in Sails,
@@ -50,5 +49,4 @@ module.exports = function(grunt) {
   // grunt.loadNpmTasks('grunt-babel');
   // ```
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-};
+}

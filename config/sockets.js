@@ -29,7 +29,6 @@ module.exports.sockets = {
 
   // transports: [ 'websocket' ],
 
-
   /***************************************************************************
   *                                                                          *
   * `beforeConnect`                                                          *
@@ -50,7 +49,6 @@ module.exports.sockets = {
   //
   // },
 
-
   /***************************************************************************
   *                                                                          *
   * `afterDisconnect`                                                        *
@@ -68,7 +66,6 @@ module.exports.sockets = {
   //
   // },
 
-
   /***************************************************************************
   *                                                                          *
   * Whether to expose a 'GET /__getcookie' route that sets an HTTP-only      *
@@ -78,5 +75,4 @@ module.exports.sockets = {
 
   // grant3rdPartyCookie: true,
 
-
-};
+}

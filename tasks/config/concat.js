@@ -10,8 +10,7 @@
  *   https://sailsjs.com/anatomy/tasks/config/concat.js
  *
  */
-module.exports = function(grunt) {
-
+module.exports = function (grunt) {
   grunt.config.set('concat', {
     js: {
       src: require('../pipeline').jsFilesToInject,
@@ -21,7 +20,7 @@ module.exports = function(grunt) {
       src: require('../pipeline').cssFilesToInject,
       dest: '.tmp/public/concat/production.css'
     }
-  });
+  })
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   // This Grunt plugin is part of the default asset pipeline in Sails,
@@ -46,5 +45,4 @@ module.exports = function(grunt) {
   // grunt.loadNpmTasks('grunt-contrib-concat');
   // ```
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-};
+}
