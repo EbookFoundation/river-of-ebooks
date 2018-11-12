@@ -19,6 +19,7 @@ module.exports.blueprints = {
 
   // actions: false,
 
+
   /***************************************************************************
   *                                                                          *
   * Automatically expose RESTful routes for your models?                     *
@@ -26,6 +27,7 @@ module.exports.blueprints = {
   ***************************************************************************/
 
   // rest: true,
+
 
   /***************************************************************************
   *                                                                          *
@@ -36,4 +38,4 @@ module.exports.blueprints = {
 
   // shortcuts: true,
 
-}
+};

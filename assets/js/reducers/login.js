@@ -3,7 +3,7 @@
 import Actions from '../actions/login'
 
 const reducer = (state = {}, action) => {
-  const { type, data } = action
+  const {type, data} = action
   switch (type) {
     case Actions.set_user:
       return {
