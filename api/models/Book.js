@@ -21,7 +21,8 @@ module.exports = {
     title: { type: 'string', required: true },
     author: { type: 'string' },
     version: { type: 'string' },
-    isbn: { type: 'string' }
+    isbn: { type: 'string' },
+    publishDate: { type: 'string' }
 
     //  ╔═╗╔╦╗╔╗ ╔═╗╔╦╗╔═╗
     //  ║╣ ║║║╠╩╗║╣  ║║╚═╗

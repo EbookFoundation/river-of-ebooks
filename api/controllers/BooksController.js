@@ -27,12 +27,16 @@ module.exports = {
         author: body.author,
         version: body.version
       }
+      if (body.isbn) data.isbn = body.isbn
       const bookExists = await Book.findOne(data)
 
       if (bookExists) {
         throw new Error('Version already exists')
       } else {
-        result = await Book.create(body).fetch()
+        result = await Book.create({
+          ...data,
+          publishDate: (new Date()).toISOString()
+        }).fetch()
       }
 
       req.file('opds').upload(sails.config.skipperConfig, function (err, uploaded) {
