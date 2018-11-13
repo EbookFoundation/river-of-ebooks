@@ -76,8 +76,6 @@
   },
   "standard": {
     "globals": [
-      "sails"
-    ]
       "sails",
       "User",
       "Book",
