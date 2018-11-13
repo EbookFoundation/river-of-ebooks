@@ -11,6 +11,8 @@
     "async": "2.0.1",
     "base64url": "^3.0.0",
     "bcrypt": "^3.0.2",
+    "chai": "^4.2.0",
+    "eslint-plugin-react": "^7.11.1",
     "express-rate-limit": "^3.2.1",
     "forever": "^0.15.3",
     "grunt": "^1.0.3",
@@ -36,6 +38,7 @@
     "css-loader": "^1.0.1",
     "html-webpack-plugin": "^3.2.0",
     "mini-css-extract-plugin": "^0.4.4",
+    "mocha": "^5.2.0",
     "node-sass": "^4.9.4",
     "npm-run-all": "^4.1.3",
     "rimraf": "^2.6.2",
@@ -75,5 +78,15 @@
     "globals": [
       "sails"
     ]
+      "sails",
+      "User",
+      "Book",
+      "Passport",
+      "_"
+    ],
+    "env": [
+      "mocha"
+    ],
+    "parser": "babel-eslint"
   }
 }
