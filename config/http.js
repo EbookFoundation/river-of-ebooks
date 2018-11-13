@@ -53,7 +53,7 @@ module.exports.http = {
     ],
     rateLimit: rateLimiter,
     passportInit: require('passport').initialize(),
-    passportSession: require('passport').session()
+    passportSession: require('passport').session(),
 
     /***************************************************************************
     *                                                                          *

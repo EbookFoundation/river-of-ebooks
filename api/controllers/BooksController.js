@@ -12,8 +12,8 @@ module.exports = {
       const host = req.hostname
       let result
 
-      if (!host) { throw new Error('Missing hostname') }
-      if (!body) { throw new Error('Missing body') }
+      if (!host) throw new Error('Missing hostname')
+      if (!body) throw new Error('Missing body')
 
       const bookExists = await Book.findOne(body)
 
@@ -36,7 +36,7 @@ module.exports = {
   list: async function (req, res) {
     try {
       const body = req.allParams()
-      if (!body) { throw new Error('Missing parameters') }
+      if (!body) throw new Error('Missing parameters')
 
       const books = await Book.find(body)
 
