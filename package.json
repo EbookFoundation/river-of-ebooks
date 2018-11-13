@@ -12,7 +12,6 @@
     "base64url": "^3.0.0",
     "bcrypt": "^3.0.2",
     "chai": "^4.2.0",
-    "eslint-plugin-react": "^7.11.1",
     "express-rate-limit": "^3.2.1",
     "forever": "^0.15.3",
     "grunt": "^1.0.3",
@@ -28,7 +27,6 @@
     "sails-hook-sockets": "^1.4.0"
   },
   "devDependencies": {
-    "@sailshq/eslint": "^4.19.3",
     "@babel/core": "^7.1.2",
     "@babel/plugin-proposal-object-rest-spread": "^7.0.0",
     "@babel/polyfill": "^7.0.0",
@@ -77,16 +75,9 @@
   "standard": {
     "globals": [
       "sails"
-    ]
-      "sails",
-      "User",
-      "Book",
-      "Passport",
-      "_"
     ],
     "env": [
       "mocha"
-    ],
-    "parser": "babel-eslint"
+    ]
   }
 }
