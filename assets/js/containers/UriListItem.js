@@ -9,9 +9,6 @@ import { changeUrlField, setUrl, removeUrl } from '../actions/targets'
 const uriRegex = /(.+:\/\/)?(.+\.)*(.+\.).{1,}(:\d+)?(.+)?/i
 
 class UriListItem extends React.Component {
-  constructor () {
-    super()
-  }
   render () {
     return (
       <li className='uri-list-item flex-container'>
@@ -24,7 +21,7 @@ class UriListItem extends React.Component {
           pattern={uriRegex}
           onChange={(e) => this.props.dispatch(changeUrlField(this.props.id, e.target.value))}
           onBlur={(e) => this.props.dispatch(setUrl(this.props.id, e.target.value))} />
-        <IconButton icon='delete' onClick={() => this.props.dispatch(removeUrl(this.props.id))}/>
+        <IconButton icon='delete' onClick={() => this.props.dispatch(removeUrl(this.props.id))} />
       </li>
     )
   }

@@ -45,10 +45,10 @@ class App extends React.Component {
   getRegisteredUris () {
     return this.state.urls.map((item, i) => {
       return (<UriListItem
-          key={i}
-          dispatch={this.dispatch}
-          id={item.id}
-          url={item.url} />)
+        key={i}
+        dispatch={this.dispatch}
+        id={item.id}
+        url={item.url} />)
     })
   }
   render () {

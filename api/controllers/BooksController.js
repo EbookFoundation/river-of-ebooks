@@ -74,7 +74,7 @@ module.exports = {
 
 async function sendUpdatesAsync (id) {
   const book = await Book.find({ id })
-  const targets = await TargetUri.find()
+  const targets = await TargetUrl.find()
   for (const i in targets) {
     sails.log('sending ' + book.id + ' info to ' + targets[i].url)
   }
