@@ -4,7 +4,8 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import Progress from './components/Progress'
 import UriListItem from './containers/UriListItem'
-
+import reducer from './reducers/targets'
+import { fetchUrls, createNewUrl } from './actions/targets'
 import '../styles/targets.scss'
 
 class App extends React.Component {
@@ -16,6 +17,7 @@ class App extends React.Component {
         email: '',
         password: ''
       },
+      urls: [1, 2],
       working: false
     }
 
@@ -34,8 +36,11 @@ class App extends React.Component {
       })
     }
   }
+  componentDidMount () {
+    this.dispatch(fetchUrls())
+  }
   getRegisteredUris () {
-    return [1, 2, 3].map((item, i) => {
+    return this.state.urls.map((item, i) => {
       return (<UriListItem key={i} />)
     })
   }
@@ -47,14 +52,14 @@ class App extends React.Component {
             <h1>RoE</h1>
           </header>
         </aside>
-        <section className='content flex'>
+        <section className={'content flex' + (this.state.working ? ' working' : '')}>
           <Progress bound />
           <header className='flex-container'>
             <div className='flex'>
               <h1>Push URIs</h1>
               <h2>Newly published books will be sent to these addresses.</h2>
             </div>
-            <button className='btn'>New address</button>
+            <button className='btn' onClick={() => this.dispatch(createNewUrl())}>New address</button>
           </header>
           <ul className='list'>
             {this.getRegisteredUris()}
