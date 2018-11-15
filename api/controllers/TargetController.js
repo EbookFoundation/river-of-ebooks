@@ -22,16 +22,22 @@ module.exports = {
     try {
       const id = req.param('id')
       const value = req.param('url')
-      const url = await TargetUrl.update({ id, user: req.user.id }, { url: value }).fetch()
-      return res.json(url)
+      if (value.length) {
+        const url = await TargetUrl.update({ id, user: req.user.id }, { url: value }).fetch()
+        return res.json(url)
+      } else {
+        await TargetUrl.destroyOne({ id })
+        return res.status(204).send()
+      }
     } catch (e) {
       return (new HttpError(500, e.message)).send(res)
     }
   },
   delete: async function (req, res) {
     try {
-      await TargetUrl.destroy({ id: req.param('id') })
-      return res.status(204)
+      const id = +req.param('id')
+      await TargetUrl.destroyOne({ id })
+      return res.status(204).send()
     } catch (e) {
       return (new HttpError(500, e.message)).send(res)
     }

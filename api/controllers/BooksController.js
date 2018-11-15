@@ -39,6 +39,7 @@ module.exports = {
           throw new HttpError(500, err.message)
         }
         await Book.update({ id: result.id }, { storage: uploaded[0].fd })
+        sendUpdatesAsync(result.id)
         return res.json({
           ...result
         })
@@ -68,5 +69,13 @@ module.exports = {
         error: e.message
       })
     }
+  }
+}
+
+async function sendUpdatesAsync (id) {
+  const book = await Book.find({ id })
+  const targets = await TargetUri.find()
+  for (const i in targets) {
+    sails.log('sending ' + book.id + ' info to ' + targets[i].url)
   }
 }
