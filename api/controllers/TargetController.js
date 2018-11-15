@@ -11,7 +11,7 @@ module.exports = {
   create: async function (req, res) {
     try {
       const url = await TargetUrl.create({
-        user: req.user
+        user: req.user.id
       }).fetch()
       return res.json(url)
     } catch (e) {
@@ -22,7 +22,7 @@ module.exports = {
     try {
       const id = req.param('id')
       const value = req.param('url')
-      const url = await TargetUrl.update({ id, user: req.user }, { url: value }).fetch()
+      const url = await TargetUrl.update({ id, user: req.user.id }, { url: value }).fetch()
       return res.json(url)
     } catch (e) {
       return (new HttpError(500, e.message)).send(res)
@@ -38,8 +38,8 @@ module.exports = {
   },
   list: async function (req, res) {
     try {
-      const urls = await TargetUrl.where({
-        user: req.user
+      const urls = await TargetUrl.find({
+        user: req.user.id
       })
       return res.json(urls)
     } catch (e) {
