@@ -17,7 +17,10 @@ class App extends React.Component {
         email: '',
         password: ''
       },
-      urls: [1, 2],
+      urls: [{
+        id: 1,
+        url: 'http'
+      }],
       working: false
     }
 
@@ -41,7 +44,11 @@ class App extends React.Component {
   }
   getRegisteredUris () {
     return this.state.urls.map((item, i) => {
-      return (<UriListItem key={i} />)
+      return (<UriListItem
+          key={i}
+          dispatch={this.dispatch}
+          id={item.id}
+          url={item.url} />)
     })
   }
   render () {
@@ -54,6 +61,7 @@ class App extends React.Component {
         </aside>
         <section className={'content flex' + (this.state.working ? ' working' : '')}>
           <Progress bound />
+          {this.state.error && <div className='error-box'>{this.state.error}</div>}
           <header className='flex-container'>
             <div className='flex'>
               <h1>Push URIs</h1>

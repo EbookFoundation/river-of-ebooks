@@ -28,6 +28,34 @@ export const addUrl = url => ({
   data: url
 })
 
+export const changeUrlField = (id, value) => ({
+  type: ACTIONS.edit_url,
+  data: {
+    id,
+    value
+  }
+})
+
+export const removeUrl = id => async (dispatch, getState) => {
+  dispatch(setWorking(true))
+  try {
+    await Ajax.delete({
+      url: '/api/targets/' + id
+    })
+    dispatch({
+      type: ACTIONS.delete_url,
+      data: id
+    })
+  } catch (e) {
+    dispatch({
+      type: ACTIONS.error,
+      data: e
+    })
+  } finally {
+    dispatch(setWorking(false))
+  }
+}
+
 export const fetchUrls = () => async (dispatch, getState) => {
   dispatch(setWorking(true))
   try {
@@ -52,6 +80,25 @@ export const createNewUrl = () => async (dispatch, getState) => {
       url: '/api/targets'
     })
     dispatch(addUrl(data))
+  } catch (e) {
+    dispatch({
+      type: ACTIONS.error,
+      data: e
+    })
+  } finally {
+    dispatch(setWorking(false))
+  }
+}
+
+export const setUrl = (id, value) => async (dispatch, getState) => {
+  dispatch(setWorking(true))
+  try {
+    await Ajax.patch({
+      url: '/api/targets/' + id,
+      data: {
+        url: value
+      }
+    })
   } catch (e) {
     dispatch({
       type: ACTIONS.error,

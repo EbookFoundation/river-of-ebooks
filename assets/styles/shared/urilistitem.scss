@@ -1,16 +1,12 @@
 @import '../lib/vars';
 
 .uri-list-item {
-  height: 50px;
-  line-height: 50px;
+  height: 60px;
+  line-height: 60px;
   background: $background-1;
   box-shadow: $shadow-0;
 
-  .uri {
-    display: inline-block;
-    font-size: 16px;
-  }
   & > .button.icon {
-    margin: 5px;
+    margin: 7px 5px 3px 5px;
   }
 }
