@@ -71,6 +71,9 @@
         left: 0;
       }
     }
+    &.invalid {
+      color: $red;
+    }
     &.invalid:focus + .reacts-to,
     &.invalid:active + .reacts-to,
     &.invalid.has-content + .reacts-to {
@@ -79,7 +82,7 @@
       }
     }
     &.invalid + .reacts-to {
-      .underline {
+      .underline:before {
         background: $red;
       }
     }

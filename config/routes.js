@@ -66,7 +66,12 @@ module.exports.routes = {
   'POST /api/publish': 'BooksController.publish',
 
   'GET /api/books': 'BooksController.list',
-  'GET /api/me': 'UserController.me'
+  'GET /api/me': 'UserController.me',
+
+  'POST /api/targets': 'TargetController.create',
+  'PATCH /api/targets/:id': 'TargetController.edit',
+  'DELETE /api/targets/:id': 'TargetController.delete',
+  'GET /api/targets': 'TargetController.list'
 
   //  ╦ ╦╔═╗╔╗ ╦ ╦╔═╗╔═╗╦╔═╔═╗
   //  ║║║║╣ ╠╩╗╠═╣║ ║║ ║╠╩╗╚═╗

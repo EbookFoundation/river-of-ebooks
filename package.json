@@ -82,6 +82,7 @@
       "User",
       "Book",
       "Passport",
+      "TargetUrl",
       "_"
     ],
     "parser": "babel-eslint"

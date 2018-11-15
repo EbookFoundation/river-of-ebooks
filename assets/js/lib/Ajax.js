@@ -81,8 +81,11 @@ export default class Ajax {
       }
 
       xhr.onload = () => {
-        if (xhr.status !== 200) { return xhr.onerror() }
+        if (!('' + xhr.status).startsWith('2')) { return xhr.onerror() }
         var data = xhr.response
+        try {
+          data = JSON.parse(data)
+        } catch (e) {}
         resolve({
           data,
           xhr
