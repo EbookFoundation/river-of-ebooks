@@ -18,3 +18,4 @@ lib-cov
 *.out
 *.pid
 package-lock.json
+ecosystem.config.js

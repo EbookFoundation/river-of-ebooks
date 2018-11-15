@@ -13,39 +13,46 @@ class AjaxError extends Error {
 
 export default class Ajax {
   static async get (opts) {
-    if (!opts) { opts = {} }
-    opts.method = 'get'
-    return Ajax.ajax(opts)
+    return Ajax.ajax({
+      ...(opts || {}),
+      method: 'get'
+    })
   }
   static async post (opts) {
-    if (!opts) { opts = {} }
-    opts.method = 'post'
-    return Ajax.ajax(opts)
+    return Ajax.ajax({
+      ...(opts || {}),
+      method: 'post'
+    })
   }
   static async put (opts) {
-    if (!opts) { opts = {} }
-    opts.method = 'put'
-    return Ajax.ajax(opts)
+    return Ajax.ajax({
+      ...(opts || {}),
+      method: 'put'
+    })
   }
   static async patch (opts) {
-    if (!opts) { opts = {} }
-    opts.method = 'patch'
-    return Ajax.ajax(opts)
+    return Ajax.ajax({
+      ...(opts || {}),
+      method: 'patch'
+    })
   }
   static async delete (opts) {
-    if (!opts) { opts = {} }
-    opts.method = 'delete'
-    return Ajax.ajax(opts)
+    return Ajax.ajax({
+      ...(opts || {}),
+      method: 'delete'
+    })
   }
   static async head (opts) {
-    if (!opts) { opts = {} }
-    opts.method = 'head'
-    return Ajax.ajax(opts)
+    return Ajax.ajax({
+      ...(opts || {}),
+      method: 'head'
+    })
   }
   static async options (opts) {
-    if (!opts) { opts = {} }
-    opts.method = 'options'
-    return Ajax.ajax(opts)
+    return Ajax.ajax({
+      ...(opts || {}),
+      method: 'options'
+    })
   }
   static ajax (opts) {
     return new Promise((resolve, reject) => {

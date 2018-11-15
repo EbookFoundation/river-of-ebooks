@@ -128,25 +128,24 @@ function PassportHelper () {
           ...q,
           user: user.id
         })
-        return next(null, user)
       } else { // existing user logging in
         if (_.has(q, 'tokens') && q.tokens !== passport.tokens) {
           passport.tokens = q.tokens
         }
         await passport.save()
         user = User.findOne(passport.user)
-        return next(null, user)
       }
+      return next(null, user)
     } else { // user logged in and trying to add new Passport
       if (!passport) {
         await Passport.create({
           ...q,
           user: req.user.id
         })
-        return next(null, req.user)
       } else { // no action, user already logged in and passport exists
-        return next(null, user)
+
       }
+      return next(null, req.user)
     }
   }
   this.disconnect = async function (req, res, next) {
