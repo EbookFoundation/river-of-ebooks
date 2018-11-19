@@ -22,12 +22,21 @@ module.exports = {
     try {
       const id = req.param('id')
       const value = req.param('url')
+      const author = req.param('author')
+      const publisher = req.param('publisher')
+      const title = req.param('title')
+      const isbn = req.param('isbn')
       if (value.length) {
-        const url = await TargetUrl.update({ id, user: req.user.id }, { url: value }).fetch()
+        const url = await TargetUrl.update({ id, user: req.user.id }, {
+          url: value,
+          author,
+          publisher,
+          title,
+          isbn
+        }).fetch()
         return res.json(url)
       } else {
-        await TargetUrl.destroyOne({ id })
-        return res.status(204).send()
+        return new HttpError(400, 'URL cannot be blank.').send(res)
       }
     } catch (e) {
       return (new HttpError(500, e.message)).send(res)

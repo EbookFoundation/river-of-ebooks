@@ -11,6 +11,10 @@ module.exports = {
     },
     url: {
       type: 'string'
-    }
+    },
+    author: 'string',
+    publisher: 'string',
+    title: 'string',
+    isbn: 'string'
   }
 }

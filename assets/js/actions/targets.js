@@ -8,6 +8,7 @@ const ACTIONS = {
   edit_url: 'edit_url',
   delete_url: 'delete_url',
   list_url: 'list_url',
+  set_editing: 'set_editing',
   error: 'error'
 }
 
@@ -28,10 +29,16 @@ export const addUrl = url => ({
   data: url
 })
 
-export const changeUrlField = (id, value) => ({
+export const setEditing = id => ({
+  type: ACTIONS.set_editing,
+  data: id
+})
+
+export const changeUrlField = (id, what, value) => ({
   type: ACTIONS.edit_url,
   data: {
     id,
+    what,
     value
   }
 })
@@ -90,13 +97,14 @@ export const createNewUrl = () => async (dispatch, getState) => {
   }
 }
 
-export const setUrl = (id, value) => async (dispatch, getState) => {
+export const setUrl = (value) => async (dispatch, getState) => {
   dispatch(setWorking(true))
   try {
     await Ajax.patch({
-      url: '/api/targets/' + id,
+      url: '/api/targets/' + value.id,
       data: {
-        url: value
+        ...value,
+        id: undefined
       }
     })
   } catch (e) {

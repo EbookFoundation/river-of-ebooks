@@ -1,12 +1,58 @@
 @import '../lib/vars';
 
 .uri-list-item {
-  height: 60px;
+  min-height: 60px;
   line-height: 60px;
-  background: $background-1;
+  background: white;
   box-shadow: $shadow-0;
+  padding: 0 0 0 14px;
+  cursor: pointer;
+  transition: margin 0.15s $transition,
+              padding 0.15s $transition,
+              border-radius 0.15s $transition;
 
-  & > .button.icon {
+  .button.icon {
     margin: 7px 5px 3px 5px;
+  }
+
+  &.editing {
+    margin: 24px 8px;
+    line-height: initial;
+    padding: 10px 0 10px 14px;
+    border-radius: 3px;
+    cursor: default;
+
+    header {
+      h3 {
+        display: inline-block;
+        margin: 10px 0 0 0;
+        font-weight: normal;
+        cursor: pointer;
+      }
+    }
+    .settings {
+      padding: 0 14px 0 0;
+    }
+    h4 {
+      margin: 30px 0 0 0;
+      font-weight: normal;
+    }
+  }
+
+  .stack {
+    line-height: 25px;
+    padding: 5px 0;
+
+    span {
+      display: inline-block;
+      width: 100%;
+    }
+    span.label {
+      font-size: 0.75rem;
+      color: $black-2;
+    }
+    span.value {
+      margin-top: -4px;
+    }
   }
 }
