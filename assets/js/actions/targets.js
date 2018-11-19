@@ -8,6 +8,7 @@ const ACTIONS = {
   edit_url: 'edit_url',
   delete_url: 'delete_url',
   list_url: 'list_url',
+  set_editing: 'set_editing',
   error: 'error'
 }
 
@@ -26,6 +27,11 @@ export const setUrls = (urls) => ({
 export const addUrl = url => ({
   type: ACTIONS.add_url,
   data: url
+})
+
+export const setEditing = id => ({
+  type: ACTIONS.set_editing,
+  data: id
 })
 
 export const changeUrlField = (id, what, value) => ({

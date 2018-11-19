@@ -5,7 +5,7 @@ import ReactDOM from 'react-dom'
 import Progress from './components/Progress'
 import UriListItem from './containers/UriListItem'
 import reducer from './reducers/targets'
-import { fetchUrls, createNewUrl } from './actions/targets'
+import { fetchUrls, createNewUrl, setEditing } from './actions/targets'
 import '../styles/targets.scss'
 
 class App extends React.Component {
@@ -72,7 +72,7 @@ class App extends React.Component {
   }
   render () {
     return (
-      <div className='root-container flex-container'>
+      <div className='root-container flex-container' onClick={() => this.dispatch(setEditing(null))}>
         <aside className='nav nav-left'>
           <header>
             <h1>RoE</h1>

@@ -30,6 +30,10 @@ const reducer = (state = {}, action) => {
       return {
         urls: urls
       }
+    case Actions.set_editing:
+      return {
+        editingUrl: data
+      }
     case Actions.error:
       return {
         error: data.message

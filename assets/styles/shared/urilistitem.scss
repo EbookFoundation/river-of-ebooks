@@ -6,6 +6,10 @@
   background: white;
   box-shadow: $shadow-0;
   padding: 0 0 0 14px;
+  cursor: pointer;
+  transition: margin 0.15s $transition,
+              padding 0.15s $transition,
+              border-radius 0.15s $transition;
 
   .button.icon {
     margin: 7px 5px 3px 5px;
@@ -16,12 +20,14 @@
     line-height: initial;
     padding: 10px 0 10px 14px;
     border-radius: 3px;
+    cursor: default;
 
     header {
       h3 {
         display: inline-block;
         margin: 10px 0 0 0;
         font-weight: normal;
+        cursor: pointer;
       }
     }
     .settings {
