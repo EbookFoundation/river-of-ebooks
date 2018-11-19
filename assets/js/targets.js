@@ -17,29 +17,8 @@ class App extends React.Component {
         email: '',
         password: ''
       },
-      urls: [{
-        id: 0,
-        url: 'http.c.co',
-        title: '',
-        author: '',
-        publisher: '',
-        isbn: ''
-      },{
-        id: 1,
-        url: 'd.',
-        title: '',
-        author: '',
-        publisher: '',
-        isbn: ''
-      },{
-        id: 2,
-        url: '',
-        title: '',
-        author: '',
-        publisher: '',
-        isbn: ''
-      }],
-      editingUrl: 0,
+      urls: [],
+      editingUrl: null,
       working: false
     }
 
