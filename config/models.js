@@ -66,8 +66,8 @@ module.exports.models = {
   ***************************************************************************/
 
   attributes: {
-    createdAt: { type: 'number', autoCreatedAt: true },
-    updatedAt: { type: 'number', autoUpdatedAt: true },
+    created_at: { type: 'number', autoCreatedAt: true },
+    updated_at: { type: 'number', autoUpdatedAt: true },
     id: { type: 'number', autoIncrement: true }
     // --------------------------------------------------------------------------
     //  /\   Using MongoDB?
