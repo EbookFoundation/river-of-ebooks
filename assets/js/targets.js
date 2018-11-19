@@ -18,9 +18,28 @@ class App extends React.Component {
         password: ''
       },
       urls: [{
+        id: 0,
+        url: 'http.c.co',
+        title: '',
+        author: '',
+        publisher: '',
+        isbn: ''
+      },{
         id: 1,
-        url: 'http'
+        url: 'd.',
+        title: '',
+        author: '',
+        publisher: '',
+        isbn: ''
+      },{
+        id: 2,
+        url: '',
+        title: '',
+        author: '',
+        publisher: '',
+        isbn: ''
       }],
+      editingUrl: 0,
       working: false
     }
 
@@ -47,8 +66,8 @@ class App extends React.Component {
       return (<UriListItem
         key={i}
         dispatch={this.dispatch}
-        id={item.id}
-        url={item.url} />)
+        item={item}
+        editing={this.state.editingUrl === item.id} />)
     })
   }
   render () {

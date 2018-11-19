@@ -26,7 +26,7 @@ const reducer = (state = {}, action) => {
       }
     case Actions.edit_url:
       urls = state.urls
-      urls.find(x => x.id === data.id).url = data.value
+      urls.find(x => x.id === data.id)[data.what] = data.value
       return {
         urls: urls
       }

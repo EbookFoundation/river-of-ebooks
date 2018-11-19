@@ -20,7 +20,7 @@
     padding: 0 14px;
     margin: -14px 0 8px 0;
   }
-  header {
+  & > header {
     padding: 0 14px;
 
     h1 {
@@ -37,10 +37,10 @@
     }
   }
   .list {
-    margin: 14px;
+    margin: 20px 14px;
     padding: 0;
     list-style: none;
-    overflow: hidden;
+    // overflow: hidden;
   }
   &.working {
     & > .progress {

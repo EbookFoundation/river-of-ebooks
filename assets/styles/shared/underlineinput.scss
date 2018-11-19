@@ -58,6 +58,13 @@
       }
     }
     &:focus + .reacts-to,
+    &:active + .reacts-to {
+      .underline:before {
+        width: 100%;
+        left: 0;
+      }
+    }
+    &:focus + .reacts-to,
     &:active + .reacts-to,
     &.has-content + .reacts-to {
       label {
@@ -65,10 +72,6 @@
         font-size: 0.7rem;
         line-height: 14px;
         color: $accent-2;
-      }
-      .underline:before {
-        width: 100%;
-        left: 0;
       }
     }
     &.invalid {
