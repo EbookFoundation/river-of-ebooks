@@ -54,7 +54,7 @@ module.exports.protocols = {
             protocol: 'local',
             password,
             user: newUser.id,
-            accessToken: token
+            accesstoken: token
           })
           return next(null, token)
         } catch (e) {
