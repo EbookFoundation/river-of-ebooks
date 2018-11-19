@@ -10,7 +10,8 @@
  *   https://sailsjs.com/anatomy/tasks/config/sync.js
  *
  */
-module.exports = function (grunt) {
+module.exports = function(grunt) {
+
   grunt.config.set('sync', {
     dev: {
       files: [{
@@ -19,7 +20,7 @@ module.exports = function (grunt) {
         dest: '.tmp/public'
       }]
     }
-  })
+  });
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   // This Grunt plugin is part of the default asset pipeline in Sails,
@@ -44,4 +45,5 @@ module.exports = function (grunt) {
   // grunt.loadNpmTasks('grunt-sync');
   // ```
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-}
+
+};

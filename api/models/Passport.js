@@ -28,7 +28,8 @@ module.exports = {
     id: {
       type: 'number',
       unique: true,
-      autoIncrement: true
+      autoIncrement: true,
+      columnName: '_id'
     },
     // local, oauth2, etc
     protocol: {

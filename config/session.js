@@ -18,7 +18,8 @@ module.exports.session = {
   * of your users, forcing them to log in again.                             *
   *                                                                          *
   ***************************************************************************/
-  secret: 'b7f0374251c4d79227067c286fe97ea5'
+  secret: 'b7f0374251c4d79227067c286fe97ea5',
+
 
   /***************************************************************************
   *                                                                          *
@@ -35,4 +36,4 @@ module.exports.session = {
   //   return !!req.path.match(req._sails.LOOKS_LIKE_ASSET_RX);
   // },
 
-}
+};
