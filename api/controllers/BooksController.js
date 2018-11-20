@@ -5,6 +5,8 @@
  * @help        :: See https://sailsjs.com/docs/concepts/actions
  */
 
+const HttpError = require('../errors/HttpError')
+
 module.exports = {
   publish: async function (req, res) {
     try {
@@ -12,13 +14,13 @@ module.exports = {
       const host = req.hostname
       let result
 
-      if (!host) throw new Error('Missing hostname')
-      if (!body) throw new Error('Missing body')
+      if (!host) throw new HttpError(400, 'Missing hostname')
+      if (!body) throw new HttpError(400, 'Missing body')
 
       const bookExists = await Book.findOne(body)
 
       if (bookExists) {
-        throw new Error('Version already exists')
+        throw new HttpError(400, 'Version already exists')
       } else {
         result = await Book.create(body)
       }
@@ -35,7 +37,8 @@ module.exports = {
         })
       })
     } catch (e) {
-      return res.status(400).json({
+      if (e instanceof HttpError) return e.send(res)
+      return res.status(500).json({
         error: e.message
       })
     }
@@ -44,17 +47,16 @@ module.exports = {
   list: async function (req, res) {
     try {
       const body = req.allParams()
-      if (!body) throw new Error('Missing parameters')
+      if (!body) throw new HttpError(400, 'Missing parameters')
 
       const books = await Book.find(body)
 
       if (!books.length) {
-        return res.status(404).json({
-          error: 'No books matching those parameters were found.'
-        })
+        throw new HttpError(404, 'No books matching those parameters were found.')
       }
       return res.json(books)
     } catch (e) {
+      if (e instanceof HttpError) return e.send(res)
       return res.status(500).json({
         error: e.message
       })

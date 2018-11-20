@@ -23,7 +23,7 @@ passport.serializeUser(function (user, next) {
   next(null, user.id)
 })
 passport.deserializeUser(function (id, next) {
-  return User.findOne({id: id})
+  return User.findOne({ id: id })
     .then(function (user) {
       next(null, user)
       return user
@@ -37,7 +37,7 @@ function PassportHelper () {
     const strategies = sails.config.passport
 
     for (const key in strategies) {
-      let options = {passReqToCallback: true}
+      let options = { passReqToCallback: true }
       let Strategy = strategies[key].strategy
       if (key === 'local') {
         _.extend(options, {
@@ -122,7 +122,7 @@ function PassportHelper () {
     let user
 
     if (!req.user) {
-      if (!passport) { // new user signing up, create a new user
+      if (!pass) { // new user signing up, create a new user
         user = await User.create(userAttrs).fetch()
         await Passport.create({
           ...q,
