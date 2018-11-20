@@ -60,8 +60,9 @@
     "forever": "sudo ./node_modules/.bin/pm2 start ecosystem.config.js --env production",
     "stop": "sudo ./node_modules/.bin/pm2 delete roe-base",
     "test": "npm run lint && npm run custom-tests && echo 'Done.'",
-    "lint": "eslint . --max-warnings=0 --report-unused-disable-directives && echo '✔  Your .js files look good.'",
-    "debug": "node --inspect app.js"
+    "lint": "standard && echo '✔  Your .js files look good.'",
+    "debug": "node --inspect app.js",
+    "custom-tests": "echo 'Nothing yet'"
   },
   "main": "app.js",
   "repository": {
