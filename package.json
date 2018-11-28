@@ -65,7 +65,9 @@
     "test": "npm run lint && npm run custom-tests && echo 'Done.'",
     "lint": "standard && echo '✔  Your .js files look good.'",
     "debug": "node --inspect app.js",
-    "custom-tests": "echo 'Nothing yet'"
+    "custom-tests": "echo 'Nothing yet'",
+    "db:migrate": "knex migrate:latest",
+    "db:rollback": "knex migrate:rollback"
   },
   "main": "app.js",
   "repository": {
