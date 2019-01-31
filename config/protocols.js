@@ -90,6 +90,23 @@ module.exports.protocols = {
         return next(e)
       }
     }
+  },
+  oauth2: {
+    login: async function (req, accessToken, refreshToken, profile, next) {
+      try {
+        const passportHelper = await sails.helpers.passport()
+        await passportHelper.connect(req, {
+          tokens: {
+            accessToken,
+            refreshToken
+          },
+          identifier: profile.id,
+          protocol: 'oauth2'
+        }, profile, next)
+      } catch (e) {
+        return next(e, false)
+      }
+    }
   }
 }
 

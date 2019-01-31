@@ -5,7 +5,7 @@ import ReactDOM from 'react-dom'
 import Progress from './components/Progress'
 import UriListItem from './containers/UriListItem'
 import reducer from './reducers/targets'
-import { fetchUrls, createNewUrl, setEditing } from './actions/targets'
+import { fetchData, createNewUrl, setEditing } from './actions/targets'
 import '../styles/targets.scss'
 
 class App extends React.Component {
@@ -38,7 +38,7 @@ class App extends React.Component {
     }
   }
   componentDidMount () {
-    this.dispatch(fetchUrls())
+    this.dispatch(fetchData())
   }
   getRegisteredUris () {
     return this.state.urls.map((item, i) => {
@@ -55,6 +55,8 @@ class App extends React.Component {
         <aside className='nav nav-left'>
           <header>
             <h1>RoE</h1>
+            <span>{this.state.user.email}</span>
+            <a href='/logout'>Log out</a>
           </header>
         </aside>
         <section className={'content flex' + (this.state.working ? ' working' : '')}>

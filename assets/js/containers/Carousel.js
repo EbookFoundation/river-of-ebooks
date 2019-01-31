@@ -45,9 +45,11 @@ const CarouselItem = props => (
         {props.button}
       </button>
     </div>
-    {props.footer &&
+    {props.footers && props.footers.length &&
     <footer className='footer-row'>
-      <a href='#'>{props.footer}</a>
+      {
+        props.footers.map((x, i) => <a key={i} href={props.footerHrefs[i] || '#'}>{x}</a>)
+      }
     </footer>}
   </form>
 )
