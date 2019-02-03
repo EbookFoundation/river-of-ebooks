@@ -9,7 +9,8 @@ const ACTIONS = {
   delete_url: 'delete_url',
   list_url: 'list_url',
   set_editing: 'set_editing',
-  error: 'error'
+  error: 'error',
+  set_user: 'set_user'
 }
 
 export default ACTIONS
@@ -22,6 +23,11 @@ export const setWorking = working => ({
 export const setUrls = (urls) => ({
   type: ACTIONS.list_url,
   data: urls
+})
+
+export const setUser = user => ({
+  type: ACTIONS.set_user,
+  data: user
 })
 
 export const addUrl = url => ({
@@ -63,13 +69,17 @@ export const removeUrl = id => async (dispatch, getState) => {
   }
 }
 
-export const fetchUrls = () => async (dispatch, getState) => {
+export const fetchData = () => async (dispatch, getState) => {
   dispatch(setWorking(true))
   try {
-    const { data } = await Ajax.get({
+    const { data: user } = await Ajax.get({
+      url: '/api/me'
+    })
+    dispatch(setUser(user))
+    const { data: urls } = await Ajax.get({
       url: '/api/targets'
     })
-    dispatch(setUrls(data))
+    dispatch(setUrls(urls))
   } catch (e) {
     dispatch({
       type: ACTIONS.error,

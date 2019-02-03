@@ -94,7 +94,7 @@ export const checkPassword = (email, password) => async (dispatch, getState) => 
   } catch (e) {
     dispatch(setError({
       type: 'password',
-      error: e.toString()
+      error: e.message
     }))
     dispatch(setWorking(false))
   }
@@ -122,7 +122,7 @@ export const signup = (email, password) => async (dispatch, getState) => {
     } catch (e) {
       dispatch(setError({
         type: 'email',
-        error: e.toString()
+        error: e.message
       }))
     }
   } else {

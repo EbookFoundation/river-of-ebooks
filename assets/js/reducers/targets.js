@@ -10,6 +10,13 @@ const reducer = (state = {}, action) => {
       return {
         working: data
       }
+    case Actions.set_user:
+      return {
+        user: {
+          ...state.user,
+          ...data
+        }
+      }
     case Actions.list_url:
       return {
         urls: data || []
