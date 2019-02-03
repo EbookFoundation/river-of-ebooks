@@ -1,6 +1,6 @@
 'use strict'
 
-import Actions from '../actions/targets'
+import Actions from '../actions'
 
 const reducer = (state = {}, action) => {
   const { type, data } = action
@@ -33,6 +33,16 @@ const reducer = (state = {}, action) => {
     case Actions.set_editing:
       return {
         editingUrl: data
+      }
+    case Actions.add_publisher:
+      return {
+        publishers: state.publishers.concat(data),
+        error: ''
+      }
+    case Actions.delete_publisher:
+      return {
+        publishers: state.publishers.filter(x => x.id !== data),
+        error: ''
       }
     case Actions.error:
       return {

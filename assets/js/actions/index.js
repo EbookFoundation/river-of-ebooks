@@ -9,6 +9,8 @@ const ACTIONS = {
   delete_url: 'delete_url',
   list_url: 'list_url',
   set_editing: 'set_editing',
+  add_publisher: 'add_publisher',
+  delete_publisher: 'delete_publisher',
   error: 'error'
 }
 
@@ -26,6 +28,11 @@ export const setUrls = (urls) => ({
 
 export const addUrl = url => ({
   type: ACTIONS.add_url,
+  data: url
+})
+
+export const addPublisher = url => ({
+  type: ACTIONS.add_publisher,
   data: url
 })
 
@@ -106,6 +113,46 @@ export const setUrl = (value) => async (dispatch, getState) => {
         ...value,
         id: undefined
       }
+    })
+  } catch (e) {
+    dispatch({
+      type: ACTIONS.error,
+      data: e
+    })
+  } finally {
+    dispatch(setWorking(false))
+  }
+}
+
+export const createNewPublisher = (url) => async (dispatch, getState) => {
+  dispatch(setWorking(true))
+  try {
+    const { data } = await Ajax.post({
+      url: '/api/keys',
+      data: {
+        url
+      }
+    })
+    dispatch(addPublisher(data))
+  } catch (e) {
+    dispatch({
+      type: ACTIONS.error,
+      data: e
+    })
+  } finally {
+    dispatch(setWorking(false))
+  }
+}
+
+export const removePublisher = id => async (dispatch, getState) => {
+  dispatch(setWorking(true))
+  try {
+    await Ajax.delete({
+      url: '/api/keys/' + id
+    })
+    dispatch({
+      type: ACTIONS.delete_publisher,
+      data: id
     })
   } catch (e) {
     dispatch({

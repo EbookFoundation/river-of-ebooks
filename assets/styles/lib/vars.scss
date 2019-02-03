@@ -14,6 +14,12 @@ $black-3: rgba(0,0,0,.38);
 $black-4: rgba(0,0,0,.12);
 $black-5: rgba(0,0,0,.07);
 
+$white-1: white;
+$white-2: rgba(255,255,255,.75);
+$white-3: rgba(255,255,255,.35);
+$white-4: rgba(255,255,255,.10);
+$white-5: rgba(255,255,255,.03);
+
 $auth-width: 450px;
 
 $background-1: #f2f2f2;
@@ -21,8 +27,8 @@ $background-2: white;
 
 $text-dark-1: $black-1;
 $text-dark-2: $black-2;
-$text-light-1: white;
-$text-light-2: rgba(255,255,255,.75);
+$text-light-1: $white-1;
+$text-light-2: $white-2;
 
 $accent-1: #731212;
 $accent-2: #9a834d;

@@ -33,5 +33,14 @@ module.exports.policies = {
 
   TargetController: {
     '*': [ 'sessionAuth' ]
+  },
+
+  PublishKeyController: {
+    '*': [ 'sessionAuth' ]
+  },
+
+  BooksController: {
+    '*': true,
+    publish: [ 'keyAuth' ]
   }
 }

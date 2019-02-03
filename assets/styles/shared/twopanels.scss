@@ -4,4 +4,41 @@
   background: $accent-1;
   color: $text-light-1;
   box-shadow: $shadow-1;
+
+  header {
+    height: 50px;
+    line-height: 50px;
+    padding: 0 14px;
+  }
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+
+    li {
+      height: 50px;
+      line-height: 50px;
+      border-bottom: 1px solid $white-4;
+
+      &:hover a {
+        background: $white-5;
+      }
+      &:last-of-type {
+        border-bottom: none
+      }
+
+      a {
+        display: inline-block;
+        height: 100%;
+        width: 100%;
+        padding: 0 12px;
+        text-decoration: none !important;
+        color: $white-2;
+
+        &.active {
+          background: $white-4;
+        }
+      }
+    }
+  }
 }
