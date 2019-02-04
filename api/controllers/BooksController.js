@@ -22,7 +22,7 @@ module.exports = {
       if (bookExists) {
         throw new HttpError(400, 'Version already exists')
       } else {
-        result = await Book.create(body)
+        result = await Book.create(body).fetch()
       }
 
       req.file('opds').upload(sails.config.skipperConfig, async function (err, uploaded) {

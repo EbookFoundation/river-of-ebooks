@@ -4,9 +4,9 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import Progress from './components/Progress'
 import UriListItem from './containers/UriListItem'
-import reducer from './reducers/targets'
-import { fetchData, createNewUrl, setEditing } from './actions/targets'
-import '../styles/targets.scss'
+import reducer from './reducers'
+import { fetchData, createNewUrl, setEditing } from './actions'
+import '../styles/index.scss'
 
 class App extends React.Component {
   constructor () {

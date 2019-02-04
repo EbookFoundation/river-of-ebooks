@@ -10,7 +10,7 @@ module.exports = (env, argv) => {
     mode: mode || 'development',
     entry: {
       login: './assets/js/login.js',
-      targets: './assets/js/targets.js'
+      index: './assets/js/index.js'
     },
     output: {
       path: path.join(__dirname, '/.tmp/public'),
@@ -41,10 +41,10 @@ module.exports = (env, argv) => {
         chunks: ['login']
       }),
       new HtmlWebpackPlugin({
-        template: 'assets/templates/targets.html',
-        links: mode === 'production' ? [{ rel: 'stylesheet', type: 'text/css', href: 'targets.css' }] : [],
-        filename: path.join(__dirname, '/.tmp/public/targets.html'),
-        chunks: ['targets']
+        template: 'assets/templates/index.html',
+        links: mode === 'production' ? [{ rel: 'stylesheet', type: 'text/css', href: 'index.css' }] : [],
+        filename: path.join(__dirname, '/.tmp/public/index.html'),
+        chunks: ['index']
       }),
       new MiniCssExtractPlugin({
         filename: '[name].css'
@@ -52,6 +52,11 @@ module.exports = (env, argv) => {
       new webpack.DefinePlugin({
         'process.env.NODE_ENV': JSON.stringify(mode)
       })
-    ]
+    ],
+    devServer: {
+      historyApiFallback: true,
+      disableHostCheck: true,
+      port: 8080
+    }
   }
 }

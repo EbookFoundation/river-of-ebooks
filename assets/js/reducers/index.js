@@ -1,6 +1,6 @@
 'use strict'
 
-import Actions from '../actions/targets'
+import Actions from '../actions'
 
 const reducer = (state = {}, action) => {
   const { type, data } = action

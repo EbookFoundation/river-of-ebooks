@@ -4,7 +4,7 @@ import React from 'react'
 import IconButton from '../components/IconButton'
 import UnderlineInput from '../components/UnderlineInput'
 import '../../styles/shared/urilistitem.scss'
-import { changeUrlField, setUrl, removeUrl, setEditing } from '../actions/targets'
+import { changeUrlField, setUrl, removeUrl, setEditing } from '../actions'
 
 const uriRegex = /(.+:\/\/)?(.+\.)*(.+\.).{1,}(:\d+)?(.+)?/i
 const isbnRegex = /^(97(8|9))?\d{9}(\d|X)$/
