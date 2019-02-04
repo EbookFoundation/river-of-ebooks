@@ -42,6 +42,7 @@
     "pm2": "^3.2.2",
     "react": "^16.6.0",
     "react-dom": "^16.6.0",
+    "request": "^2.88.0",
     "sails": "^1.0.2",
     "sails-hook-grunt": "^3.0.2",
     "sails-hook-orm": "^2.1.1",

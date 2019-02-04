@@ -54,9 +54,11 @@ class App extends React.Component {
       <div className='root-container flex-container' onClick={() => this.dispatch(setEditing(null))}>
         <aside className='nav nav-left'>
           <header>
-            <h1>RoE</h1>
-            <span>{this.state.user.email}</span>
-            <a href='/logout'>Log out</a>
+            <h1>River of Ebooks</h1>
+            <h2 className='flex-container'>
+              <span className='flex'>{this.state.user.email}</span>
+              <a href='/logout'>Log out</a>
+            </h2>
           </header>
         </aside>
         <section className={'content flex' + (this.state.working ? ' working' : '')}>
