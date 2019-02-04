@@ -70,17 +70,19 @@ module.exports.protocols = {
         const dbUser = await User.findOne({
           id: user.id
         })
-        if (!dbUser) throw new Error('an account with that id was not found')
+        if (!dbUser) throw new Error('An account with that id was not found.')
 
         const passport = await Passport.findOne({
           protocol: 'local',
           user: user.id
         })
-        if (!user.currentPassword && passport) throw new Error('Missing current password')
+        if (!user.currentPassword && passport) throw new Error('Please enter your current password.')
         if (passport) {
           const res = await Passport.validatePassword(user.currentPassword, passport)
           if (!res) throw new Error('incorrect password')
 
+          const otherUser = await User.findOne({ email: user.email })
+          if (otherUser && otherUser.id !== dbUser.id) throw new Error('There is already an account with that email.')
           await User.update({ id: user.id }, {
             email: user.email
           })
@@ -90,6 +92,8 @@ module.exports.protocols = {
             })
           }
         } else { // no password yet, add one
+          const otherUser = await User.findOne({ email: user.email })
+          if (otherUser && otherUser.id !== dbUser.id) throw new Error('There is already an account with that email.')
           await User.update({ id: user.id }, {
             email: user.email
           })

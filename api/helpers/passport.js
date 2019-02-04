@@ -117,7 +117,7 @@ function PassportHelper () {
 
     // if the profile object from passport has an email, use it
     if (profile.emails && profile.emails[0]) userAttrs.email = profile.emails[0].value
-    if (!userAttrs.email) return next(new Error('No email available'))
+    // if (!userAttrs.email) return next(new Error('No email available'))
 
     const pass = await Passport.findOne({
       provider,
@@ -128,7 +128,9 @@ function PassportHelper () {
 
     if (!req.user) {
       if (!pass) { // new user signing up, create a new user and/or passport
-        user = await User.findOne({ email: userAttrs.email })
+        if (userAttrs.email) {
+          user = await User.findOne({ email: userAttrs.email })
+        }
         if (!user) {
           user = await User.create(userAttrs).fetch()
         }

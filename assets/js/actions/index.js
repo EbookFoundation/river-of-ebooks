@@ -131,7 +131,7 @@ export const editUser = (user) => async (dispatch, getState) => {
   dispatch(setWorking(true))
 
   try {
-    if (!user.currentPassword) throw new Error('Please enter your current password.')
+    // if (!user.currentPassword) throw new Error('Please enter your current password.')
     await Ajax.patch({
       url: '/api/me',
       data: {
