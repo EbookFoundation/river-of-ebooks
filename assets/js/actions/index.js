@@ -126,3 +126,31 @@ export const setUrl = (value) => async (dispatch, getState) => {
     dispatch(setWorking(false))
   }
 }
+
+export const editUser = (user) => async (dispatch, getState) => {
+  dispatch(setWorking(true))
+
+  try {
+    if (!user.currentPassword) throw new Error('Please enter your current password.')
+    await Ajax.patch({
+      url: '/api/me',
+      data: {
+        id: user.id,
+        email: user.email,
+        password: user.password,
+        currentPassword: user.currentPassword
+      }
+    })
+    dispatch({
+      type: ACTIONS.error,
+      data: null
+    })
+  } catch (e) {
+    dispatch({
+      type: ACTIONS.error,
+      data: e
+    })
+  } finally {
+    dispatch(setWorking(false))
+  }
+}

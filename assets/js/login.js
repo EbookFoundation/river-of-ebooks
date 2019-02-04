@@ -108,8 +108,8 @@ class App extends React.Component {
               error={this.state.passwordError}
               button='Sign in'
               onButtonClick={() => this.dispatch(checkPassword(this.state.user.email, this.state.user.password))}
-              smallButton='Forgot password?'
-              onSmallButtonClick={() => this.dispatch(setCarousel(3))} />
+              comment={null/*smallButton='Forgot password?'
+              onSmallButtonClick={() => this.dispatch(setCarousel(3))}*/} />
 
             <CarouselItem
               header='Password recovery'

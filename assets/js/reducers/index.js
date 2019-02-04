@@ -43,7 +43,7 @@ const reducer = (state = {}, action) => {
       }
     case Actions.error:
       return {
-        error: data.message
+        error: (data || {}).message || ''
       }
     default: return {}
   }

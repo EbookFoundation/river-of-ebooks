@@ -17,12 +17,11 @@ module.exports = {
           error: err.toString()
         })
       }
-
       res.json(user)
     })
   },
 
-  update: async function (req, res, next) {
+  edit: async function (req, res, next) {
     const passportHelper = await sails.helpers.passport()
     passportHelper.protocols.local.update(req.body, function (err, user) {
       if (err) {
@@ -30,7 +29,6 @@ module.exports = {
           error: err.toString()
         })
       }
-
       res.json(user)
     })
   },

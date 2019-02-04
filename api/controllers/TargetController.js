@@ -3,7 +3,7 @@ const HttpError = require('../errors/HttpError')
 
 module.exports = {
   show: function (req, res) {
-    res.view('pages/targets', {
+    res.view('pages/app', {
       email: req.user.email
     })
   },
