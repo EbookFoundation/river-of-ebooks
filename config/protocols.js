@@ -66,7 +66,48 @@ module.exports.protocols = {
       }
     },
     update: async function (user, next) {
-      throw new Error('not implemented')
+      try {
+        const dbUser = await User.findOne({
+          id: user.id
+        })
+        if (!dbUser) throw new Error('an account with that id was not found')
+
+        const passport = await Passport.findOne({
+          protocol: 'local',
+          user: user.id
+        })
+        if (!user.currentPassword && passport) throw new Error('Missing current password')
+        if (passport) {
+          const res = await Passport.validatePassword(user.currentPassword, passport)
+          if (!res) throw new Error('incorrect password')
+
+          await User.update({ id: user.id }, {
+            email: user.email
+          })
+          if (user.password && user.password.length) {
+            await Passport.update({ id: passport.id }, {
+              password: user.password
+            })
+          }
+        } else { // no password yet, add one
+          await User.update({ id: user.id }, {
+            email: user.email
+          })
+          if (user.password && user.password.length) {
+            const token = generateToken()
+            await Passport.create({
+              protocol: 'local',
+              password: user.password,
+              user: dbUser.id,
+              accesstoken: token
+            })
+          }
+        }
+        delete dbUser.password
+        next(null, dbUser)
+      } catch (e) {
+        return next(e)
+      }
     },
     connect: async function (req, res, next) {
       try {

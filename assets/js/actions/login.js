@@ -47,7 +47,7 @@ export const clearError = () => ({
 
 export const setLoggedIn = (data) => (dispatch, getState) => {
   window.localStorage.setItem('roe-token', JSON.stringify(data))
-  window.location.href = '/app'
+  window.location.href = '/targets'
 }
 
 export const checkEmail = email => async (dispatch, getState) => {

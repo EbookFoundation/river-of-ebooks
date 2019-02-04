@@ -6,6 +6,7 @@
  */
 
 const HttpError = require('../errors/HttpError')
+const request = require('request')
 
 module.exports = {
   publish: async function (req, res) {
@@ -65,9 +66,18 @@ module.exports = {
 }
 
 async function sendUpdatesAsync (id) {
-  const book = await Book.find({ id })
+  const book = await Book.findOne({ id })
   const targets = await TargetUrl.find()
   for (const i in targets) {
     sails.log('sending ' + book.id + ' info to ' + targets[i].url)
+    request.post({
+      url: targets[i].url,
+      headers: { 'User-Agent': 'RoE-aggregator' },
+      form: book
+    }, function (err, httpResp, body) {
+      if (err) {
+        sails.log(`error: failed to send book ${id} to ${targets[i].url}`)
+      }
+    })
   }
 }
