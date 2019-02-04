@@ -17,9 +17,7 @@ module.exports = {
       autoIncrement: true
     },
     email: {
-      type: 'string',
-      unique: true,
-      required: true
+      type: 'string'
     }
 
     //  ╔═╗╔╦╗╔╗ ╔═╗╔╦╗╔═╗
