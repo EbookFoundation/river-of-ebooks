@@ -31,7 +31,8 @@ module.exports = {
           await Book.destroy({ id: result.id })
           throw new HttpError(500, err.message)
         }
-        await Book.update({ id: result.id }, { storage: uploaded[0].fd })
+        const fd = (uploaded[0] || {}).fd
+        await Book.update({ id: result.id }, { storage: fd })
         sendUpdatesAsync(result.id)
         return res.json({
           ...result
@@ -48,9 +49,13 @@ module.exports = {
   list: async function (req, res) {
     try {
       const body = req.allParams()
-      if (!body) throw new HttpError(400, 'Missing parameters')
-
-      const books = await Book.find(body)
+      let page = 1
+      const perPage = 200
+      if (body.page) {
+        page = Math.abs(+body.page) || 1
+        delete body.page
+      }
+      const books = await Book.find(body || {}).skip((page * perPage) - perPage).limit(perPage)
 
       if (!books.length) {
         throw new HttpError(404, 'No books matching those parameters were found.')
