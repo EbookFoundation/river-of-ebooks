@@ -96,7 +96,7 @@ The server will send a POST request to the provided URL whenever a new ebook is 
 
 ```
 HTTP Headers:
-  User-Agent  RoE-aggregator
+  User-Agent: RoE-aggregator
 
 HTTP Body:
 {
