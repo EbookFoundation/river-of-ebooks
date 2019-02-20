@@ -21,7 +21,8 @@ module.exports = {
     author: { type: 'string' },
     publisher: { type: 'string' },
     isbn: { type: 'string' },
-    version: { type: 'string' }
+    version: { type: 'string' },
+    hostname: { type: 'string' }
 
     //  ╔═╗╔╦╗╔╗ ╔═╗╔╦╗╔═╗
     //  ║╣ ║║║╠╩╗║╣  ║║╚═╗
