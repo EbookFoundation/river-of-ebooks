@@ -19,6 +19,7 @@ module.exports = {
     },
     title: { type: 'string', required: true },
     author: { type: 'string' },
+    publisher: { type: 'string' },
     isbn: { type: 'string' },
     version: { type: 'string' }
 

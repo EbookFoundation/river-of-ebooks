@@ -7,6 +7,7 @@
 
 const HttpError = require('../errors/HttpError')
 const request = require('request')
+const uriRegex = /^(.+:\/\/)?(.+\.)*(.+\.).{1,}(:\d+)?(.+)?/i
 
 module.exports = {
   publish: async function (req, res) {
@@ -73,16 +74,27 @@ module.exports = {
 async function sendUpdatesAsync (id) {
   const book = await Book.findOne({ id })
   const targets = await TargetUrl.find()
+  if (!book) return
   for (const i in targets) {
-    sails.log('sending ' + book.id + ' info to ' + targets[i].url)
-    request.post({
-      url: targets[i].url,
-      headers: { 'User-Agent': 'RoE-aggregator' },
-      form: book
-    }, function (err, httpResp, body) {
-      if (err) {
-        sails.log(`error: failed to send book ${id} to ${targets[i].url}`)
-      }
-    })
+    const item = targets[i]
+    const { author: fAuthor, publisher: fPublisher, title: fTitle, isbn: fIsbn, url } = item
+    const { author: bAuthor, publisher: bPublisher, title: bTitle, isbn: bIsbn } = book
+    sails.log('sending ' + book.id + ' info to ' + url)
+
+    if (uriRegex.test(url)) {
+      if (fAuthor && !((bAuthor || '').includes(fAuthor))) continue
+      if (fPublisher && !((bPublisher || '').includes(fPublisher))) continue
+      if (fTitle && !((bTitle || '').includes(fTitle))) continue
+      if (fIsbn && !((bIsbn || '').includes(fIsbn))) continue
+      request.post({
+        url: url,
+        headers: { 'User-Agent': 'RoE-aggregator' },
+        form: book
+      }, function (err, httpResp, body) {
+        if (err) {
+          sails.log(`error: failed to send book ${id} to ${url}`)
+        }
+      })
+    }
   }
 }
