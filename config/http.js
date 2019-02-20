@@ -14,7 +14,15 @@ const rateLimiter = rateLimit({
   windowMs: 10 * 60 * 1000, // 10 minutes
   max: 100, // limit each IP to 100 requests per windowMs
   skip (req, res) {
-    return !req.path.startsWith('/api')
+    return !req.path.startsWith('/api') || req.path.startsWith('/api/publish')
+  }
+})
+
+const publishLimiter = rateLimit({
+  windowMs: 1000 * 60 * 60 * 24, // 24 hours
+  max: 1000, // 1000 publish requests per day
+  skip (req, res) {
+    return !req.path.startsWith('/api/publish')
   }
 })
 
@@ -40,6 +48,7 @@ module.exports.http = {
 
     order: [
       'rateLimit',
+      'publishLimit',
       'cookieParser',
       'session',
       'passportInit',
@@ -52,6 +61,7 @@ module.exports.http = {
       'favicon'
     ],
     rateLimit: rateLimiter,
+    publishLimit: publishLimiter,
     passportInit: require('passport').initialize(),
     passportSession: require('passport').session()
 
