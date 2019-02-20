@@ -21,7 +21,8 @@
     "debug": "node --inspect app.js",
     "custom-tests": "echo 'Nothing yet'",
     "db:migrate": "knex migrate:latest",
-    "db:rollback": "knex migrate:rollback"
+    "db:rollback": "knex migrate:rollback",
+    "g:migration": "knex migrate:make"
   },
   "dependencies": {
     "@sailshq/connect-redis": "^3.2.1",
