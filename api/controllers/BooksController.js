@@ -24,7 +24,13 @@ module.exports = {
       if (bookExists) {
         throw new HttpError(400, 'Version already exists')
       } else {
-        result = await Book.create(body).fetch()
+        const { title, isbn, author, publisher } = body
+        // require at least 2 fields to be filled out
+        if ([title, isbn, author, publisher].reduce((a, x) => a + (x ? 1 : 0), 0) >= 2) {
+          result = await Book.create(body).fetch()
+        } else {
+          throw new HttpError(400, 'Please fill out at least 2 fields (title, author, publisher, isbn)')
+        }
       }
 
       req.file('opds').upload(sails.config.skipperConfig, async function (err, uploaded) {
