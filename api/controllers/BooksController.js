@@ -33,18 +33,22 @@ module.exports = {
         }
       }
 
-      req.file('opds').upload(sails.config.skipperConfig, async function (err, uploaded) {
-        if (err) {
-          await Book.destroy({ id: result.id })
-          throw new HttpError(500, err.message)
-        }
-        const fd = (uploaded[0] || {}).fd
-        await Book.update({ id: result.id }, { storage: fd })
-        sendUpdatesAsync(result.id)
-        return res.json({
-          ...result
+      if (req.file('opds')) {
+        req.file('opds').upload(sails.config.skipperConfig, async function (err, uploaded) {
+          if (err) {
+            await Book.destroy({ id: result.id })
+            throw new HttpError(500, err.message)
+          }
+          const fd = (uploaded[0] || {}).fd
+          await Book.update({ id: result.id }, { storage: fd })
+          sendUpdatesAsync(result.id)
+          return res.json({
+            ...result
+          })
         })
-      })
+      } else {
+        throw new HttpError(400, 'Missing OPDS file upload')
+      }
     } catch (e) {
       if (e instanceof HttpError) return e.send(res)
       return res.status(500).json({
