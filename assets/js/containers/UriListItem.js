@@ -87,6 +87,15 @@ class UriListItem extends React.Component {
             pattern={isbnRegex}
             onChange={(e) => this.props.dispatch(changeUrlField(this.props.item.id, 'isbn', e.target.value))}
             onBlur={(e) => this.props.dispatch(setUrl(this.props.item))} />
+          <UnderlineInput
+            className='uri flex'
+            type='text'
+            name={'tags-' + this.props.item.id}
+            placeholder='Tags'
+            value={this.props.item.tags ? this.props.item.tags.join(', ') : ''}
+            pattern={/^.*?(?:,\s+\S.+?)*$/}
+            onChange={(e) => this.props.dispatch(changeUrlField(this.props.item.id, 'tags', e.target.value.split(/,\s+/)))}
+            onBlur={(e) => this.props.dispatch(setUrl(this.props.item))} />
         </div>
       </li>
     )

@@ -22,7 +22,8 @@ module.exports = {
     publisher: { type: 'string' },
     isbn: { type: 'string' },
     version: { type: 'string' },
-    hostname: { type: 'string' }
+    hostname: { type: 'string' },
+    tags: { type: 'json' }
 
     //  ╔═╗╔╦╗╔╗ ╔═╗╔╦╗╔═╗
     //  ║╣ ║║║╠╩╗║╣  ║║╚═╗

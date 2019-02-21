@@ -25,9 +25,11 @@ module.exports = {
         throw new HttpError(400, 'Version already exists')
       } else {
         const { title, isbn, author, publisher } = body
+        let tags = body.tags
+        if (!tags && title) tags = title.split(/\s/).filter(x => x.length < 3)
         // require at least 2 fields to be filled out
         if ([title, isbn, author, publisher].reduce((a, x) => a + (x ? 1 : 0), 0) >= 2) {
-          result = await Book.create(body).fetch()
+          result = await Book.create({ ...body, tags: JSON.stringify(tags) }).fetch()
         } else {
           throw new HttpError(400, 'Please fill out at least 2 fields (title, author, publisher, isbn)')
         }
@@ -66,7 +68,18 @@ module.exports = {
         page = Math.abs(+body.page) || 1
         delete body.page
       }
-      const books = await Book.find(body || {}).skip((page * perPage) - perPage).limit(perPage)
+
+      const searchBody = { ...body }
+      if (searchBody.tags) {
+        const tags = searchBody.tags.split(',')
+        searchBody.tags = {
+          or: [
+            ...tags.map(tag => ({ contains: tag })),
+            { in: tags }
+          ]
+        }
+      }
+      const books = await Book.find(body ? searchBody : {}).skip((page * perPage) - perPage).limit(perPage)
 
       if (!books.length) {
         throw new HttpError(404, 'No books matching those parameters were found.')
@@ -87,8 +100,8 @@ async function sendUpdatesAsync (id) {
   if (!book) return
   for (const i in targets) {
     const item = targets[i]
-    const { author: fAuthor, publisher: fPublisher, title: fTitle, isbn: fIsbn, url } = item
-    const { author: bAuthor, publisher: bPublisher, title: bTitle, isbn: bIsbn } = book
+    const { author: fAuthor, publisher: fPublisher, title: fTitle, isbn: fIsbn, tags: fTags, url } = item
+    const { author: bAuthor, publisher: bPublisher, title: bTitle, isbn: bIsbn, tags: bTags } = book
     sails.log('sending ' + book.id + ' info to ' + url)
 
     if (uriRegex.test(url)) {
@@ -96,6 +109,11 @@ async function sendUpdatesAsync (id) {
       if (fPublisher && !((bPublisher || '').includes(fPublisher))) continue
       if (fTitle && !((bTitle || '').includes(fTitle))) continue
       if (fIsbn && !((bIsbn || '').includes(fIsbn))) continue
+
+      // checks to see if tag arrays intersect at all and skips if they do not
+      const otherSet = new Set(fTags)
+      if (!([...new Set(bTags)].filter(x => otherSet.has(x)).length)) continue
+
       request.post({
         url: url,
         headers: { 'User-Agent': 'RoE-aggregator' },

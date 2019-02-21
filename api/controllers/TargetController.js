@@ -25,13 +25,15 @@ module.exports = {
       const publisher = req.param('publisher') || ''
       const title = req.param('title') || ''
       const isbn = req.param('isbn') || ''
+      const tags = req.param('tags') || []
       if (value.length) {
         const url = await TargetUrl.update({ id, user: req.user.id }, {
           url: value,
           author,
           publisher,
           title,
-          isbn
+          isbn,
+          tags: JSON.stringify(tags)
         }).fetch()
         return res.json(url)
       } else {

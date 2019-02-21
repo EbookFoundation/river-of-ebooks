@@ -11,6 +11,7 @@ POST to /api/publish containing the body:
   author: The author (optional),
   version: A version number (optional),
   isbn: The ISBN (optional),
+  tags: An array of search tags (optional),
   opds: file
 }
 ```
@@ -30,6 +31,7 @@ The server will respond with either:
   "title": string,
   "author": string,
   "isbn": string,
+  "tags": array,
   "version": string
 }
 ```
@@ -53,6 +55,7 @@ title: The book's title (optional)
 author: The author (optional)
 version: A version number (optional)
 isbn: The ISBN (optional)
+tags: Comma-separated search tags (optional)
 
 page: The page of results to view (200 results per page)
 ```
@@ -72,6 +75,7 @@ The server will respond with either:
     "title": string,
     "author": string,
     "isbn": string,
+    "tags": array,
     "version": string
   }
 ]
@@ -107,6 +111,7 @@ HTTP Body:
   "title": string,
   "author": string,
   "isbn": string,
+  "tags": array,
   "version": string
 }
 ```

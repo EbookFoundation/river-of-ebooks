@@ -15,6 +15,7 @@ module.exports = {
     author: 'string',
     publisher: 'string',
     title: 'string',
-    isbn: 'string'
+    isbn: 'string',
+    tags: 'json'
   }
 }
