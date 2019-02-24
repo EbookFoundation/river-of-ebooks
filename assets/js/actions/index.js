@@ -10,7 +10,9 @@ const ACTIONS = {
   list_url: 'list_url',
   set_editing: 'set_editing',
   error: 'error',
-  set_user: 'set_user'
+  set_user: 'set_user',
+  add_publisher: 'add_publisher',
+  delete_publisher: 'delete_publisher'
 }
 
 export default ACTIONS
@@ -32,6 +34,11 @@ export const setUser = user => ({
 
 export const addUrl = url => ({
   type: ACTIONS.add_url,
+  data: url
+})
+
+export const addPublisher = url => ({
+  type: ACTIONS.add_publisher,
   data: url
 })
 
@@ -144,6 +151,46 @@ export const editUser = (user) => async (dispatch, getState) => {
     dispatch({
       type: ACTIONS.error,
       data: null
+     })
+  } catch (e) {
+    dispatch({
+      type: ACTIONS.error,
+      data: e
+    })
+  } finally {
+    dispatch(setWorking(false))
+  }
+}
+
+export const createNewPublisher = (url) => async (dispatch, getState) => {
+  dispatch(setWorking(true))
+  try {
+    const { data } = await Ajax.post({
+      url: '/api/keys',
+      data: {
+        url
+      }
+    })
+    dispatch(addPublisher(data))
+  } catch (e) {
+    dispatch({
+      type: ACTIONS.error,
+      data: e
+    })
+  } finally {
+    dispatch(setWorking(false))
+  }
+}
+
+export const removePublisher = id => async (dispatch, getState) => {
+  dispatch(setWorking(true))
+  try {
+    await Ajax.delete({
+      url: '/api/keys/' + id
+    })
+    dispatch({
+      type: ACTIONS.delete_publisher,
+      data: id
     })
   } catch (e) {
     dispatch({

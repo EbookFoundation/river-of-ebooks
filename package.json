@@ -90,6 +90,7 @@
       "Book",
       "Passport",
       "TargetUrl",
+      "PublishKey",
       "_"
     ],
     "env": [

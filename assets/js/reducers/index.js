@@ -45,6 +45,16 @@ const reducer = (state = {}, action) => {
       return {
         error: (data || {}).message || ''
       }
+    case Actions.add_publisher:
+      return {
+        publishers: state.publishers.concat(data),
+        error: ''
+      }
+    case Actions.delete_publisher:
+      return {
+        publishers: state.publishers.filter(x => x.id !== data),
+        error: ''
+      }
     default: return {}
   }
 }

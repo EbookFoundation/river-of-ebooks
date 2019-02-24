@@ -71,9 +71,14 @@ module.exports.routes = {
   'GET /api/books': 'BooksController.list',
 
   'POST /api/targets': 'TargetController.create',
+  'GET /api/targets': 'TargetController.list',
   'PATCH /api/targets/:id': 'TargetController.edit',
   'DELETE /api/targets/:id': 'TargetController.delete',
-  'GET /api/targets': 'TargetController.list'
+
+  'POST /api/keys': 'PublishKeyController.create',
+  'GET /api/keys': 'PublishKeyController.list',
+  'PATCH /api/keys/:id': 'PublishKeyController.refresh',
+  'DELETE /api/keys/:id': 'PublishKeyController.delete'
 
   //  ╦ ╦╔═╗╔╗ ╦ ╦╔═╗╔═╗╦╔═╔═╗
   //  ║║║║╣ ╠╩╗╠═╣║ ║║ ║╠╩╗╚═╗

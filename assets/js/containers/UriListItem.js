@@ -3,7 +3,7 @@
 import React from 'react'
 import IconButton from '../components/IconButton'
 import UnderlineInput from '../components/UnderlineInput'
-import '../../styles/shared/urilistitem.scss'
+import '../../styles/shared/listitem.scss'
 import { changeUrlField, setUrl, removeUrl, setEditing } from '../actions'
 
 const uriRegex = /(.+:\/\/)?(.+\.)*(.+\.).{1,}(:\d+)?(.+)?/i
