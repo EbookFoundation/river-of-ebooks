@@ -4,7 +4,8 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <title>RoE - Login</title>
+    <title>River of Ebooks - Login</title>
+    <base href="/">
     <% for (item of htmlWebpackPlugin.options.links) {
       if (typeof item === 'string' || item instanceof String) { item = { href: item, rel: 'stylesheet' } } %>
       <link<% for (key in item) { %> <%= key %>="<%= item[key] %>"<% } %> /><%

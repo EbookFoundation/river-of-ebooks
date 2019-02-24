@@ -1,10 +1,10 @@
 const crypto = require('crypto')
 
-function generateToken({ bytes, base }) {
-  return new Promise((res, rej) => {
+function generateToken ({ bytes, base }) {
+  return new Promise((resolve, reject) => {
     crypto.randomBytes(bytes, (err, buf) => {
-      if (err) rej(err)
-      else res(buf.toString(base || 'base64'))
+      if (err) reject(err)
+      else resolve(buf.toString(base || 'base64'))
     })
   })
 }
@@ -24,17 +24,16 @@ module.exports = {
       type: 'string',
       required: true
     },
-    key: {
-      type: 'string',
-      required: true
+    whitelisted: 'boolean',
+    appid: {
+      type: 'string'
     },
     secret: {
-      type: 'string',
-      required: true
+      type: 'string'
     }
   },
   beforeCreate: async function (key, next) {
-    key.key = await generateToken({ bytes: 12 })
+    key.appid = await generateToken({ bytes: 12 })
     key.secret = await generateToken({ bytes: 48 })
     next()
   },

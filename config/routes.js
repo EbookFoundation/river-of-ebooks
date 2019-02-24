@@ -34,6 +34,12 @@ module.exports.routes = {
   // figure out why proper clientside routing breaks the backend session
   'GET /account': 'TargetController.show',
   'GET /targets': 'TargetController.show',
+  'GET /keys': 'TargetController.show',
+  'GET /admin': 'AdminController.show',
+  'GET /admin/*': {
+    action: 'admin/show',
+    skipAssets: true
+  },
 
   /***************************************************************************
   *                                                                          *
@@ -78,7 +84,10 @@ module.exports.routes = {
   'POST /api/keys': 'PublishKeyController.create',
   'GET /api/keys': 'PublishKeyController.list',
   'PATCH /api/keys/:id': 'PublishKeyController.refresh',
-  'DELETE /api/keys/:id': 'PublishKeyController.delete'
+  'DELETE /api/keys/:id': 'PublishKeyController.delete',
+
+  'GET /admin/api/users': 'AdminController.listUsers',
+  'GET /admin/api/publishers': 'AdminController.listPublishers'
 
   //  ╦ ╦╔═╗╔╗ ╦ ╦╔═╗╔═╗╦╔═╔═╗
   //  ║║║║╣ ╠╩╗╠═╣║ ║║ ║╠╩╗╚═╗

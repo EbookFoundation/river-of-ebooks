@@ -17,6 +17,10 @@ const reducer = (state = {}, action) => {
           ...data
         }
       }
+    case Actions.set_publishers:
+      return {
+        publishers: data
+      }
     case Actions.list_url:
       return {
         urls: data || []

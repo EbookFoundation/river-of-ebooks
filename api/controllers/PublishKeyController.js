@@ -17,7 +17,7 @@ module.exports = {
   },
   list: async function (req, res) {
     try {
-      const keys = await PublishKey.find()
+      const keys = await PublishKey.find({ user: req.user.id })
       return res.json(keys)
     } catch (e) {
       return (new HttpError(500, e.message)).send(res)

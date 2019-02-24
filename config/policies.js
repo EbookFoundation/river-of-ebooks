@@ -42,5 +42,9 @@ module.exports.policies = {
   BooksController: {
     '*': true,
     publish: [ 'keyAuth' ]
+  },
+
+  AdminController: {
+    '*': [ 'adminAuth' ]
   }
 }

@@ -55,4 +55,29 @@
       margin-top: -4px;
     }
   }
+
+  &.publisher-list-item {
+    cursor: default;
+
+    .stack {
+      margin-right: 14px;
+
+      &.site-name {
+        min-width: 400px;
+        flex: 0.5;
+      }
+
+      input.value {
+        outline: none;
+        border: none;
+        font-family: monospace;
+      }
+    }
+    .btn-view {
+      margin: 18px 14px;
+      min-width: 90px;
+      height: 24px;
+      line-height: 24px;
+    }
+  }
 }

@@ -9,6 +9,6 @@ module.exports = function (req, res, next) {
   if (req.session.authenticated) {
     return next()
   }
-  // res.status(403).json({ error: 'You are not permitted to perform this action.' })
-  res.redirect('/login')
+  res.status(403).json({ error: 'You are not permitted to perform this action.' })
+  // res.redirect('/login')
 }

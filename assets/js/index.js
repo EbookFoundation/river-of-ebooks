@@ -6,6 +6,7 @@ import { BrowserRouter as Router, Route, NavLink, Switch, Redirect } from 'react
 import Progress from './components/Progress'
 import UnderlineInput from './components/UnderlineInput'
 import UriListItem from './containers/UriListItem'
+import PublisherListItem from './containers/PublisherListItem'
 import reducer from './reducers'
 import { fetchData, createNewUrl, setEditing, editUser, createNewPublisher } from './actions'
 
@@ -105,9 +106,12 @@ class App extends React.Component {
               </h2>
             </header>
             <ul>
+              <li><NavLink to='/keys'>Publishing keys</NavLink></li>
               <li><NavLink to='/targets'>Push URIs</NavLink></li>
               <li><NavLink to='/account'>My account</NavLink></li>
-              <li><NavLink to='/keys'>Publishing keys</NavLink></li>
+              {(this.state.user.id === 1 || this.state.user.admin) &&
+                <li><a href='/admin'>Admin</a></li>
+              }
             </ul>
           </aside>
           <section className={'content flex' + (this.state.working ? ' working' : '')}>
@@ -139,7 +143,7 @@ class App extends React.Component {
                   <div className='creator flex-container'>
                     <UnderlineInput
                       className='flex'
-                      placeholder='Site URL'
+                      placeholder='Site name'
                       value={this.state.newPublisherUrl}
                       onChange={this.setPublisherUrl} />
                     <button className='btn' onClick={() => this.dispatch(createNewPublisher(this.state.newPublisherUrl))}>Create keys</button>
