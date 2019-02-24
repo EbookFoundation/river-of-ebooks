@@ -185,7 +185,7 @@ class App extends React.Component {
                 </div>
               )} />
 
-              <Route path='/' render={() => <Redirect to='/targets' />} />
+              <Route path='/' render={() => <Redirect to='/keys' />} />
             </Switch>
           </section>
         </div>

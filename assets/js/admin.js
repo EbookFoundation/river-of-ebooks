@@ -51,7 +51,7 @@ class App extends React.Component {
   getRegisteredUsers () {
     return this.state.users.map(user => {
       return (
-        <li className='flex-container' key={`is-admin-${user.id}`}>
+        <li className='uri-list-item flex-container' key={`is-admin-${user.id}`}>
           <span className='flex'>{user.email}</span>
           <span className='flex'>
             <label for={`is-admin-${user.id}`} className='cb-label'>Admin?</label>
@@ -69,7 +69,7 @@ class App extends React.Component {
   getRegisteredPublishers () {
     return this.state.publishers.map(pub => {
       return (
-        <li className='flex-container' key={`is-whitelisted-${pub.id}`}>
+        <li className='uri-list-item flex-container' key={`is-whitelisted-${pub.id}`}>
           <div className='stack flex flex-container flex-vertical'>
             <span className='flex'><span className='name'>{pub.url}</span><span className='appid'>{pub.appid}</span></span>
             <span className='flex'>{pub.user.email}</span>

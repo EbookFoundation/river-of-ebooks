@@ -4,7 +4,7 @@ module.exports = {
   create: async function (req, res) {
     try {
       const url = req.param('url')
-      if (!url.length) throw new Error('URL cannot be blank')
+      if (!url.length) throw new Error('Name cannot be blank')
 
       const created = await PublishKey.create({
         user: req.user.id,
