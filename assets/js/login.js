@@ -87,7 +87,8 @@ class App extends React.Component {
               onButtonClick={() => this.dispatch(signup(this.state.user.email, this.state.user.password))}
               smallButton='Have an account?'
               onSmallButtonClick={() => this.dispatch(setCarousel(1))}
-              footer='Sign up with your Google account' />
+              footers={['Sign up with Google', 'Sign up with Github']}
+              footerHrefs={['/auth/google', '/auth/github']} />
 
             <CarouselItem
               header='Sign in'
@@ -97,7 +98,8 @@ class App extends React.Component {
               onButtonClick={() => this.dispatch(checkEmail(this.state.user.email))}
               smallButton='Create account'
               onSmallButtonClick={() => this.dispatch(setCarousel(0))}
-              footer='Sign in with your Google account' />
+              footers={['Sign in with Google', 'Sign in with Github']}
+              footerHrefs={['/auth/google', '/auth/github']} />
 
             <CarouselItem
               header='Welcome'
@@ -106,8 +108,8 @@ class App extends React.Component {
               error={this.state.passwordError}
               button='Sign in'
               onButtonClick={() => this.dispatch(checkPassword(this.state.user.email, this.state.user.password))}
-              smallButton='Forgot password?'
-              onSmallButtonClick={() => this.dispatch(setCarousel(3))} />
+              comment={null/*smallButton='Forgot password?'
+              onSmallButtonClick={() => this.dispatch(setCarousel(3))}*/} />
 
             <CarouselItem
               header='Password recovery'

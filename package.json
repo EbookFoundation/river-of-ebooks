@@ -21,7 +21,8 @@
     "debug": "node --inspect app.js",
     "custom-tests": "echo 'Nothing yet'",
     "db:migrate": "knex migrate:latest",
-    "db:rollback": "knex migrate:rollback"
+    "db:rollback": "knex migrate:rollback",
+    "g:migration": "knex migrate:make"
   },
   "dependencies": {
     "@sailshq/connect-redis": "^3.2.1",
@@ -42,10 +43,12 @@
     "pm2": "^3.2.2",
     "react": "^16.6.0",
     "react-dom": "^16.6.0",
+    "request": "^2.88.0",
     "sails": "^1.0.2",
     "sails-hook-grunt": "^3.0.2",
     "sails-hook-orm": "^2.1.1",
-    "sails-hook-sockets": "^1.4.0"
+    "sails-hook-sockets": "^1.4.0",
+    "sails-postgresql": "^1.0.2"
   },
   "devDependencies": {
     "@babel/core": "^7.1.2",

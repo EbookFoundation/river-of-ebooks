@@ -10,6 +10,13 @@ const reducer = (state = {}, action) => {
       return {
         working: data
       }
+    case Actions.set_user:
+      return {
+        user: {
+          ...state.user,
+          ...data
+        }
+      }
     case Actions.list_url:
       return {
         urls: data || []
@@ -34,6 +41,10 @@ const reducer = (state = {}, action) => {
       return {
         editingUrl: data
       }
+    case Actions.error:
+      return {
+        error: (data || {}).message || ''
+      }
     case Actions.add_publisher:
       return {
         publishers: state.publishers.concat(data),
@@ -43,10 +54,6 @@ const reducer = (state = {}, action) => {
       return {
         publishers: state.publishers.filter(x => x.id !== data),
         error: ''
-      }
-    case Actions.error:
-      return {
-        error: data.message
       }
     default: return {}
   }

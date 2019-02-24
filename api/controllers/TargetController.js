@@ -3,7 +3,7 @@ const HttpError = require('../errors/HttpError')
 
 module.exports = {
   show: function (req, res) {
-    res.view('pages/targets', {
+    res.view('pages/app', {
       email: req.user.email
     })
   },
@@ -21,10 +21,10 @@ module.exports = {
     try {
       const id = req.param('id')
       const value = req.param('url')
-      const author = req.param('author')
-      const publisher = req.param('publisher')
-      const title = req.param('title')
-      const isbn = req.param('isbn')
+      const author = req.param('author') || ''
+      const publisher = req.param('publisher') || ''
+      const title = req.param('title') || ''
+      const isbn = req.param('isbn') || ''
       if (value.length) {
         const url = await TargetUrl.update({ id, user: req.user.id }, {
           url: value,

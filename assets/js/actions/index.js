@@ -9,9 +9,10 @@ const ACTIONS = {
   delete_url: 'delete_url',
   list_url: 'list_url',
   set_editing: 'set_editing',
+  error: 'error',
+  set_user: 'set_user',
   add_publisher: 'add_publisher',
-  delete_publisher: 'delete_publisher',
-  error: 'error'
+  delete_publisher: 'delete_publisher'
 }
 
 export default ACTIONS
@@ -24,6 +25,11 @@ export const setWorking = working => ({
 export const setUrls = (urls) => ({
   type: ACTIONS.list_url,
   data: urls
+})
+
+export const setUser = user => ({
+  type: ACTIONS.set_user,
+  data: user
 })
 
 export const addUrl = url => ({
@@ -70,13 +76,17 @@ export const removeUrl = id => async (dispatch, getState) => {
   }
 }
 
-export const fetchUrls = () => async (dispatch, getState) => {
+export const fetchData = () => async (dispatch, getState) => {
   dispatch(setWorking(true))
   try {
-    const { data } = await Ajax.get({
+    const { data: user } = await Ajax.get({
+      url: '/api/me'
+    })
+    dispatch(setUser(user))
+    const { data: urls } = await Ajax.get({
       url: '/api/targets'
     })
-    dispatch(setUrls(data))
+    dispatch(setUrls(urls))
   } catch (e) {
     dispatch({
       type: ACTIONS.error,
@@ -114,6 +124,34 @@ export const setUrl = (value) => async (dispatch, getState) => {
         id: undefined
       }
     })
+  } catch (e) {
+    dispatch({
+      type: ACTIONS.error,
+      data: e
+    })
+  } finally {
+    dispatch(setWorking(false))
+  }
+}
+
+export const editUser = (user) => async (dispatch, getState) => {
+  dispatch(setWorking(true))
+
+  try {
+    // if (!user.currentPassword) throw new Error('Please enter your current password.')
+    await Ajax.patch({
+      url: '/api/me',
+      data: {
+        id: user.id,
+        email: user.email,
+        password: user.password,
+        currentPassword: user.currentPassword
+      }
+    })
+    dispatch({
+      type: ACTIONS.error,
+      data: null
+     })
   } catch (e) {
     dispatch({
       type: ACTIONS.error,

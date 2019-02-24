@@ -31,7 +31,9 @@ module.exports.routes = {
   'GET /register': {
     view: 'pages/login'
   },
-  'GET /app': 'TargetController.show',
+  // figure out why proper clientside routing breaks the backend session
+  'GET /account': 'TargetController.show',
+  'GET /targets': 'TargetController.show',
 
   /***************************************************************************
   *                                                                          *
@@ -55,6 +57,8 @@ module.exports.routes = {
   'POST /auth/email_available': 'AuthController.emailAvailable',
   // 'POST /auth/local': 'AuthController.callback',
   // 'POST /auth/local/:action': 'AuthController.callback',
+  'GET /api/me': 'UserController.me',
+  'PATCH /api/me': 'UserController.edit',
 
   'POST /auth/:provider': 'AuthController.callback',
   'POST /auth/:provider/:action': 'AuthController.callback',
@@ -64,9 +68,7 @@ module.exports.routes = {
   'GET /auth/:provider/:action': 'AuthController.callback',
 
   'POST /api/publish': 'BooksController.publish',
-
   'GET /api/books': 'BooksController.list',
-  'GET /api/me': 'UserController.me',
 
   'POST /api/targets': 'TargetController.create',
   'GET /api/targets': 'TargetController.list',

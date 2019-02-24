@@ -7,7 +7,8 @@ import Progress from './components/Progress'
 import UnderlineInput from './components/UnderlineInput'
 import UriListItem from './containers/UriListItem'
 import reducer from './reducers'
-import { fetchUrls, createNewUrl, setEditing, createNewPublisher } from './actions'
+import { fetchData, createNewUrl, setEditing, editUser, createNewPublisher } from './actions'
+
 import '../styles/index.scss'
 
 class App extends React.Component {
@@ -16,8 +17,10 @@ class App extends React.Component {
     this.state = {
       error: '',
       user: {
+        id: '',
         email: '',
-        password: ''
+        password: '',
+        currentPassword: ''
       },
       urls: [],
       publishers: [],
@@ -28,6 +31,8 @@ class App extends React.Component {
 
     this.dispatch = this.dispatch.bind(this)
     this.getRegisteredUris = this.getRegisteredUris.bind(this)
+    this.setUserValue = this.setUserValue.bind(this)
+    this.saveUser = this.saveUser.bind(this)
     this.getRegisteredPublishers = this.getRegisteredPublishers.bind(this)
     this.setPublisherUrl = this.setPublisherUrl.bind(this)
   }
@@ -44,7 +49,7 @@ class App extends React.Component {
     }
   }
   componentDidMount () {
-    // this.dispatch(fetchUrls())
+    this.dispatch(fetchData())
   }
   setPublisherUrl (e) {
     this.setState({
@@ -58,6 +63,25 @@ class App extends React.Component {
         dispatch={this.dispatch}
         item={item}
         editing={this.state.editingUrl === item.id} />)
+    })
+  }
+  setUserValue (which, e) {
+    this.setState({
+      user: {
+        ...this.state.user,
+        [which]: e.target.value
+      }
+    })
+  }
+  saveUser () {
+    this.dispatch(editUser(this.state.user))
+    this.setState({
+      user: {
+        ...this.state.user,
+        email: this.state.user.email,
+        password: '',
+        currentPassword: ''
+      }
     })
   }
   getRegisteredPublishers () {
@@ -75,16 +99,35 @@ class App extends React.Component {
           <aside className='nav nav-left'>
             <header>
               <h1>River of Ebooks</h1>
+              <h2 className='flex-container'>
+                <span className='flex'>{this.state.user.email}</span>
+                <a href='/logout'>Log out</a>
+              </h2>
             </header>
             <ul>
-              <li><NavLink to='/keys'>Publishing keys</NavLink></li>
               <li><NavLink to='/targets'>Push URIs</NavLink></li>
+              <li><NavLink to='/account'>My account</NavLink></li>
+              <li><NavLink to='/keys'>Publishing keys</NavLink></li>
             </ul>
           </aside>
           <section className={'content flex' + (this.state.working ? ' working' : '')}>
             <Progress bound />
             {this.state.error && <div className='error-box'>{this.state.error}</div>}
             <Switch>
+              <Route path='/targets' exact children={props => (
+                <div>
+                  <header className='flex-container'>
+                    <div className='flex'>
+                      <h1>Push URIs</h1>
+                      <h2>Newly published books will be sent to these addresses.</h2>
+                    </div>
+                    <button className='btn' onClick={() => this.dispatch(createNewUrl())}>New address</button>
+                  </header>
+                  <ul className='list'>
+                    {this.getRegisteredUris()}
+                  </ul>
+                </div>
+              )} />
               <Route path='/keys' exact children={props => (
                 <div>
                   <header className='flex-container'>
@@ -107,22 +150,38 @@ class App extends React.Component {
                 </div>
               )} />
 
-              <Route path='/targets' exact children={props => (
+              <Route path='/account' exact children={props => (
                 <div>
                   <header className='flex-container'>
                     <div className='flex'>
-                      <h1>Push URIs</h1>
-                      <h2>Newly published books will be sent to these addresses.</h2>
+                      <h1>My account</h1>
+                      <h2>User account settings</h2>
                     </div>
-                    <button className='btn' onClick={() => this.dispatch(createNewUrl())}>New address</button>
                   </header>
-                  <ul className='list'>
-                    {this.getRegisteredUris()}
-                  </ul>
+                  <section className='inputs'>
+                    <UnderlineInput
+                      placeholder='Email address'
+                      value={this.state.user.email}
+                      pattern={/^([a-zA-Z0-9_\-.]+)@([a-zA-Z0-9_\-.]+)\.([a-zA-Z]{2,5})$/}
+                      onChange={(e) => this.setUserValue('email', e)} />
+                    <UnderlineInput
+                      placeholder='Password'
+                      type='password'
+                      value={this.state.user.password}
+                      onChange={(e) => this.setUserValue('password', e)} />
+                    <UnderlineInput
+                      placeholder='Current password'
+                      type='password'
+                      value={this.state.user.currentPassword}
+                      onChange={(e) => this.setUserValue('currentPassword', e)} />
+                    <div className='buttons'>
+                      <button className='btn' onClick={this.saveUser}>Save</button>
+                    </div>
+                  </section>
                 </div>
               )} />
 
-              <Route path='/' render={() => <Redirect to='/keys' />} />
+              <Route path='/' render={() => <Redirect to='/targets' />} />
             </Switch>
           </section>
         </div>

@@ -86,28 +86,29 @@ export default class Ajax {
       }
       xhr.onerror = () => {
         var data = xhr.response
+        try { data = JSON.parse(data) } catch (e) {}
 
         // method not allowed
         if (xhr.status === 405) {
-          reject(new AjaxError('405 Method Not Allowed', data, xhr))
+          reject(new AjaxError('405 Method Not Allowed', data.error || data, xhr))
           return
         } else if (xhr.status === 404) {
-          reject(new AjaxError('404 Not Found', data, xhr))
+          reject(new AjaxError('404 Not Found', data.error || data, xhr))
           return
         }
 
         try {
           // if the access token is invalid, try to use the refresh token
-          var json = JSON.parse(data)
+          var json = data
           if (json.error === 'access_denied' && json.hint.includes('token') && json.hint.includes('invalid') && ajaxcfg.refresh_token) {
             return Ajax.refresh(opts)
           } else if (json.error === 'access_denied' && json.hint.includes('token') && json.hint.includes('revoked')) {
             reject(new AjaxError('token revoked', data, xhr))
           }
         } catch (e) {
-          reject(new AjaxError(e.toString(), data, xhr))
+          reject(new AjaxError(e.toString(), data.error || data, xhr))
         } finally {
-          reject(new AjaxError(data, xhr.status, xhr))
+          reject(new AjaxError(data.error || data, xhr.status, xhr))
         }
       }
 

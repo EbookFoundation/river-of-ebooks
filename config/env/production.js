@@ -348,7 +348,7 @@ module.exports = {
   *                                                                         *
   ***************************************************************************/
   custom: {
-    baseUrl: 'https://example.com',
+    baseURL: 'http://ec2-18-219-223-27.us-east-2.compute.amazonaws.com',
     internalEmailAddress: 'support@example.com'
 
     // mailgunDomain: 'mg.example.com',

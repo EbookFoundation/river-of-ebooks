@@ -48,8 +48,8 @@ function PassportHelper () {
         const protocol = strategies[key].protocol
         const callbackURL = strategies[key].callback
         let baseURL = ''
-        if (sails.config.appUrl && sails.config.appUrl !== null) {
-          baseURL = sails.config.appUrl
+        if (sails.config.custom.baseURL && sails.config.custom.baseURL !== null) {
+          baseURL = sails.config.custom.baseURL
         } else {
           sails.log.warn('Please add \'appUrl\' to configuration')
           baseURL = sails.getBaseurl()
@@ -74,7 +74,12 @@ function PassportHelper () {
 
     if (!_.has(strategies, provider)) return res.redirect('/login')
 
-    passport.authenticate(provider, {})(req, res, req.next)
+    const scopes = {
+      google: ['email'],
+      github: ['user:email']
+    }
+
+    passport.authenticate(provider, { scope: scopes[provider] })(req, res, req.next)
   }
   // a callback helper to split by req
   this.callback = function (req, res, next) {
@@ -112,33 +117,39 @@ function PassportHelper () {
 
     // if the profile object from passport has an email, use it
     if (profile.emails && profile.emails[0]) userAttrs.email = profile.emails[0].value
-    if (!userAttrs.email) return next(new Error('No email available'))
+    // if (!userAttrs.email) return next(new Error('No email available'))
 
     const pass = await Passport.findOne({
       provider,
-      identifier: q.identifier.toString()
+      identifier: q.identifier
     })
 
     let user
 
     if (!req.user) {
-      if (!pass) { // new user signing up, create a new user
-        user = await User.create(userAttrs).fetch()
+      if (!pass) { // new user signing up, create a new user and/or passport
+        if (userAttrs.email) {
+          user = await User.findOne({ email: userAttrs.email })
+        }
+        if (!user) {
+          user = await User.create(userAttrs).fetch()
+        }
         await Passport.create({
           ...q,
           user: user.id
         })
         next(null, user)
       } else { // existing user logging in
-        if (_.has(q, 'tokens') && q.tokens !== passport.tokens) {
-          passport.tokens = q.tokens
+        if (_.has(q, 'tokens') && q.tokens !== pass.tokens) {
+          pass.tokens = q.tokens
         }
-        await passport.save()
-        user = User.findOne(passport.user)
-        next(null, user)
+        delete pass.id
+        await Passport.update({ id: pass.id }, { tokens: pass.tokens })
+        user = await User.find({ id: passport.user }).limit(1)
+        next(null, user[0])
       }
     } else { // user logged in and trying to add new Passport
-      if (!passport) {
+      if (!pass) {
         await Passport.create({
           ...q,
           user: req.user.id

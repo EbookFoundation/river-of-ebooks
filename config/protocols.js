@@ -66,7 +66,52 @@ module.exports.protocols = {
       }
     },
     update: async function (user, next) {
-      throw new Error('not implemented')
+      try {
+        const dbUser = await User.findOne({
+          id: user.id
+        })
+        if (!dbUser) throw new Error('An account with that id was not found.')
+
+        const passport = await Passport.findOne({
+          protocol: 'local',
+          user: user.id
+        })
+        if (!user.currentPassword && passport) throw new Error('Please enter your current password.')
+        if (passport) {
+          const res = await Passport.validatePassword(user.currentPassword, passport)
+          if (!res) throw new Error('incorrect password')
+
+          const otherUser = await User.findOne({ email: user.email })
+          if (otherUser && otherUser.id !== dbUser.id) throw new Error('There is already an account with that email.')
+          await User.update({ id: user.id }, {
+            email: user.email
+          })
+          if (user.password && user.password.length) {
+            await Passport.update({ id: passport.id }, {
+              password: user.password
+            })
+          }
+        } else { // no password yet, add one
+          const otherUser = await User.findOne({ email: user.email })
+          if (otherUser && otherUser.id !== dbUser.id) throw new Error('There is already an account with that email.')
+          await User.update({ id: user.id }, {
+            email: user.email
+          })
+          if (user.password && user.password.length) {
+            const token = generateToken()
+            await Passport.create({
+              protocol: 'local',
+              password: user.password,
+              user: dbUser.id,
+              accesstoken: token
+            })
+          }
+        }
+        delete dbUser.password
+        next(null, dbUser)
+      } catch (e) {
+        return next(e)
+      }
     },
     connect: async function (req, res, next) {
       try {
@@ -88,6 +133,23 @@ module.exports.protocols = {
         }
       } catch (e) {
         return next(e)
+      }
+    }
+  },
+  oauth2: {
+    login: async function (req, accessToken, refreshToken, profile, next) {
+      try {
+        const passportHelper = await sails.helpers.passport()
+        await passportHelper.connect(req, {
+          tokens: {
+            accessToken,
+            refreshToken
+          },
+          identifier: profile.id,
+          protocol: 'oauth2'
+        }, profile, next)
+      } catch (e) {
+        return next(e, false)
       }
     }
   }
