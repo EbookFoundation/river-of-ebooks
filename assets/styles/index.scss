@@ -4,6 +4,7 @@
 .content {
   padding: 14px 0 42px 0;
   position: relative;
+  overflow-y: auto;
 
   .error-box {
     min-height: 30px;
@@ -32,7 +33,7 @@
     .creator {
       padding: 0 14px;
       line-height: 60px;
-      max-width: 500px;
+      // max-width: 500px;
 
       .btn {
         margin: 12px 0 12px 12px;

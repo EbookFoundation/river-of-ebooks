@@ -38,7 +38,7 @@ module.exports = {
   beforeCreate: async function (key, next) {
     key.appid = await generateToken({ bytes: 12 })
     key.secret = await generateToken({ bytes: 48 })
-    key.verification_key = await generateToken({ bytes: 24 })
+    key.verification_key = await generateToken({ bytes: 24, base: 'hex' })
     next()
   },
   beforeUpdate: async function (key, next) {

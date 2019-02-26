@@ -2,7 +2,7 @@
 
 import React from 'react'
 
-import '../../styles/shared/underlineinput.scss'
+import './underlineinput.scss'
 
 const UnderlineInput = props => (
   <div className={'underlined-input ' + (props.className ? props.className : '')}>

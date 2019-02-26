@@ -1,6 +1,7 @@
 'use strict'
 
 import Ajax from '../lib/Ajax'
+const FileSaver = require('file-saver')
 
 const getPath = str => window.location.hostname === 'localhost' ? `http://localhost:3000${str}` : str
 
@@ -10,12 +11,14 @@ const ACTIONS = {
   edit_url: 'edit_url',
   delete_url: 'delete_url',
   list_url: 'list_url',
-  set_editing: 'set_editing',
+  set_editing_uri: 'set_editing_uri',
+  set_editing_publisher: 'set_editing_publisher',
   error: 'error',
   set_user: 'set_user',
   add_publisher: 'add_publisher',
   delete_publisher: 'delete_publisher',
-  set_publishers: 'set_publishers'
+  set_publishers: 'set_publishers',
+  update_publisher: 'update_publisher'
 }
 
 export default ACTIONS
@@ -50,8 +53,23 @@ export const addPublisher = url => ({
   data: url
 })
 
-export const setEditing = id => ({
-  type: ACTIONS.set_editing,
+export const updatePublisher = data => ({
+  type: ACTIONS.update_publisher,
+  data: data
+})
+
+export const setEditing = () => (dispatch) => {
+  dispatch(setEditingUri(null))
+  dispatch(setEditingPublisher(null))
+}
+
+export const setEditingUri = id => ({
+  type: ACTIONS.set_editing_uri,
+  data: id
+})
+
+export const setEditingPublisher = id => ({
+  type: ACTIONS.set_editing_publisher,
   data: id
 })
 
@@ -175,13 +193,14 @@ export const editUser = (user) => async (dispatch, getState) => {
   }
 }
 
-export const createNewPublisher = (name) => async (dispatch, getState) => {
+export const createNewPublisher = ({ name, url }) => async (dispatch, getState) => {
   dispatch(setWorking(true))
   try {
     const { data } = await Ajax.post({
       url: getPath('/api/keys'),
       data: {
-        name
+        name,
+        url
       }
     })
     dispatch(addPublisher(data))
@@ -213,4 +232,27 @@ export const removePublisher = id => async (dispatch, getState) => {
   } finally {
     dispatch(setWorking(false))
   }
+}
+
+export const verifyDomain = id => async (dispatch, getState) => {
+  dispatch(setWorking(true))
+  try {
+    const { data } = await Ajax.post({
+      url: getPath(`/api/keys/${id}/verify`)
+    })
+    dispatch(updatePublisher(data))
+    dispatch(setEditingPublisher(null))
+  } catch (e) {
+    dispatch({
+      type: ACTIONS.error,
+      data: e
+    })
+  } finally {
+    dispatch(setWorking(false))
+  }
+}
+
+export const saveFile = data => (dispatch) => {
+  var blob = new Blob([data], { type: 'text/plain;charset=utf-8' })
+  FileSaver.saveAs(blob, data)
 }

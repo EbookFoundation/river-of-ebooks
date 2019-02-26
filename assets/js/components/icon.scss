@@ -1,0 +1,20 @@
+@import '../../styles/lib/vars';
+
+.icon {
+  display: inline-block;
+  height: 40px;
+  line-height: 40px;
+  width: 40px;
+  padding: 5px;
+  background: transparent;
+  border-radius: 50%;
+
+  svg {
+    height: 30px;
+    width: 30px;
+
+    path {
+      fill: $white-2;
+    }
+  }
+}

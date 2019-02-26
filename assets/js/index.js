@@ -12,6 +12,8 @@ import { fetchData, createNewUrl, setEditing, editUser, createNewPublisher } fro
 
 import '../styles/index.scss'
 
+const uriRegex = /^(https?:\/\/)(.+\.)*(.+\.).{1,}(:\d+)?/i
+
 class App extends React.Component {
   constructor () {
     super()
@@ -24,9 +26,50 @@ class App extends React.Component {
         currentPassword: ''
       },
       urls: [],
-      publishers: [],
-      newPublisherUrl: '',
+      publishers: [
+        /*{
+          'created_at': 1551151516409,
+          'updated_at': 1551151651178,
+          'id': 1,
+          'name': 'foo',
+          'url': 'test.com',
+          'whitelisted': true,
+          'verified': false,
+          'verification_key': 'bsjj9s+bE1glKYF3YPzry0B5AZWFtkvI',
+          'appid': 'RtSST1hcuzU434MR',
+          'secret': 'aydN2jI4MzCwZPWRxfQGOMME/B8ZG5X4uoN0bo72AolUPKwYPVzMJIakT8HQ26s3',
+          'user': 1
+        },
+        {
+          'created_at': 1551152311149,
+          'updated_at': 1551152311149,
+          'id': 2,
+          'name': 'afasfsdfsd',
+          'url': 'test.com',
+          'whitelisted': false,
+          'verified': true,
+          'verification_key': 'qntO7L7Mcr6jtCjJh8rQN9kOx2x0bmep',
+          'appid': 'GCYJp+CIX4HxFPLy',
+          'secret': 'MsaG97ogRhPYoceZeWE06MNJ82PIFgqqWhL3L0/pDsJbMjKXcuUE3unmoewG0rmW',
+          'user': 1
+        },
+        {
+          'created_at': 1551152311149,
+          'updated_at': 1551152311149,
+          'id': 2,
+          'name': 'afasfsdfsd',
+          'url': 'test.com',
+          'whitelisted': true,
+          'verified': true,
+          'verification_key': 'qntO7L7Mcr6jtCjJh8rQN9kOx2x0bmep',
+          'appid': 'GCYJp+CIX4HxFPLy',
+          'secret': 'MsaG97ogRhPYoceZeWE06MNJ82PIFgqqWhL3L0/pDsJbMjKXcuUE3unmoewG0rmW',
+          'user': 1
+        }*/
+      ],
+      newPublisher: { name: '', url: '' },
       editingUrl: null,
+      editingPublisher: 1,
       working: false
     }
 
@@ -35,7 +78,16 @@ class App extends React.Component {
     this.setUserValue = this.setUserValue.bind(this)
     this.saveUser = this.saveUser.bind(this)
     this.getRegisteredPublishers = this.getRegisteredPublishers.bind(this)
-    this.setPublisherUrl = this.setPublisherUrl.bind(this)
+    this.setPublisherValue = this.setPublisherValue.bind(this)
+
+    /*this.state.user = {
+      ...this.state.user,
+      'created_at': 1551151466802,
+      'updated_at': 1551151520134,
+      'id': 1,
+      'email': 'admin@tkluge.net',
+      'admin': true
+    }*/
   }
   dispatch (action) {
     if (!action) throw new Error('dispatch: missing action')
@@ -52,18 +104,12 @@ class App extends React.Component {
   componentDidMount () {
     this.dispatch(fetchData())
   }
-  setPublisherUrl (e) {
+  setPublisherValue (which, e) {
     this.setState({
-      newPublisherUrl: e.target.value
-    })
-  }
-  getRegisteredUris () {
-    return this.state.urls.map((item, i) => {
-      return (<UriListItem
-        key={i}
-        dispatch={this.dispatch}
-        item={item}
-        editing={this.state.editingUrl === item.id} />)
+      newPublisher: {
+        ...this.state.newPublisher,
+        [which]: e.target.value
+      }
     })
   }
   setUserValue (which, e) {
@@ -85,10 +131,20 @@ class App extends React.Component {
       }
     })
   }
+  getRegisteredUris () {
+    return this.state.urls.map((item, i) => {
+      return (<UriListItem
+        key={i}
+        dispatch={this.dispatch}
+        item={item}
+        editing={this.state.editingUrl === item.id} />)
+    })
+  }
   getRegisteredPublishers () {
     return this.state.publishers.map((item, i) => {
       return (<PublisherListItem
         key={i}
+        editing={this.state.editingPublisher === item.id}
         dispatch={this.dispatch}
         item={item} />)
     })
@@ -142,11 +198,18 @@ class App extends React.Component {
                   </header>
                   <div className='creator flex-container'>
                     <UnderlineInput
-                      className='flex'
-                      placeholder='Site name'
-                      value={this.state.newPublisherUrl}
-                      onChange={this.setPublisherUrl} />
-                    <button className='btn' onClick={() => this.dispatch(createNewPublisher(this.state.newPublisherUrl))}>Create keys</button>
+                      className='flex stack-h'
+                      placeholder='Website name'
+                      value={this.state.newPublisher.name}
+                      onChange={e => this.setPublisherValue('name', e)} />
+                    <UnderlineInput
+                      className='flex stack-h'
+                      type='text'
+                      placeholder='Website domain (starts with http or https)'
+                      value={this.state.newPublisher.url}
+                      pattern={uriRegex}
+                      onChange={(e) => this.setPublisherValue('url', e)} />
+                    <button className='btn' onClick={() => this.dispatch(createNewPublisher(this.state.newPublisher))}>Create keys</button>
                   </div>
                   <ul className='list'>
                     {this.getRegisteredPublishers()}

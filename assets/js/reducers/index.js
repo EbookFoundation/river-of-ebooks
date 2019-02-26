@@ -4,7 +4,7 @@ import Actions from '../actions'
 
 const reducer = (state = {}, action) => {
   const { type, data } = action
-  let urls
+  let urls, ind
   switch (type) {
     case Actions.set_working:
       return {
@@ -41,13 +41,17 @@ const reducer = (state = {}, action) => {
       return {
         urls: urls
       }
-    case Actions.set_editing:
+    case Actions.set_editing_uri:
       return {
         editingUrl: data
       }
+    case Actions.set_editing_publisher:
+      return {
+        editingPublisher: data
+      }
     case Actions.error:
       return {
-        error: (data || {}).message || ''
+        error: (data || {}).data ? (data || {}).data : (data || {}).message
       }
     case Actions.add_publisher:
       return {
@@ -57,6 +61,14 @@ const reducer = (state = {}, action) => {
     case Actions.delete_publisher:
       return {
         publishers: state.publishers.filter(x => x.id !== data),
+        error: ''
+      }
+    case Actions.update_publisher:
+      const modifiedPublishers = [ ...state.publishers ]
+      ind = modifiedPublishers.findIndex(x => x.id === data.id)
+      modifiedPublishers[ind] = { ...modifiedPublishers[ind], ...data }
+      return {
+        publishers: modifiedPublishers,
         error: ''
       }
     default: return {}

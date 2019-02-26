@@ -85,6 +85,7 @@ module.exports.routes = {
   'GET /api/keys': 'PublishKeyController.list',
   'PATCH /api/keys/:id': 'PublishKeyController.refresh',
   'DELETE /api/keys/:id': 'PublishKeyController.delete',
+  'POST /api/keys/:id/verify': 'PublishKeyController.verify',
 
   'GET /admin/api/users': 'AdminController.listUsers',
   'GET /admin/api/publishers': 'AdminController.listPublishers',

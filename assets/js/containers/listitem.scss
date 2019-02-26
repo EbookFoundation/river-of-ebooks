@@ -1,0 +1,172 @@
+@import '../../styles/lib/vars';
+
+.uri-list-item {
+  min-height: 60px;
+  line-height: 60px;
+  max-width: 100%;
+  background: white;
+  box-shadow: $shadow-0;
+  padding: 0 0 0 14px;
+  cursor: pointer;
+  transition: margin 0.15s $transition,
+              padding 0.15s $transition,
+              border-radius 0.15s $transition;
+
+  .button.icon {
+    margin: 10px 5px 10px 5px;
+  }
+
+  &.editing {
+    margin: 24px 8px;
+    line-height: initial;
+    padding: 10px 0 10px 14px;
+    border-radius: 3px;
+    cursor: default;
+
+    header {
+      h3 {
+        display: inline-block;
+        margin: 10px 0 0 0;
+        font-weight: normal;
+        cursor: pointer;
+      }
+    }
+    .settings {
+      padding: 0 14px 0 0;
+    }
+    h4 {
+      margin: 30px 0 0 0;
+      font-weight: normal;
+    }
+  }
+
+  .stack {
+    line-height: 25px;
+    padding: 5px 0;
+
+    > span {
+      display: inline-block;
+      width: 100%;
+      @include ellip;
+    }
+    span.label {
+      font-size: 0.75rem;
+      color: $black-2;
+    }
+    span.value {
+      margin-top: -4px;
+    }
+  }
+
+  &.publisher-list-item {
+    cursor: default;
+    min-height: 120px;
+    padding: 10px 0 10px 14px;
+
+    .button.icon {
+      margin: 0;
+
+      &.tiny {
+        padding: 0;
+        height: 30px;
+        width: 30px;
+      }
+    }
+    .site-name {
+      height: 40px;
+      line-height: 40px;
+
+      h3 {
+        margin: 0;
+        line-height: 40px;
+        font-weight: normal;
+        cursor: default;
+      }
+      .button.icon {
+        margin-right: 10px;
+      }
+    }
+    .stack {
+      .label {
+        display: inline-block;
+        margin-bottom: -7px;
+      }
+      input {
+        display: inline-block;
+        line-height: 30px;
+        background: transparent;
+      }
+      input.value {
+        outline: none;
+        border: none;
+        font-family: monospace;
+        margin-right: 10px;
+      }
+    }
+    .col {
+      margin-right: 10px;
+
+      & + .col {
+        margin-left: 10px;
+      }
+    }
+    .verification {
+      line-height: 40px;
+      height: 40px;
+
+      .icon {
+        padding: 0;
+        height: 30px;
+        width: 30px;
+        vertical-align: middle;
+        margin-right: 10px;
+
+        &.verified {
+          path {
+            fill: $green;
+          }
+        }
+        &.unverified {
+          path {
+            fill: $red;
+          }
+        }
+      }
+      .btn {
+        vertical-align: middle;
+        border: 1px solid $black-4;
+        line-height: 30px;
+        height: 30px;
+        padding: 0 10px;
+
+        &:hover {
+          box-shadow: none;
+          color: $red;
+        }
+      }
+      span {
+        color: $green;
+      }
+    }
+    &.editing {
+      .buttons {
+        margin-top: 10px;
+
+        span.cancel {
+          display: inline-block;
+          line-height: 36px;
+          text-align: right;
+          padding-right: 10px;
+          color: $black-2;
+          cursor: pointer;
+        }
+      }
+      p {
+        .name {
+          color: $accent-3;
+          font-family: monospace;
+        }
+      }
+    }
+  }
+}

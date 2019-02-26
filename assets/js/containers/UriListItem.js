@@ -3,8 +3,8 @@
 import React from 'react'
 import IconButton from '../components/IconButton'
 import UnderlineInput from '../components/UnderlineInput'
-import '../../styles/shared/listitem.scss'
-import { changeUrlField, setUrl, removeUrl, setEditing } from '../actions'
+import './listitem.scss'
+import { changeUrlField, setUrl, removeUrl, setEditingUri } from '../actions'
 
 const uriRegex = /(.+:\/\/)?(.+\.)*(.+\.).{1,}(:\d+)?(.+)?/i
 const isbnRegex = /^(97(8|9))?\d{9}(\d|X)$/
@@ -19,7 +19,7 @@ class UriListItem extends React.Component {
   cancelEvent (e, id) {
     e.stopPropagation()
     if (id === false) return
-    this.props.dispatch(setEditing(id))
+    this.props.dispatch(setEditingUri(id))
   }
   getView () {
     return (
