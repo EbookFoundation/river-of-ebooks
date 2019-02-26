@@ -45,6 +45,6 @@ module.exports.policies = {
   },
 
   AdminController: {
-    '*': [ 'adminAuth' ]
+    '*': [ 'sessionAuth', 'adminAuth' ]
   }
 }

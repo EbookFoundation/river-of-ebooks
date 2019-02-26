@@ -87,7 +87,11 @@ module.exports.routes = {
   'DELETE /api/keys/:id': 'PublishKeyController.delete',
 
   'GET /admin/api/users': 'AdminController.listUsers',
-  'GET /admin/api/publishers': 'AdminController.listPublishers'
+  'GET /admin/api/publishers': 'AdminController.listPublishers',
+  'PATCH /admin/api/users/:id': 'AdminController.editUser',
+  'PATCH /admin/api/publishers/:id': 'AdminController.editPublisher',
+  'DELETE /admin/api/users/:id': 'AdminController.deleteUser',
+  'DELETE /admin/api/publishers/:id': 'AdminController.deletePublisher'
 
   //  ╦ ╦╔═╗╔╗ ╦ ╦╔═╗╔═╗╦╔═╔═╗
   //  ║║║║╣ ╠╩╗╠═╣║ ║║ ║╠╩╗╚═╗

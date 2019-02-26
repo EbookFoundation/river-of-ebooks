@@ -21,7 +21,7 @@ class PublisherListItem extends React.Component {
       <li className='uri-list-item publisher-list-item flex-container'>
         <div className='stack flex site-name flex-container flex-vertical'>
           <span className='label'>Website name</span>
-          <span className='value'>{this.props.item.url}</span>
+          <span className='value'>{this.props.item.name}</span>
         </div>
         <div className='flex flex-container'>
           <div className='stack flex-container flex-vertical'>

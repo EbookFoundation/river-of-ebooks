@@ -59,18 +59,26 @@ export default class Ajax {
 
       var fd = null
       var qs = ''
-      if (opts.data && opts.method.toLowerCase() !== 'get') {
+      if (!opts.noProcess && opts.data && opts.method.toLowerCase() !== 'get') {
         fd = new FormData()
         for (let key in opts.data) {
           fd.append(key, opts.data[key])
         }
-      } else if (opts.data) {
+      } else if (!opts.noProcess && opts.data) {
         qs += '?'
         let params = []
         for (let key in opts.data) {
           params.push([key, opts.data[key]].join('='))
         }
         qs += params.join('&')
+      }
+
+      if (opts.noProcess) {
+        opts.headers = {
+          'Content-Type': 'application/json',
+          ...opts.headers
+        }
+        try { fd = JSON.stringify(opts.data) } catch (e) { console.warn(e) }
       }
 
       xhr.onload = () => {

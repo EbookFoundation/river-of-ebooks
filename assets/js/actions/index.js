@@ -175,13 +175,13 @@ export const editUser = (user) => async (dispatch, getState) => {
   }
 }
 
-export const createNewPublisher = (url) => async (dispatch, getState) => {
+export const createNewPublisher = (name) => async (dispatch, getState) => {
   dispatch(setWorking(true))
   try {
     const { data } = await Ajax.post({
       url: getPath('/api/keys'),
       data: {
-        url
+        name
       }
     })
     dispatch(addPublisher(data))

@@ -7,7 +7,9 @@ const getPath = str => window.location.hostname === 'localhost' ? `http://localh
 const ACTIONS = {
   set_working: 'set_working',
   error: 'error',
-  set_admin_data: 'set_admin_data'
+  set_admin_data: 'set_admin_data',
+  a_update_user: 'a_update_user',
+  a_update_publisher: 'a_update_publisher'
 }
 
 export default ACTIONS
@@ -39,6 +41,54 @@ export const fetchAdminData = () => async (dispatch, getState) => {
         users,
         publishers
       }
+    })
+  } catch (e) {
+    dispatch({
+      type: ACTIONS.error,
+      data: e
+    })
+  } finally {
+    dispatch(setWorking(false))
+  }
+}
+
+export const patchUser = ({ id, ...data }) => async (dispatch, getState) => {
+  dispatch(setWorking(true))
+  try {
+    const { data: user } = await Ajax.patch({
+      url: getPath('/admin/api/users/' + id),
+      data: {
+        patch: data
+      },
+      noProcess: true
+    })
+    dispatch({
+      type: ACTIONS.a_update_user,
+      data: user
+    })
+  } catch (e) {
+    dispatch({
+      type: ACTIONS.error,
+      data: e
+    })
+  } finally {
+    dispatch(setWorking(false))
+  }
+}
+
+export const patchPublisher = ({ id, ...data }) => async (dispatch, getState) => {
+  dispatch(setWorking(true))
+  try {
+    const { data: publisher } = await Ajax.patch({
+      url: getPath('/admin/api/publishers/' + id),
+      data: {
+        patch: data
+      },
+      noProcess: true
+    })
+    dispatch({
+      type: ACTIONS.a_update_publisher,
+      data: publisher
     })
   } catch (e) {
     dispatch({

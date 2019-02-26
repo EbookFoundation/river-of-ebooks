@@ -3,12 +3,12 @@ const HttpError = require('../errors/HttpError')
 module.exports = {
   create: async function (req, res) {
     try {
-      const url = req.param('url')
-      if (!url.length) throw new Error('Name cannot be blank')
+      const name = req.param('name')
+      if (!name.length) throw new Error('Name cannot be blank')
 
       const created = await PublishKey.create({
         user: req.user.id,
-        url
+        name
       }).fetch()
       return res.json(created)
     } catch (e) {

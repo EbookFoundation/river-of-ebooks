@@ -20,11 +20,14 @@ module.exports = {
       model: 'User',
       required: true
     },
-    url: {
+    name: {
       type: 'string',
       required: true
     },
+    url: 'string',
     whitelisted: 'boolean',
+    verified: 'boolean',
+    verification_key: 'string',
     appid: {
       type: 'string'
     },
@@ -35,6 +38,7 @@ module.exports = {
   beforeCreate: async function (key, next) {
     key.appid = await generateToken({ bytes: 12 })
     key.secret = await generateToken({ bytes: 48 })
+    key.verification_key = await generateToken({ bytes: 24 })
     next()
   },
   beforeUpdate: async function (key, next) {

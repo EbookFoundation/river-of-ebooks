@@ -40,7 +40,7 @@ const CarouselItem = props => (
     {props.inputs}
     <span className='carousel-error'>{props.error}</span>
     <div className='button-row'>
-      <a href='#' onClick={props.onSmallButtonClick}>{props.smallButton}</a>
+      <a href='#' onClick={e => handleClick(e, props.onSmallButtonClick)}>{props.smallButton}</a>
       <button className='btn btn-primary' type='submit' >
         {props.button}
       </button>

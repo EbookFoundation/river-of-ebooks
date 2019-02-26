@@ -6,7 +6,7 @@ import { BrowserRouter as Router, Route, NavLink, Switch, Redirect } from 'react
 import Progress from './components/Progress'
 import appReducer from './reducers'
 import adminReducer from './reducers/admin'
-import { fetchAdminData } from './actions/admin'
+import { fetchAdminData, patchUser, patchPublisher } from './actions/admin'
 import Util from './lib/Util'
 
 import '../styles/admin.scss'
@@ -55,7 +55,7 @@ class App extends React.Component {
           <span className='flex'>{user.email}</span>
           <span className='flex'>
             <label for={`is-admin-${user.id}`} className='cb-label'>Admin?</label>
-            <input className='checkbox' type='checkbox' defaultChecked={user.admin} id={`is-admin-${user.id}`} />
+            <input className='checkbox' type='checkbox' checked={user.admin} onChange={() => this.dispatch(patchUser({ id: user.id, admin: !user.admin }))} id={`is-admin-${user.id}`} />
             <label for={`is-admin-${user.id}`} />
           </span>
           <div className='stack flex flex-container flex-vertical'>
@@ -71,12 +71,12 @@ class App extends React.Component {
       return (
         <li className='uri-list-item flex-container' key={`is-whitelisted-${pub.id}`}>
           <div className='stack flex flex-container flex-vertical'>
-            <span className='flex'><span className='name'>{pub.url}</span><span className='appid'>{pub.appid}</span></span>
+            <span className='flex'><span className='name'>{pub.name}</span><span className='appid'>{pub.appid}</span></span>
             <span className='flex'>{pub.user.email}</span>
           </div>
           <span className='flex'>
             <label for={`is-whitelisted-${pub.id}`} className='cb-label'>Whitelisted?</label>
-            <input className='checkbox' type='checkbox' defaultChecked={pub.whitelisted} id={`is-whitelisted-${pub.id}`} />
+            <input className='checkbox' type='checkbox' checked={pub.whitelisted} onChange={() => this.dispatch(patchPublisher({ id: pub.id, whitelisted: !pub.whitelisted }))} id={`is-whitelisted-${pub.id}`} />
             <label for={`is-whitelisted-${pub.id}`} />
           </span>
           <div className='stack flex flex-container flex-vertical'>
@@ -102,7 +102,7 @@ class App extends React.Component {
             <ul>
               <li><NavLink to='/users'>Users</NavLink></li>
               <li><NavLink to='/publishers'>Publishers</NavLink></li>
-              <li><a href='/targets'>Exit admin</a></li>
+              <li><a href='/keys'>Exit admin</a></li>
             </ul>
           </aside>
           <section className={'content flex' + (this.state.working ? ' working' : '')}>
