@@ -8,8 +8,10 @@ import appReducer from './reducers'
 import adminReducer from './reducers/admin'
 import { fetchAdminData, patchUser, patchPublisher } from './actions/admin'
 import Util from './lib/Util'
+import Icon from './components/Icon'
 
 import '../styles/admin.scss'
+import './containers/listitem.scss'
 
 const reducer = Util.combineReducers(appReducer, adminReducer)
 
@@ -32,6 +34,17 @@ class App extends React.Component {
     this.dispatch = this.dispatch.bind(this)
     this.getRegisteredUsers = this.getRegisteredUsers.bind(this)
     this.getRegisteredPublishers = this.getRegisteredPublishers.bind(this)
+
+    /*
+    this.state.user = {
+      ...this.state.user,
+      'created_at': 1551151466802,
+      'updated_at': 1551151520134,
+      'id': 1,
+      'email': 'admin@tkluge.net',
+      'admin': true
+    }
+    */
   }
   dispatch (action) {
     if (!action) throw new Error('dispatch: missing action')
@@ -56,11 +69,11 @@ class App extends React.Component {
           <span className='flex'>
             <label for={`is-admin-${user.id}`} className='cb-label'>Admin?</label>
             <input className='checkbox' type='checkbox' checked={user.admin} onChange={() => this.dispatch(patchUser({ id: user.id, admin: !user.admin }))} id={`is-admin-${user.id}`} />
-            <label for={`is-admin-${user.id}`} />
+            <label htmlFor={`is-admin-${user.id}`} />
           </span>
           <div className='stack flex flex-container flex-vertical'>
-            <span>{user.created_at}</span>
-            <span>{user.updated_at}</span>
+            <span className='flex'><span className='key'>Created at:</span><span className='value'>{new Date(user.created_at).toLocaleString()}</span></span>
+            <span className='flex'><span className='key'>Updated at:</span><span className='value'>{new Date(user.updated_at).toLocaleString()}</span></span>
           </div>
         </li>
       )
@@ -69,19 +82,27 @@ class App extends React.Component {
   getRegisteredPublishers () {
     return this.state.publishers.map(pub => {
       return (
-        <li className='uri-list-item flex-container' key={`is-whitelisted-${pub.id}`}>
-          <div className='stack flex flex-container flex-vertical'>
-            <span className='flex'><span className='name'>{pub.name}</span><span className='appid'>{pub.appid}</span></span>
-            <span className='flex'>{pub.user.email}</span>
-          </div>
-          <span className='flex'>
-            <label for={`is-whitelisted-${pub.id}`} className='cb-label'>Whitelisted?</label>
-            <input className='checkbox' type='checkbox' checked={pub.whitelisted} onChange={() => this.dispatch(patchPublisher({ id: pub.id, whitelisted: !pub.whitelisted }))} id={`is-whitelisted-${pub.id}`} />
-            <label for={`is-whitelisted-${pub.id}`} />
-          </span>
-          <div className='stack flex flex-container flex-vertical'>
-            <span>{pub.created_at}</span>
-            <span>{pub.updated_at}</span>
+        <li className='uri-list-item flex-container flex-vertical' key={`is-whitelisted-${pub.id}`}>
+          <header><h3>{pub.name}</h3></header>
+          <div className='flex flex-container'>
+            <div className='flex flex-container flex-vertical key-value'>
+              <span className='flex'><span className='key'>Owner:</span><span className='value'>{pub.user.email}</span></span>
+              <span className='flex'><span className='key'>App ID:</span><span className='value'>{pub.appid}</span></span>
+              <span className='flex contains-icon'>
+                <span className='key'>App domain:</span>
+                <span className='value'>{pub.url}</span>
+                <Icon icon={pub.verified ? 'shield-check' : 'alert-circle'} className={pub.verified ? 'verified' : 'unverified'} />
+              </span>
+            </div>
+            <span className='flex'>
+              <label htmlFor={`is-whitelisted-${pub.id}`} className='cb-label'>Whitelisted?</label>
+              <input className='checkbox' type='checkbox' checked={pub.whitelisted} onChange={() => this.dispatch(patchPublisher({ id: pub.id, whitelisted: !pub.whitelisted }))} id={`is-whitelisted-${pub.id}`} />
+              <label htmlFor={`is-whitelisted-${pub.id}`} />
+            </span>
+            <div className='stack flex flex-container flex-vertical'>
+              <span className='flex'><span className='key'>Created at:</span><span className='value'>{new Date(pub.created_at).toLocaleString()}</span></span>
+              <span className='flex'><span className='key'>Updated at:</span><span className='value'>{new Date(pub.updated_at).toLocaleString()}</span></span>
+            </div>
           </div>
         </li>
       )

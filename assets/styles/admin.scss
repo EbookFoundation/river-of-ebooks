@@ -4,11 +4,17 @@
   .list {
     li {
       padding: 5px 0;
-      height: 50px;
       min-height: 50px;
       line-height: 50px;
       padding: 0 14px;
 
+      header {
+        h3 {
+          font-weight: normal;
+          line-height: 30px;
+          margin: 0;
+        }
+      }
       .stack {
         line-height: 20px;
       }
@@ -45,6 +51,43 @@
             top: 1px;
           }
         }
+      }
+      .key-value {
+        span {
+          line-height: 30px;
+
+          &.contains-icon {
+            margin-bottom: 10px;
+          }
+        }
+        .icon {
+          padding: 0;
+          height: 20px;
+          width: 20px;
+          vertical-align: middle;
+          margin-left: 10px;
+          svg {
+            height: 20px;
+            width: 20px;
+          }
+          &.verified {
+            path {
+              fill: $green;
+            }
+          }
+          &.unverified {
+            path {
+              fill: $red;
+            }
+          }
+        }
+      }
+      .key {
+        margin-right: 10px;
+      }
+      .value {
+        font-family: monospace;
+        color: $black-3;
       }
     }
   }

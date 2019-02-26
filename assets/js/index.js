@@ -26,47 +26,7 @@ class App extends React.Component {
         currentPassword: ''
       },
       urls: [],
-      publishers: [
-        /*{
-          'created_at': 1551151516409,
-          'updated_at': 1551151651178,
-          'id': 1,
-          'name': 'foo',
-          'url': 'test.com',
-          'whitelisted': true,
-          'verified': false,
-          'verification_key': 'bsjj9s+bE1glKYF3YPzry0B5AZWFtkvI',
-          'appid': 'RtSST1hcuzU434MR',
-          'secret': 'aydN2jI4MzCwZPWRxfQGOMME/B8ZG5X4uoN0bo72AolUPKwYPVzMJIakT8HQ26s3',
-          'user': 1
-        },
-        {
-          'created_at': 1551152311149,
-          'updated_at': 1551152311149,
-          'id': 2,
-          'name': 'afasfsdfsd',
-          'url': 'test.com',
-          'whitelisted': false,
-          'verified': true,
-          'verification_key': 'qntO7L7Mcr6jtCjJh8rQN9kOx2x0bmep',
-          'appid': 'GCYJp+CIX4HxFPLy',
-          'secret': 'MsaG97ogRhPYoceZeWE06MNJ82PIFgqqWhL3L0/pDsJbMjKXcuUE3unmoewG0rmW',
-          'user': 1
-        },
-        {
-          'created_at': 1551152311149,
-          'updated_at': 1551152311149,
-          'id': 2,
-          'name': 'afasfsdfsd',
-          'url': 'test.com',
-          'whitelisted': true,
-          'verified': true,
-          'verification_key': 'qntO7L7Mcr6jtCjJh8rQN9kOx2x0bmep',
-          'appid': 'GCYJp+CIX4HxFPLy',
-          'secret': 'MsaG97ogRhPYoceZeWE06MNJ82PIFgqqWhL3L0/pDsJbMjKXcuUE3unmoewG0rmW',
-          'user': 1
-        }*/
-      ],
+      publishers: [],
       newPublisher: { name: '', url: '' },
       editingUrl: null,
       editingPublisher: 1,
@@ -79,15 +39,6 @@ class App extends React.Component {
     this.saveUser = this.saveUser.bind(this)
     this.getRegisteredPublishers = this.getRegisteredPublishers.bind(this)
     this.setPublisherValue = this.setPublisherValue.bind(this)
-
-    /*this.state.user = {
-      ...this.state.user,
-      'created_at': 1551151466802,
-      'updated_at': 1551151520134,
-      'id': 1,
-      'email': 'admin@tkluge.net',
-      'admin': true
-    }*/
   }
   dispatch (action) {
     if (!action) throw new Error('dispatch: missing action')

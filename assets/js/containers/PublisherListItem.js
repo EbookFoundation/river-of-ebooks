@@ -29,9 +29,9 @@ class PublisherListItem extends React.Component {
   }
   getView () {
     return (
-      <li key={this.props.item.appid} className='uri-list-item publisher-list-item flex-container flex-vertical'>
+      <li key={this.props.item.appid} className={'uri-list-item publisher-list-item flex-container flex-vertical' + (this.props.item.whitelisted ? ' whitelisted' : '')}>
         <header className='site-name flex-container'>
-          <h3 className='flex'>{this.props.item.name}</h3>
+          <h3 className='flex'>{`${this.props.item.name}${this.props.item.whitelisted ? '' : ' (awaiting approval)'}`}</h3>
           <ConfirmIconButton icon='delete' onClick={() => this.props.dispatch(removePublisher(this.props.item.id))} />
         </header>
         <div className='flex flex-container'>

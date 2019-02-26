@@ -1,6 +1,7 @@
 @import '../../styles/lib/vars';
 
 .uri-list-item {
+  position: relative;
   min-height: 60px;
   line-height: 60px;
   max-width: 100%;
@@ -166,6 +167,17 @@
           color: $accent-3;
           font-family: monospace;
         }
+      }
+    }
+    &:not(.whitelisted) {
+      &:before {
+        position: absolute;
+        content: '';
+        left: 0;
+        top: 0;
+        width: 4px;
+        height: 100%;
+        background: $red;
       }
     }
   }
