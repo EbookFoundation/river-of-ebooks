@@ -2,7 +2,7 @@
 
 import React from 'react'
 import Icon from './Icon'
-import './IconButton.scss'
+import './iconbutton.scss'
 
 const IconButton = props => {
   return (
