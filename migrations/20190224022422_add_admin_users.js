@@ -13,7 +13,8 @@ exports.up = function (knex, Promise) {
       t.string('verification_key')
       t.boolean('whitelisted').defaultTo(false)
       t.boolean('verified').defaultTo(false)
-      t.timestamps(true, true)
+      t.bigInteger('created_at')
+      t.bigInteger('updated_at')
     })
   ])
 }
