@@ -27,3 +27,102 @@ Note:  Generators are usually run using the globally-installed `sails` CLI (comm
 
 [![Build Status](https://travis-ci.org/miacona96/RoE-pipe.svg?branch=master)](https://travis-ci.org/miacona96/RoE-pipe)
 
+
+### Setup
+
+#### Standalone
+
+1. Standard npm install
+```
+git clone https://github.com/EbookFoundation/RoE-pipe
+cd RoE-pipe
+npm i
+```
+
+2. Create config files
+```
+touch knexfile.js ecosystem.config.js config/local.js
+```
+
+3. Add database info to knexfile and pm2 ecosystem
+```js
+/* -- knexfile.js -- */
+module.exports = {
+  client: 'pg',
+  connection: 'postgresql://user:password@example.com:5432/databasename'
+}
+
+/* -- ecosystem.config.js -- */
+
+// Options reference: https://pm2.io/doc/en/runtime/reference/ecosystem-file/
+module.exports = {
+  apps: [{
+    name: 'roe-base',
+    script: 'app.js',
+    instances: 1,
+    autorestart: true,
+    watch: false,
+    env: {
+      NODE_ENV: 'development'
+    },
+    env_production: {
+      NODE_ENV: 'production',
+      SAILS_DATASTORE_URL: 'postgresql://user:password@example.com:5432/databasename'
+    }
+  }]
+}
+```
+
+4. Add secrets to config/local.js
+```
+/* -- config/local.js -- */
+module.exports = {
+  skipperConfig: {
+    adapter: require('skipper-s3'),
+    key: 'S3_API_KEY',
+    secret: 'S3_API_SECRET',
+    bucket: 'S3_BUCKET'
+  },
+  passport: {
+    google: {
+      options: {
+        clientID: 'GOOGLE_CLIENT_ID',
+        clientSecret: 'GOOGLE_CLIENT_SECRET'
+      }
+    },
+    github: {
+      options: {
+        clientID: 'GITHUB_CLIENT_ID',
+        clientSecret: 'GITHUB_CLIENT_SECRET'
+      }
+    }
+  }
+}
+```
+
+5. Run database migrations
+```
+npm run db:migrate
+```
+
+6. Start server
+```
+npm start
+```
+
+
+#### Elastic Beanstalk
+
+1. Clone repo
+```
+git clone https://github.com/EbookFoundation/RoE-pipe
+cd RoE-pipe
+```
+
+2. Deploy to environment
+```
+eb deploy environment_name
+```
+
+3. Configure environment variables on elastic beanstalk
+
