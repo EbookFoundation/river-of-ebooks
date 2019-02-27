@@ -4,7 +4,13 @@
 ### Publishing a book
 
 ```
-POST to /api/publish containing the body:
+POST to /api/publish containing headers:
+{
+  roe-key: <api key>,
+  roe-secret: <api secret>
+}
+
+and body:
 
 {
   title: The book's title,
@@ -37,7 +43,7 @@ The server will respond with either:
 or
 
 ```
-400 BAD REQUEST
+400 BAD REQUEST / 403 UNAUTHORIZED
 {
   "error": string,
   "hint": string

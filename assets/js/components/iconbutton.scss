@@ -1,10 +1,11 @@
-@import '../lib/vars';
+@import '../../styles/lib/vars';
 
 .button.icon {
   height: 40px;
   line-height: 40px;
   width: 40px;
-  padding: 5px;
+  // padding: 5px;
+  text-align: center;
   background: transparent;
   border: none;
   outline: none;
@@ -17,7 +18,14 @@
     background: $black-4;
     box-shadow: $shadow-1;
   }
-  path {
-    fill: $black-2;
+  .icon {
+    padding: 0;
+    height: 30px;
+    line-height: 30px;
+    width: 30px;
+
+    path {
+      fill: $black-2;
+    }
   }
 }

@@ -35,3 +35,32 @@ $accent-2: #18517c;
 $accent-3: #4f91b8;
 
 $red: #FE4C52;
+$green: #4FE070;
+
+$small-break: 640px;
+$medium-break: 800px;
+$large-break: 1200px;
+
+$breakpoints: (
+  'small':  ( max-width: $small-break ),
+  'medium': ( max-width:  $medium-break ),
+  'large':  ( max-width: $large-break )
+) !default;
+
+@mixin break($breakpoint) {
+  @if map-has-key($breakpoints, $breakpoint) {
+    @media #{inspect(map-get($breakpoints, $breakpoint))} {
+      @content;
+    }
+  }
+  @else {
+    @warn "No value could be retrieved from `#{$breakpoint}`. "
+        + "Available breakpoints are: #{map-keys($breakpoints)}.";
+  }
+}
+
+@mixin ellip() {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

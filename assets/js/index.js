@@ -6,10 +6,13 @@ import { BrowserRouter as Router, Route, NavLink, Switch, Redirect } from 'react
 import Progress from './components/Progress'
 import UnderlineInput from './components/UnderlineInput'
 import UriListItem from './containers/UriListItem'
+import PublisherListItem from './containers/PublisherListItem'
 import reducer from './reducers'
 import { fetchData, createNewUrl, setEditing, editUser, createNewPublisher } from './actions'
 
 import '../styles/index.scss'
+
+const uriRegex = /^(https?:\/\/)(.+\.)*(.+\.).{1,}(:\d+)?/i
 
 class App extends React.Component {
   constructor () {
@@ -24,8 +27,9 @@ class App extends React.Component {
       },
       urls: [],
       publishers: [],
-      newPublisherUrl: '',
+      newPublisher: { name: '', url: '' },
       editingUrl: null,
+      editingPublisher: 1,
       working: false
     }
 
@@ -34,7 +38,7 @@ class App extends React.Component {
     this.setUserValue = this.setUserValue.bind(this)
     this.saveUser = this.saveUser.bind(this)
     this.getRegisteredPublishers = this.getRegisteredPublishers.bind(this)
-    this.setPublisherUrl = this.setPublisherUrl.bind(this)
+    this.setPublisherValue = this.setPublisherValue.bind(this)
   }
   dispatch (action) {
     if (!action) throw new Error('dispatch: missing action')
@@ -51,18 +55,12 @@ class App extends React.Component {
   componentDidMount () {
     this.dispatch(fetchData())
   }
-  setPublisherUrl (e) {
+  setPublisherValue (which, e) {
     this.setState({
-      newPublisherUrl: e.target.value
-    })
-  }
-  getRegisteredUris () {
-    return this.state.urls.map((item, i) => {
-      return (<UriListItem
-        key={i}
-        dispatch={this.dispatch}
-        item={item}
-        editing={this.state.editingUrl === item.id} />)
+      newPublisher: {
+        ...this.state.newPublisher,
+        [which]: e.target.value
+      }
     })
   }
   setUserValue (which, e) {
@@ -84,10 +82,20 @@ class App extends React.Component {
       }
     })
   }
+  getRegisteredUris () {
+    return this.state.urls.map((item, i) => {
+      return (<UriListItem
+        key={i}
+        dispatch={this.dispatch}
+        item={item}
+        editing={this.state.editingUrl === item.id} />)
+    })
+  }
   getRegisteredPublishers () {
     return this.state.publishers.map((item, i) => {
       return (<PublisherListItem
         key={i}
+        editing={this.state.editingPublisher === item.id}
         dispatch={this.dispatch}
         item={item} />)
     })
@@ -105,9 +113,12 @@ class App extends React.Component {
               </h2>
             </header>
             <ul>
+              <li><NavLink to='/keys'>Publishing keys</NavLink></li>
               <li><NavLink to='/targets'>Push URIs</NavLink></li>
               <li><NavLink to='/account'>My account</NavLink></li>
-              <li><NavLink to='/keys'>Publishing keys</NavLink></li>
+              {(this.state.user.id === 1 || this.state.user.admin) &&
+                <li><a href='/admin'>Admin</a></li>
+              }
             </ul>
           </aside>
           <section className={'content flex' + (this.state.working ? ' working' : '')}>
@@ -138,11 +149,18 @@ class App extends React.Component {
                   </header>
                   <div className='creator flex-container'>
                     <UnderlineInput
-                      className='flex'
-                      placeholder='Site URL'
-                      value={this.state.newPublisherUrl}
-                      onChange={this.setPublisherUrl} />
-                    <button className='btn' onClick={() => this.dispatch(createNewPublisher(this.state.newPublisherUrl))}>Create keys</button>
+                      className='flex stack-h'
+                      placeholder='Website name'
+                      value={this.state.newPublisher.name}
+                      onChange={e => this.setPublisherValue('name', e)} />
+                    <UnderlineInput
+                      className='flex stack-h'
+                      type='text'
+                      placeholder='Website domain (starts with http or https)'
+                      value={this.state.newPublisher.url}
+                      pattern={uriRegex}
+                      onChange={(e) => this.setPublisherValue('url', e)} />
+                    <button className='btn' onClick={() => this.dispatch(createNewPublisher(this.state.newPublisher))}>Create keys</button>
                   </div>
                   <ul className='list'>
                     {this.getRegisteredPublishers()}
@@ -181,7 +199,7 @@ class App extends React.Component {
                 </div>
               )} />
 
-              <Route path='/' render={() => <Redirect to='/targets' />} />
+              <Route path='/' render={() => <Redirect to='/keys' />} />
             </Switch>
           </section>
         </div>

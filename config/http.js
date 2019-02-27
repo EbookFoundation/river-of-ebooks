@@ -26,6 +26,14 @@ const publishLimiter = rateLimit({
   }
 })
 
+const allowCrossDomain = function (req, res, next) {
+  res.header('Access-Control-Allow-Origin', 'http://localhost:8080')
+  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,PATCH,DELETE')
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization')
+  res.header('Access-Control-Allow-Credentials', 'true')
+  next()
+}
+
 module.exports.http = {
 
   /****************************************************************************
@@ -47,6 +55,7 @@ module.exports.http = {
     ***************************************************************************/
 
     order: [
+      'allowCrossDomain',
       'rateLimit',
       'publishLimit',
       'cookieParser',
@@ -63,7 +72,8 @@ module.exports.http = {
     rateLimit: rateLimiter,
     publishLimit: publishLimiter,
     passportInit: require('passport').initialize(),
-    passportSession: require('passport').session()
+    passportSession: require('passport').session(),
+    allowCrossDomain: allowCrossDomain
 
     /***************************************************************************
     *                                                                          *

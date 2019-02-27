@@ -18,7 +18,8 @@ module.exports = {
     },
     email: {
       type: 'string'
-    }
+    },
+    admin: 'boolean'
 
     //  ╔═╗╔╦╗╔╗ ╔═╗╔╦╗╔═╗
     //  ║╣ ║║║╠╩╗║╣  ║║╚═╗
