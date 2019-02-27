@@ -3,8 +3,7 @@ exports.up = function (knex, Promise) {
     knex.schema.createTable('user', t => {
       t.increments('id').primary()
       t.string('email').notNullable()
-      t.integer('created_at')
-      t.integer('updated_at')
+      t.timestamps(true, true)
     }),
     knex.schema.createTable('passport', t => {
       t.increments('id').primary()
@@ -15,15 +14,13 @@ exports.up = function (knex, Promise) {
       t.string('identifier')
       t.json('tokens')
       t.integer('user').notNullable().references('user.id').onDelete('CASCADE').onUpdate('CASCADE')
-      t.integer('created_at')
-      t.integer('updated_at')
+      t.timestamps(true, true)
     }),
     knex.schema.createTable('targeturl', t => {
       t.increments('id').primary()
       t.integer('user').notNullable().references('user.id').onDelete('CASCADE').onUpdate('CASCADE')
       t.string('url')
-      t.integer('created_at')
-      t.integer('updated_at')
+      t.timestamps(true, true)
     }),
     knex.schema.createTable('book', t => {
       t.increments('id').primary()
@@ -33,8 +30,7 @@ exports.up = function (knex, Promise) {
       t.string('author')
       t.string('version')
       t.string('isbn')
-      t.integer('created_at')
-      t.integer('updated_at')
+      t.timestamps(true, true)
     })
   ])
 }
