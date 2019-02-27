@@ -29,7 +29,7 @@ class App extends React.Component {
       publishers: [],
       newPublisher: { name: '', url: '' },
       editingUrl: null,
-      editingPublisher: 1,
+      editingPublisher: null,
       working: false
     }
 
