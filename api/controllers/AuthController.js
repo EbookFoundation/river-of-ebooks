@@ -138,7 +138,7 @@ module.exports = {
         if (req.query.next) {
           res.status(302).set('Location', req.query.next)
         } else if (req.query.code) { // if came from oauth callback
-          res.status(302).set('Location', '/targets')
+          res.status(302).set('Location', '/keys')
         }
 
         sails.log.info('user', user, 'authenticated successfully')
