@@ -73,7 +73,6 @@ module.exports.routes = {
   'GET /auth/:provider/:action': 'AuthController.callback',
 
   'POST /api/publish': 'BooksController.publish',
-  'GET /api/books': 'BooksController.list',
 
   'GET /api/catalog': 'CatalogController.navigation',
   'GET /api/catalog/new': 'CatalogController.listNew',

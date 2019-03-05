@@ -56,29 +56,6 @@ module.exports = {
         error: e.message
       })
     }
-  },
-
-  list: async function (req, res) {
-    try {
-      const body = req.allParams()
-      let page = 1
-      const perPage = 200
-      if (body.page) {
-        page = Math.abs(+body.page) || 1
-        delete body.page
-      }
-      const books = await Book.find(body || {}).skip((page * perPage) - perPage).limit(perPage)
-
-      if (!books.length) {
-        throw new HttpError(404, 'No books matching those parameters were found.')
-      }
-      return res.json(books)
-    } catch (e) {
-      if (e instanceof HttpError) return e.send(res)
-      return res.status(500).json({
-        error: e.message
-      })
-    }
   }
 }
 

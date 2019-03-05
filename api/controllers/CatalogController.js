@@ -27,7 +27,7 @@ module.exports = {
           'type': 'application/opds+json',
           'rel': 'current'
         },
-        { 'rel': 'search', 'href': '/api/catalog/search{?title,author,isbn}', 'type': 'application/opds+json', 'templated': true }
+        { 'rel': 'search', 'href': 'search{?title,author,isbn}', 'type': 'application/opds+json', 'templated': true }
       ]
     })
   },
