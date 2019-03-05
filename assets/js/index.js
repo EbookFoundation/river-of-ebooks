@@ -7,8 +7,9 @@ import Progress from './components/Progress'
 import UnderlineInput from './components/UnderlineInput'
 import UriListItem from './containers/UriListItem'
 import PublisherListItem from './containers/PublisherListItem'
+import IconButton from '../components/IconButton'
 import reducer from './reducers'
-import { fetchData, createNewUrl, setEditing, editUser, createNewPublisher } from './actions'
+import { fetchData, createNewUrl, setEditing, editUser, createNewPublisher, regenerateSigningSecret } from './actions'
 
 import '../styles/index.scss'
 
@@ -23,8 +24,10 @@ class App extends React.Component {
         id: '',
         email: '',
         password: '',
-        currentPassword: ''
+        currentPassword: '',
+        signing_secret: ''
       },
+      signingSecretShown: false,
       urls: [],
       publishers: [],
       newPublisher: { name: '', url: '' },
@@ -39,6 +42,7 @@ class App extends React.Component {
     this.saveUser = this.saveUser.bind(this)
     this.getRegisteredPublishers = this.getRegisteredPublishers.bind(this)
     this.setPublisherValue = this.setPublisherValue.bind(this)
+    this.toggleRevealSecret = this.toggleRevealSecret.bind(this)
   }
   dispatch (action) {
     if (!action) throw new Error('dispatch: missing action')
@@ -98,6 +102,11 @@ class App extends React.Component {
         editing={this.state.editingPublisher === item.id}
         dispatch={this.dispatch}
         item={item} />)
+    })
+  }
+  toggleRevealSecret () {
+    this.setState({
+      signingSecretShown: !this.state.signingSecretShown
     })
   }
   render () {
@@ -194,6 +203,16 @@ class App extends React.Component {
                       onChange={(e) => this.setUserValue('currentPassword', e)} />
                     <div className='buttons'>
                       <button className='btn' onClick={this.saveUser}>Save</button>
+                    </div>
+                  </section>
+                  <section className='details'>
+                    <div className='row'>
+                      <h3>Signing secret</h3>
+                      <div className='flex-container'>
+                        <input className='flex' defaultValue={this.state.user.signing_secret} readonly type={this.state.signingSecretShown ? 'text' : 'password'} />
+                        <IconButton onClick={this.toggleRevealSecret} icon={this.state.signingSecretShown ? 'eye-close' : 'eye'} />
+                        <IconButton onClick={() => this.dispatch(regenerateSigningSecret())} icon={'refresh'} />
+                      </div>
                     </div>
                   </section>
                 </div>

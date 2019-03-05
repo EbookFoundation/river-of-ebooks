@@ -6,7 +6,7 @@
  */
 
 const HttpError = require('../errors/HttpError')
-const { asyncRead } = require('../util')
+const { asyncRead, hmacSign } = require('../util')
 const request = require('request')
 const uriRegex = /^(.+:\/\/)?(.+\.)*(.+\.).{1,}(:\d+)?(.+)?/i
 
@@ -65,6 +65,7 @@ async function sendUpdatesAsync (id) {
   if (!book) return
   for (const i in targets) {
     const item = targets[i]
+    const user = await User.findOne({ id: item.user })
     const { author: fAuthor, publisher: fPublisher, title: fTitle, isbn: fIsbn, url } = item
     const { author: bAuthor, publisher: bPublisher, title: bTitle, isbn: bIsbn } = book
     sails.log('sending ' + book.id + ' info to ' + url)
@@ -86,9 +87,14 @@ async function sendUpdatesAsync (id) {
       } catch (e) {
         content = await opdsHelper.book2opds(book)
       }
+      const timestamp = Date.now()
       request.post({
         url: url,
-        headers: { 'User-Agent': 'RoE-aggregator' },
+        headers: {
+          'User-Agent': 'RoE-aggregator',
+          'X-RoE-Signature': hmacSign(user.signing_secret, timestamp, content),
+          'X-RoE-Request-Timestamp': timestamp
+        },
         body: content,
         json: true
       }, function (err, httpResp, body) {

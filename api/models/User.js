@@ -19,7 +19,8 @@ module.exports = {
     email: {
       type: 'string'
     },
-    admin: 'boolean'
+    admin: 'boolean',
+    signing_secret: 'string'
 
     //  ╔═╗╔╦╗╔╗ ╔═╗╔╦╗╔═╗
     //  ║╣ ║║║╠╩╗║╣  ║║╚═╗
