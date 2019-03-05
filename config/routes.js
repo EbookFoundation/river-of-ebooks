@@ -61,8 +61,7 @@ module.exports.routes = {
 
   'POST /auth/email_exists': 'AuthController.emailExists',
   'POST /auth/email_available': 'AuthController.emailAvailable',
-  // 'POST /auth/local': 'AuthController.callback',
-  // 'POST /auth/local/:action': 'AuthController.callback',
+
   'GET /api/me': 'UserController.me',
   'PATCH /api/me': 'UserController.edit',
 
@@ -75,6 +74,10 @@ module.exports.routes = {
 
   'POST /api/publish': 'BooksController.publish',
   'GET /api/books': 'BooksController.list',
+
+  'GET /api/catalog': 'CatalogController.navigation',
+  'GET /api/catalog/new': 'CatalogController.listNew',
+  'GET /api/catalog/all': 'CatalogController.listAll',
 
   'POST /api/targets': 'TargetController.create',
   'GET /api/targets': 'TargetController.list',
