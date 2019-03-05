@@ -1,7 +1,7 @@
 # River of Ebooks REST API
 ## Information on how to use the api endpoints to publish and view ebook metadata
 
-### Publishing a book
+### Publishing ebook metadata
 
 ```
 POST to /api/publish containing headers:
@@ -13,7 +13,7 @@ POST to /api/publish containing headers:
 and body:
 
 {
-  title: The book's title,
+  title: The ebook's title,
   author: The author (optional),
   version: A version number (optional),
   isbn: The ISBN (optional),
@@ -23,7 +23,7 @@ and body:
 
 Each tuple of `(title, author, version, isbn)` must be unique.
 
-The `opds` parameter is an opds file sent along with the post body.
+The `opds` parameter is an opds2 file sent along with the post body.
 
 The server will respond with either:
 
@@ -36,7 +36,8 @@ The server will respond with either:
   "title": string,
   "author": string,
   "isbn": string,
-  "version": string
+  "version": string,
+  "storage": string
 }
 ```
 
@@ -52,10 +53,10 @@ or
 
 ### Fetching published books
 
-GET from /api/books with the query string parameters:
+GET from /api/catalog/all with the query string parameters:
 
 ```
-title: The book's title (optional)
+title: The ebook's title (optional)
 author: The author (optional)
 version: A version number (optional)
 isbn: The ISBN (optional)
@@ -63,24 +64,63 @@ isbn: The ISBN (optional)
 page: The page of results to view (200 results per page)
 ```
 
-For example: `GET /api/books?title=foo&page=3`
+For example: `GET /api/catalog/all?title=foo&page=3`
 
 The server will respond with either:
 
 ```
 200 OK
-[
-  {
-    "storage": "path/to/opds/storage/location",
-    "created_at": timestamp,
-    "updated_at": timestamp,
-    "id": number,
-    "title": string,
-    "author": string,
-    "isbn": string,
-    "version": string
-  }
-]
+{
+  "metadata":{
+    "title": "RoE all publications",
+    "itemsPerPage": 200,
+    "currentPage": 1
+  },
+  "links":[
+    {
+      "rel": "self",
+      "href": "all?page=1",
+      "type": "application/opds+json"
+    }
+    {
+      "rel": "search",
+      "href": "all{?title,author,version,isbn}",
+      "type": "application/opds+json",
+      "templated": true
+    }
+  ],
+  "publications":[
+    {
+      "metadata":{
+        "@type": "http://schema.org/Book",
+        "title": "Moby-Dick",
+        "author": "Herman Melville",
+        "identifier": "urn:isbn:978031600000X",
+        "language": "en",
+        "modified": "2015-09-29T17:00:00Z"
+      },
+      "links":[
+        {
+          "rel": "self",
+          "href": "http://example.org/manifest.json",
+          "type": "application/webpub+json"
+        }
+      ],
+      "images":[
+        {
+          "href": "http://example.org/cover.jpg",
+          "type": "image/jpeg",
+          "height": 1400,
+          "width": 800
+        },
+        {
+          "href": "http://example.org/cover.svg",
+          "type": "image/svg+xml"
+        }
+      ]
+    }
+  ]
+}
 ```
 
 or
@@ -98,7 +138,7 @@ or
 - Log in to the River of Ebooks website
 - Add your webhook URL and desired filters
 
-The server will send a POST request to the provided URL whenever a new ebook is published through the pipeline with the following data:
+The server will send a POST request with the following body to the provided URL whenever a new ebook is published through the pipeline:
 
 ```
 HTTP Headers:
@@ -106,13 +146,32 @@ HTTP Headers:
 
 HTTP Body:
 {
-  "storage": "path/to/opds/storage/location",
-  "created_at": timestamp,
-  "updated_at": timestamp,
-  "id": number,
-  "title": string,
-  "author": string,
-  "isbn": string,
-  "version": string
+  "metadata":{
+    "@type": "http://schema.org/Book",
+    "title": "Moby-Dick",
+    "author": "Herman Melville",
+    "identifier": "urn:isbn:978031600000X",
+    "language": "en",
+    "modified": "2015-09-29T17:00:00Z"
+  },
+  "links":[
+    {
+      "rel": "self",
+      "href": "http://example.org/manifest.json",
+      "type": "application/webpub+json"
+    }
+  ],
+  "images":[
+    {
+      "href": "http://example.org/cover.jpg",
+      "type": "image/jpeg",
+      "height": 1400,
+      "width": 800
+    },
+    {
+      "href": "http://example.org/cover.svg",
+      "type": "image/svg+xml"
+    }
+  ]
 }
 ```

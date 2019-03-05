@@ -6,6 +6,7 @@
  */
 
 const HttpError = require('../errors/HttpError')
+const { asyncRead } = require('../util')
 const request = require('request')
 const uriRegex = /^(.+:\/\/)?(.+\.)*(.+\.).{1,}(:\d+)?(.+)?/i
 
@@ -55,29 +56,6 @@ module.exports = {
         error: e.message
       })
     }
-  },
-
-  list: async function (req, res) {
-    try {
-      const body = req.allParams()
-      let page = 1
-      const perPage = 200
-      if (body.page) {
-        page = Math.abs(+body.page) || 1
-        delete body.page
-      }
-      const books = await Book.find(body || {}).skip((page * perPage) - perPage).limit(perPage)
-
-      if (!books.length) {
-        throw new HttpError(404, 'No books matching those parameters were found.')
-      }
-      return res.json(books)
-    } catch (e) {
-      if (e instanceof HttpError) return e.send(res)
-      return res.status(500).json({
-        error: e.message
-      })
-    }
   }
 }
 
@@ -96,10 +74,23 @@ async function sendUpdatesAsync (id) {
       if (fPublisher && !((bPublisher || '').includes(fPublisher))) continue
       if (fTitle && !((bTitle || '').includes(fTitle))) continue
       if (fIsbn && !((bIsbn || '').includes(fIsbn))) continue
+
+      let content
+      const skipperConfig = sails.config.skipperConfig
+      const adapterConfig = { ...skipperConfig, adapter: undefined }
+      const skipperAdapter = skipperConfig.adapter(adapterConfig)
+      const opdsHelper = await sails.helpers.opds()
+      try {
+        if (!book.storage.length) throw new Error('missing book opds file')
+        content = await asyncRead(skipperAdapter, opdsHelper, book.storage)
+      } catch (e) {
+        content = await opdsHelper.book2opds(book)
+      }
       request.post({
         url: url,
         headers: { 'User-Agent': 'RoE-aggregator' },
-        form: book
+        body: content,
+        json: true
       }, function (err, httpResp, body) {
         if (err) {
           sails.log(`error: failed to send book ${id} to ${url}`)
