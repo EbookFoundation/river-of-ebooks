@@ -4,7 +4,7 @@
 1. Grab your Signing Secret from the bottom of the 'My account' page. In this example, the Signing Secret is `919ac0b6c07b50`. Additionally, extract the raw request body from the request.
 ```js
 signing_secret = 'ROE_SIGNING_SECRET' // set this as an environment variable
->>> 919ac0b6c07b50
+>>> '919ac0b6c07b50'
 request_body = request.body()
 >>> {"metadata":{"@type":"http://schema.org/Book","title": "Moby-Dick" ...
 ```
@@ -14,8 +14,8 @@ request_body = request.body()
 timestamp = request.headers['X-RoE-Request-Timestamp']
 >>> 1551832182955
 if absolute_value(time.time() - timestamp) > 60 * 5:
-  # The request timestamp is more than five minutes from local time.
-  # It could be a replay attack, so let's ignore it.
+  // The request timestamp is more than five minutes from local time.
+  // It could be a replay attack, so let's ignore it.
   return
 ```
 
