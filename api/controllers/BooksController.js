@@ -93,7 +93,7 @@ async function sendUpdatesAsync (id) {
           url: url,
           headers: {
             'User-Agent': 'RoE-aggregator',
-            'X-RoE-Signature': hmacSign(user.signing_secret, timestamp, content),
+            'X-RoE-Signature': hmacSign(user.signing_secret, timestamp, JSON.stringify(content)),
             'X-RoE-Request-Timestamp': timestamp
           },
           body: content,
