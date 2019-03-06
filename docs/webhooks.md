@@ -13,7 +13,7 @@ request_body = request.body()
 ```js
 timestamp = request.headers['X-RoE-Request-Timestamp']
 >>> 1551832182955
-if absolute_value(time.time() - timestamp) > 60 * 5:
+if (absolute_value(time.time() - timestamp) > 60 * 5)
   // The request timestamp is more than five minutes from local time.
   // It could be a replay attack, so let's ignore it.
   return
