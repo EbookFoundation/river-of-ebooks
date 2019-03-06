@@ -256,3 +256,20 @@ export const saveFile = data => (dispatch) => {
   var blob = new Blob([data], { type: 'text/plain;charset=utf-8' })
   FileSaver.saveAs(blob, data)
 }
+
+export const regenerateSigningSecret = () => async (dispatch, getState) => {
+  dispatch(setWorking(true))
+  try {
+    const { data: user } = await Ajax.patch({
+      url: getPath('/api/me/regenerate_signing_secret')
+    })
+    dispatch(setUser(user))
+  } catch (e) {
+    dispatch({
+      type: ACTIONS.error,
+      data: e
+    })
+  } finally {
+    dispatch(setWorking(false))
+  }
+}

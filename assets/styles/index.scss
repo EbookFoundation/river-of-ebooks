@@ -46,12 +46,31 @@
     list-style: none;
     // overflow: hidden;
   }
-  .inputs {
+  .inputs,
+  .details {
     padding: 20px 14px;
 
     .buttons {
       margin-top: 14px;
       text-align: right;
+    }
+
+    input[readonly] {
+      background: transparent;
+      border: none;
+      outline: none;
+      font-family: monospace;
+    }
+    .row {
+      h4 {
+        font-size: .8em;
+        font-weight: normal;
+        color: $black-2;
+      }
+      h3,
+      h4 {
+        margin: 10px 0;
+      }
     }
   }
   &.working {

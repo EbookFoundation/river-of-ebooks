@@ -1,13 +1,4 @@
-const crypto = require('crypto')
-
-function generateToken ({ bytes, base }) {
-  return new Promise((resolve, reject) => {
-    crypto.randomBytes(bytes, (err, buf) => {
-      if (err) reject(err)
-      else resolve(buf.toString(base || 'base64'))
-    })
-  })
-}
+const { generateToken } = require('../util')
 
 module.exports = {
   attributes: {

@@ -4,6 +4,8 @@
  * @description :: Server-side logic for managing Users
  * @help        :: See http://links.sailsjs.org/docs/controllers
  */
+const { generateToken } = require('../util')
+const HttpError = require('../errors/HttpError')
 
 module.exports = {
   /**
@@ -35,5 +37,14 @@ module.exports = {
 
   me: function (req, res) {
     res.json(req.user)
+  },
+
+  regenerateSigningSecret: async function (req, res) {
+    try {
+      const user = await User.updateOne({ id: req.user.id }, { signing_secret: await generateToken({ bytes: 24 }) })
+      return res.json(user)
+    } catch (e) {
+      return (new HttpError(500, e.message)).send(res)
+    }
   }
 }

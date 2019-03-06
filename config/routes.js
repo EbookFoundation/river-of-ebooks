@@ -64,6 +64,7 @@ module.exports.routes = {
 
   'GET /api/me': 'UserController.me',
   'PATCH /api/me': 'UserController.edit',
+  'PATCH /api/me/regenerate_signing_secret': 'UserController.regenerateSigningSecret',
 
   'POST /auth/:provider': 'AuthController.callback',
   'POST /auth/:provider/:action': 'AuthController.callback',

@@ -1,7 +1,7 @@
 // api/helpers/passport.js
 // from https://github.com/trailsjs/sails-auth/blob/master/api/services/passport.js
-
 const url = require('url')
+const { generateToken } = require('../util')
 
 module.exports = {
   friendlyName: 'Load PassportHelper',
@@ -132,7 +132,7 @@ function PassportHelper () {
           user = await User.findOne({ email: userAttrs.email })
         }
         if (!user) {
-          user = await User.create(userAttrs).fetch()
+          user = await User.create({ userAttrs, signing_secret: await generateToken({ bytes: 24 }) }).fetch()
         }
         await Passport.create({
           ...q,
