@@ -132,7 +132,7 @@ function PassportHelper () {
           user = await User.findOne({ email: userAttrs.email })
         }
         if (!user) {
-          user = await User.create({ userAttrs, signing_secret: generateToken({ bytes: 24 }) }).fetch()
+          user = await User.create({ userAttrs, signing_secret: await generateToken({ bytes: 24 }) }).fetch()
         }
         await Passport.create({
           ...q,

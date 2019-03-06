@@ -1,5 +1,3 @@
-'use strict'
-
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { BrowserRouter as Router, Route, NavLink, Switch, Redirect } from 'react-router-dom'
@@ -7,7 +5,8 @@ import Progress from './components/Progress'
 import UnderlineInput from './components/UnderlineInput'
 import UriListItem from './containers/UriListItem'
 import PublisherListItem from './containers/PublisherListItem'
-import IconButton from '../components/IconButton'
+import IconButton from './components/IconButton'
+import ConfirmIconButton from './containers/ConfirmIconButton'
 import reducer from './reducers'
 import { fetchData, createNewUrl, setEditing, editUser, createNewPublisher, regenerateSigningSecret } from './actions'
 
@@ -208,10 +207,11 @@ class App extends React.Component {
                   <section className='details'>
                     <div className='row'>
                       <h3>Signing secret</h3>
+                      <h4>RoE signs the requests we send to you using this unique secret. Confirm that each request comes from RoE by verifying its unique signature.</h4>
                       <div className='flex-container'>
-                        <input className='flex' defaultValue={this.state.user.signing_secret} readonly type={this.state.signingSecretShown ? 'text' : 'password'} />
+                        <input className='flex' defaultValue={this.state.user.signing_secret} readOnly type={this.state.signingSecretShown ? 'text' : 'password'} />
                         <IconButton onClick={this.toggleRevealSecret} icon={this.state.signingSecretShown ? 'eye-close' : 'eye'} />
-                        <IconButton onClick={() => this.dispatch(regenerateSigningSecret())} icon={'refresh'} />
+                        <ConfirmIconButton onClick={() => this.dispatch(regenerateSigningSecret())} icon={'refresh'} />
                       </div>
                     </div>
                   </section>

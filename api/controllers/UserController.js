@@ -41,7 +41,7 @@ module.exports = {
 
   regenerateSigningSecret: async function (req, res) {
     try {
-      const user = await User.update({ id: req.user.id }, { signing_secret: generateToken({ bytes: 24 }) }).fetch()
+      const user = await User.updateOne({ id: req.user.id }, { signing_secret: await generateToken({ bytes: 24 }) })
       return res.json(user)
     } catch (e) {
       return (new HttpError(500, e.message)).send(res)

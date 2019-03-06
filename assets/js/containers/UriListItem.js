@@ -2,6 +2,7 @@
 
 import React from 'react'
 import IconButton from '../components/IconButton'
+import ConfirmIconButton from '../containers/ConfirmIconButton'
 import UnderlineInput from '../components/UnderlineInput'
 import './listitem.scss'
 import { changeUrlField, setUrl, removeUrl, setEditingUri } from '../actions'
@@ -32,7 +33,7 @@ class UriListItem extends React.Component {
           <span className='label'>Filters</span>
           <span className='value'>{['publisher', 'title', 'author', 'isbn'].reduce((a, x) => a + (this.props.item[x] ? 1 : 0), 0) || 'None'}</span>
         </div>
-        <IconButton icon='delete' onClick={() => this.props.dispatch(removeUrl(this.props.item.id))} />
+        <ConfirmIconButton icon='delete' onClick={() => this.props.dispatch(removeUrl(this.props.item.id))} />
       </li>
     )
   }
@@ -41,7 +42,7 @@ class UriListItem extends React.Component {
       <li className='uri-list-item flex-container flex-vertical editing' onClick={(e) => this.cancelEvent(e, false)}>
         <header className='flex-container' onClick={(e) => this.cancelEvent(e, null)}>
           <h3 className='flex'>Editing: {this.props.item.url}</h3>
-          <IconButton icon='delete' onClick={() => this.props.dispatch(removeUrl(this.props.item.id))} />
+          <ConfirmIconButton icon='delete' onClick={() => this.props.dispatch(removeUrl(this.props.item.id))} />
         </header>
         <div className='settings'>
           <UnderlineInput

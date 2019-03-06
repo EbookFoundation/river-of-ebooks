@@ -8,12 +8,19 @@ export default class ConfirmIconButton extends React.Component {
       confirmed: false
     }
     this.onClick = this.onClick.bind(this)
+    this.timer = null
   }
   onClick (e) {
+    e.stopPropagation()
     if (this.state.confirmed) {
+      clearTimeout(this.timer)
+      this.setState({ confirmed: false })
       this.props.onClick(e)
     } else {
       this.setState({ confirmed: true })
+      this.timer = setTimeout(() => {
+        this.setState({ confirmed: false })
+      }, 4000)
     }
   }
   render () {

@@ -143,6 +143,8 @@ The server will send a POST request with the following body to the provided URL 
 ```
 HTTP Headers:
   User-Agent: RoE-aggregator
+  X-Roe-Request-Timestamp: number
+  X-Roe-Signature: string
 
 HTTP Body:
 {

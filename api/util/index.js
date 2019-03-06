@@ -31,8 +31,8 @@ function generateToken ({ bytes, base }) {
 
 function hmacSign (secret, timestamp, body) {
   const value = `${APP_VERSION}:${timestamp}:${body}`
-  const hmac = crypto.createHmac('sha256', secret).update(value, 'utf-8').digest('hex')
-  return hmac
+  const hmac = crypto.createHmac('sha256', secret.toString()).update(value, 'utf-8').digest('hex')
+  return `${APP_VERSION}=${hmac}`
 }
 
 module.exports = {
