@@ -1,12 +1,10 @@
 # River of Ebooks
+https://github.com/EbookFoundation/RoE-pipe
 
 ## About
 The River of Ebooks serves as an easy-to-use ebook aggregator. Publishers can send metadata from new and updated ebooks through the River where it will be available for any downstream consumers to read, allowing for a more widely available ebook collection. This way, ebooks can be made available on all end user sites, instead of only the site they were published with.
 
 -----
-
-### Links
-+ [Sails framework documentation](https://sailsjs.com/documentation)
 
 ### Version info
 This app was originally generated on Tue Oct 16 2018 01:21:31 GMT+0000 (UTC) using Sails v1.0.2.

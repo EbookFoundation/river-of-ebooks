@@ -1,4 +1,4 @@
-# River of Ebooks signed requests
+# River of Ebooks webhooks and signed requests
 ## Information on how to receive new publications from RoE
 
 To have RoE send your service any newly published or updated ebooks, you will first need to register an account and then create a Push URI. RoE will send a POST request containing the OPDS2 metadata from any published or updated book to each valid URL. The POST body structure can be viewed in the [API documentation](docs/api).

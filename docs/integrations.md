@@ -2,7 +2,7 @@
 ## Information on existing RoE integrations with other websites and services
 
 
-### readthedocs.org
+### - readthedocs.org
 [view on github](https://github.com/ghowardsit/readthedocs.org)
 New ebooks published using ReadTheDocs will automatically be sent to the River of Ebooks.
 
