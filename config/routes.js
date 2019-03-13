@@ -22,9 +22,9 @@ module.exports.routes = {
   *                                                                          *
   ***************************************************************************/
 
-  'GET /': {
-    view: 'pages/index'
-  },
+  'GET /': 'HomeController.show',
+  'GET /docs/:page': 'HomeController.docs',
+
   'GET /login': {
     view: 'pages/login'
   },

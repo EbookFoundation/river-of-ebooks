@@ -1,7 +1,7 @@
 <% var key, item %>
 <% htmlWebpackPlugin.options.links = htmlWebpackPlugin.options.links || [] %>
 <!DOCTYPE html>
-<html>
+<html lang="en-US">
   <head>
     <meta charset="UTF-8">
     <title>River of Ebooks | admin</title>
@@ -10,7 +10,7 @@
       if (typeof item === 'string' || item instanceof String) { item = { href: item, rel: 'stylesheet' } } %>
       <link<% for (key in item) { %> <%= key %>="<%= item[key] %>"<% } %> /><%
     } %>
-    <meta name="viewport" content="initial-scale=1, width=device-width, maximum-scale=1, minimum-scale=1, user-scalable=no" />
+    <meta name="viewport" content="initial-scale=1, width=device-width, maximum-scale=1, minimum-scale=1" />
   </head>
   <body>
     <div id="root"></div>

@@ -80,3 +80,106 @@
     }
   }
 }
+
+.home {
+  header {
+    height: 50px;
+    line-height: 50px;
+
+    .logo {
+      color: $black-1;
+      text-decoration: none;
+      font-size: 1.2em;
+      padding: 0 20px;
+    }
+    nav {
+      a {
+        text-decoration: none;
+        display: inline-block;
+        line-height: 50px;
+        padding: 0 20px;
+        color: $accent-2;
+
+        &:hover {
+          text-decoration: underline;
+        }
+        &:last-of-type {
+          line-height: 40px;
+          height: 40px;
+          margin: 5px 20px 5px 0;
+          background: $accent-1;
+          color: $text-light-1;
+          border-radius: 3px;
+        }
+      }
+    }
+  }
+  footer {
+    height: 40px;
+    line-height: 40px;
+    background: $accent-1;
+    color: white;
+    padding: 0 20px;
+    box-shadow: $shadow-3;
+
+    a {
+      color: $accent-3;
+      text-decoration: none;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+  main {
+    background: white;
+    width: 85%;
+    max-width: 900px;
+    box-shadow: $shadow-1;
+    padding: 100px 60px 140px 60px;
+    margin: 60px auto 100px auto;
+
+    h2,
+    h3,
+    h4 {
+      margin: 40px 0 10px 0;
+      font-weight: normal;
+      color: $black-1;
+    }
+    hr {
+      border: none;
+      border-top: 1px solid $black-3;
+      margin: 40px 80px;
+    }
+    a {
+      color: $accent-2;
+    }
+    pre {
+      background: $black-5;
+      padding: 10px;
+      border-radius: 3px;
+
+      &:before {
+        display: block;
+        content: '';
+        background: $accent-3;
+        height: 100%;
+        width: 2px;
+        top: 0;
+        left: 0;
+      }
+      code {
+        background: transparent;
+        padding: 0;
+      }
+    }
+    code {
+      background: $black-5;
+      padding: 2px 5px;
+      border-radius: 3px;
+    }
+    p {
+      line-height: 1.4em;
+    }
+  }
+}
