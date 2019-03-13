@@ -23,7 +23,7 @@ and body:
 
 Each tuple of `(title, author, version, isbn)` must be unique.
 
-The `opds` parameter is an opds2 file sent along with the post body.
+The `opds` parameter is an opds2 file containing an opds Publication sent along with the post body.
 
 The server will respond with either:
 
