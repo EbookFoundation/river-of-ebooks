@@ -1,14 +1,13 @@
 'use strict'
 
 import React from 'react'
-import IconButton from '../components/IconButton'
 import ConfirmIconButton from '../containers/ConfirmIconButton'
 import UnderlineInput from '../components/UnderlineInput'
 import './listitem.scss'
 import { changeUrlField, setUrl, removeUrl, setEditingUri } from '../actions'
 
 const uriRegex = /(.+:\/\/)?(.+\.)*(.+\.).{1,}(:\d+)?(.+)?/i
-const isbnRegex = /^(97(8|9))?\d{9}(\d|X)$/
+// const isbnRegex = /^(97(8|9))?\d{9}(\d|X)$/
 
 class UriListItem extends React.Component {
   constructor () {
@@ -81,11 +80,10 @@ class UriListItem extends React.Component {
             onBlur={(e) => this.props.dispatch(setUrl(this.props.item))} />
           <UnderlineInput
             className='uri flex'
-            type='number'
+            type='text'
             name={'isbn-' + this.props.item.id}
-            placeholder='ISBN'
+            placeholder='Identifier'
             value={'' + this.props.item.isbn}
-            pattern={isbnRegex}
             onChange={(e) => this.props.dispatch(changeUrlField(this.props.item.id, 'isbn', e.target.value))}
             onBlur={(e) => this.props.dispatch(setUrl(this.props.item))} />
         </div>
