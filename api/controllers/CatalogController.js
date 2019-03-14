@@ -57,10 +57,10 @@ module.exports = {
           currentPage: page
         },
         links: [
-          { rel: 'self', href: `new?page=${page}`, type: 'application/opds+json' },
-          { rel: 'prev', href: `new?page=${page > 1 ? page - 1 : page}`, type: 'application/opds+json' },
-          { rel: 'next', href: `new?page=${page + 1}`, type: 'application/opds+json' },
-          { 'rel': 'search', 'href': 'all{?title,author,version,isbn}', 'type': 'application/opds+json', 'templated': true }
+          { rel: 'self', href: `all?page=${page}`, type: 'application/opds+json' },
+          { rel: 'prev', href: `all?page=${page > 1 ? page - 1 : page}`, type: 'application/opds+json' },
+          { rel: 'next', href: `all?page=${page + 1}`, type: 'application/opds+json' },
+          { rel: 'search', href: 'all{?title,author,version,isbn}', type: 'application/opds+json', templated: true }
         ],
         publications: books
       })

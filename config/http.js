@@ -73,7 +73,7 @@ module.exports.http = {
     publishLimit: publishLimiter,
     passportInit: require('passport').initialize(),
     passportSession: require('passport').session(),
-    allowCrossDomain: allowCrossDomain
+    allowCrossDomain: allowCrossDomain,
 
     /***************************************************************************
     *                                                                          *
@@ -83,10 +83,10 @@ module.exports.http = {
     *                                                                          *
     ***************************************************************************/
 
-    // bodyParser: (function _configureBodyParser(){
-    //   var skipper = require('skipper');
-    //   var middlewareFn = skipper({ strict: true });
-    //   return middlewareFn;
-    // })(),
+    bodyParser: (function _configureBodyParser () {
+      const skipper = require('skipper')
+      const middlewareFn = skipper({ strict: true })
+      return middlewareFn
+    })()
   }
 }

@@ -23,7 +23,7 @@ module.exports = {
       if (!body.metadata['@type'] || body.metadata['@type'] !== 'http://schema.org/Book') throw new HttpError(400, 'Invalid \'@type\': expected \'http://schema.org/Book\'')
 
       const query = {
-        source: host,
+        hostname: host,
         title: body.metadata.title,
         author: body.metadata.author,
         publisher: body.metadata.publisher,
