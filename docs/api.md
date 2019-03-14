@@ -10,20 +10,31 @@ POST to /api/publish containing headers:
   roe-secret: <api secret>
 }
 
-and body:
+and opds2 publication body with type `application/json`:
 
 {
-  title: The ebook's title,
-  author: The author (optional),
-  version: A version number (optional),
-  isbn: The ISBN (optional),
-  opds: file
+  "metadata": {
+    "@type": "http://schema.org/Book",
+    "title": "Moby-Dick",
+    "author": "Herman Melville",
+    "identifier": "urn:isbn:978031600000X",
+    "publisher": "Ebook Publisher.com",
+    "language": "en",
+    "modified": "2015-09-29T17:00:00Z"
+  },
+  "links": [
+    {"rel": "self", "href": "http://example.org/manifest.json", "type": "application/webpub+json"}
+  ],
+  "images": [
+    {"href": "http://example.org/cover.jpg", "type": "image/jpeg", "height": 1400, "width": 800},
+    {"href": "http://example.org/cover-small.jpg", "type": "image/jpeg", "height": 700, "width": 400},
+    {"href": "http://example.org/cover.svg", "type": "image/svg+xml"}
+  ]
 }
 ```
 
-Each tuple of `(title, author, version, isbn)` must be unique.
-
-The `opds` parameter is an opds2 file containing an opds Publication sent along with the post body.
+@Type must be `http://schema.org/Book`.
+Each tuple of `(title, author, publisher, identifier, modified)` must be unique.
 
 The server will respond with either:
 
@@ -35,9 +46,10 @@ The server will respond with either:
   "id": number,
   "title": string,
   "author": string,
-  "isbn": string,
+  "publisher": string,
+  "identifier": string,
   "version": string,
-  "storage": string
+  "opds": json
 }
 ```
 
@@ -95,6 +107,7 @@ The server will respond with either:
         "@type": "http://schema.org/Book",
         "title": "Moby-Dick",
         "author": "Herman Melville",
+        "publisher": "Ebook Publisher.com",
         "identifier": "urn:isbn:978031600000X",
         "language": "en",
         "modified": "2015-09-29T17:00:00Z"
@@ -152,6 +165,7 @@ HTTP Body:
     "@type": "http://schema.org/Book",
     "title": "Moby-Dick",
     "author": "Herman Melville",
+    "publisher": "Ebook Publisher.com",
     "identifier": "urn:isbn:978031600000X",
     "language": "en",
     "modified": "2015-09-29T17:00:00Z"

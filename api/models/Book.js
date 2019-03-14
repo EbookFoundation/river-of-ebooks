@@ -20,10 +20,10 @@ module.exports = {
     title: { type: 'string', required: true },
     author: { type: 'string' },
     publisher: { type: 'string' },
-    isbn: { type: 'string' },
+    identifier: { type: 'string' },
     version: { type: 'string' },
     hostname: { type: 'string' },
-    storage: { type: 'string' }
+    opds: { type: 'json' }
 
     //  ╔═╗╔╦╗╔╗ ╔═╗╔╦╗╔═╗
     //  ║╣ ║║║╠╩╗║╣  ║║╚═╗

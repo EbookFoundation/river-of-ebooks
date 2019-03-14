@@ -6,7 +6,7 @@
  */
 
 const HttpError = require('../errors/HttpError')
-const { asyncRead, hmacSign } = require('../util')
+const { hmacSign } = require('../util')
 const request = require('request')
 const uriRegex = /^(.+:\/\/)?(.+\.)*(.+\.).{1,}(:\d+)?(.+)?/i
 
@@ -19,37 +19,37 @@ module.exports = {
 
       if (!host) throw new HttpError(400, 'Missing hostname')
       if (!body) throw new HttpError(400, 'Missing body')
+      if (!body.metadata) throw new HttpError(400, 'Missing OPDS metadata')
+      if (!body.metadata['@type'] || body.metadata['@type'] !== 'http://schema.org/Book') throw new HttpError(400, 'Invalid \'@type\': expected \'http://schema.org/Book\'')
 
-      const bookExists = await Book.findOne(body)
+      const query = {
+        hostname: host,
+        title: body.metadata.title,
+        author: body.metadata.author,
+        publisher: body.metadata.publisher,
+        identifier: body.metadata.identifier,
+        version: body.metadata.modified.replace(/\D/g, '')
+      }
+
+      const bookExists = await Book.findOne(query)
 
       if (bookExists) {
-        throw new HttpError(400, 'Version already exists')
+        throw new HttpError(400, 'Ebook already exists')
       } else {
-        const { title, isbn, author, publisher } = body
-        // require at least 2 fields to be filled out
-        if ([title, isbn, author, publisher].reduce((a, x) => a + (x ? 1 : 0), 0) >= 2) {
-          result = await Book.create(body).fetch()
+        const { publisher, title, author, identifier } = body.metadata
+        // require at least 3 fields to be filled out
+        if ([title, identifier, author, publisher].reduce((a, x) => a + (x ? 1 : 0), 0) >= 3) {
+          result = await Book.create({
+            ...query,
+            opds: body
+          }).fetch()
         } else {
-          throw new HttpError(400, 'Please fill out at least 2 fields (title, author, publisher, isbn)')
+          throw new HttpError(400, 'Please fill out at least 3 opds metadata fields (title, author, publisher, identifier)')
         }
       }
 
-      if (req.file('opds')) {
-        req.file('opds').upload(sails.config.skipperConfig, async function (err, uploaded) {
-          if (err) {
-            await Book.destroy({ id: result.id })
-            throw new HttpError(500, err.message)
-          }
-          const fd = (uploaded[0] || {}).fd
-          await Book.update({ id: result.id }, { storage: fd })
-          sendUpdatesAsync(result.id)
-          return res.json({
-            ...result
-          })
-        })
-      } else {
-        throw new HttpError(400, 'Missing OPDS file upload')
-      }
+      sendUpdatesAsync(result)
+      return res.json(result)
     } catch (e) {
       if (e instanceof HttpError) return e.send(res)
       return res.status(500).json({
@@ -59,16 +59,16 @@ module.exports = {
   }
 }
 
-async function sendUpdatesAsync (id) {
-  const book = await Book.findOne({ id })
+async function sendUpdatesAsync (book) {
+  const id = book.id
   const targets = await TargetUrl.find()
   if (!book) return
   for (const i in targets) {
     try {
       const item = targets[i]
       const user = await User.findOne({ id: item.user })
-      const { author: fAuthor, publisher: fPublisher, title: fTitle, isbn: fIsbn, url } = item
-      const { author: bAuthor, publisher: bPublisher, title: bTitle, isbn: bIsbn } = book
+      const { author: fAuthor, publisher: fPublisher, title: fTitle, identifier: fIsbn, url } = item
+      const { author: bAuthor, publisher: bPublisher, title: bTitle, identifier: bIsbn, opds } = book
       sails.log('sending ' + book.id + ' info to ' + url)
 
       if (uriRegex.test(url)) {
@@ -77,17 +77,7 @@ async function sendUpdatesAsync (id) {
         if (fTitle && !((bTitle || '').includes(fTitle))) continue
         if (fIsbn && !((bIsbn || '').includes(fIsbn))) continue
 
-        let content
-        const skipperConfig = sails.config.skipperConfig
-        const adapterConfig = { ...skipperConfig, adapter: undefined }
-        const skipperAdapter = skipperConfig.adapter(adapterConfig)
-        const opdsHelper = await sails.helpers.opds()
-        try {
-          if (!book.storage.length) throw new Error('missing book opds file')
-          content = await asyncRead(skipperAdapter, opdsHelper, book.storage)
-        } catch (e) {
-          content = await opdsHelper.book2opds(book)
-        }
+        let content = opds
         const timestamp = Date.now()
         request.post({
           url: url,

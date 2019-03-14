@@ -85,12 +85,17 @@
   header {
     height: 50px;
     line-height: 50px;
+    flex: none;
 
     .logo {
       color: $black-1;
       text-decoration: none;
       font-size: 1.2em;
       padding: 0 20px;
+
+      @include break('small') {
+        display: none;
+      }
     }
     nav {
       a {
@@ -107,7 +112,7 @@
           line-height: 40px;
           height: 40px;
           margin: 5px 20px 5px 0;
-          background: $accent-1;
+          background: $accent-2;
           color: $text-light-1;
           border-radius: 3px;
         }
@@ -115,12 +120,13 @@
     }
   }
   footer {
-    height: 40px;
+    min-height: 40px;
     line-height: 40px;
     background: $accent-1;
     color: white;
     padding: 0 20px;
     box-shadow: $shadow-3;
+    flex: none;
 
     a {
       color: $accent-3;
@@ -131,7 +137,7 @@
       }
     }
   }
-  main {
+  .paper {
     background: white;
     width: 85%;
     max-width: 900px;
@@ -158,6 +164,7 @@
       background: $black-5;
       padding: 10px;
       border-radius: 3px;
+      overflow-x: scroll;
 
       &:before {
         display: block;
@@ -180,6 +187,12 @@
     }
     p {
       line-height: 1.4em;
+    }
+
+    @include break('small') {
+      width: 100%;
+      padding: 30px 10px;
+      margin: 0;
     }
   }
 }
