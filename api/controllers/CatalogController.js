@@ -1,5 +1,4 @@
 const HttpError = require('../errors/HttpError')
-const { asyncRead } = require('../util')
 
 module.exports = {
   navigation: async function (req, res) {
@@ -49,19 +48,7 @@ module.exports = {
         throw new HttpError(404, 'No books matching those parameters were found.')
       }
 
-      const skipperConfig = sails.config.skipperConfig
-      const adapterConfig = { ...skipperConfig, adapter: undefined }
-      const skipperAdapter = skipperConfig.adapter(adapterConfig)
-      const opdsHelper = await sails.helpers.opds()
-
-      books = await Promise.all(books.map(book => {
-        try {
-          if (!book.storage.length) throw new Error('missing book opds file')
-          return asyncRead(skipperAdapter, opdsHelper, book.storage)
-        } catch (e) {
-          return opdsHelper.book2opds(book)
-        }
-      }))
+      books = books.map(b => b.opds)
 
       return res.json({
         metadata: {
