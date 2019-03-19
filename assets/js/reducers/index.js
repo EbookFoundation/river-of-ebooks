@@ -10,6 +10,10 @@ const reducer = (state = {}, action) => {
       return {
         working: data
       }
+    case Actions.toggle_menu:
+      return {
+        navMenu: !state.navMenu
+      }
     case Actions.set_user:
       return {
         user: {

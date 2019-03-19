@@ -34,7 +34,7 @@ class PublisherListItem extends React.Component {
           <h3 className='flex'>{`${this.props.item.name}${this.props.item.whitelisted ? '' : ' (awaiting approval)'}`}</h3>
           <ConfirmIconButton icon='delete' onClick={() => this.props.dispatch(removePublisher(this.props.item.id))} />
         </header>
-        <div className='flex flex-container'>
+        <div className='cols flex flex-container'>
           <div className='col flex flex-container flex-vertical'>
             <div className='stack flex-container flex-vertical'>
               <span className='label'>AppID</span>
@@ -73,7 +73,7 @@ class PublisherListItem extends React.Component {
           <h3 className='flex'>{this.props.item.name}</h3>
           <ConfirmIconButton icon='delete' onClick={() => this.props.dispatch(removePublisher(this.props.item.id))} />
         </header>
-        <div className='flex flex-container'>
+        <div className='cols flex flex-container'>
           <div className='col flex flex-container flex-vertical'>
             <p>
               Download <span className='name'>{this.props.item.verification_key}.html</span> and upload it to the root directory of your webserver. Then, click <strong>VERIFY</strong> to verify that you own and control <span className='name'>{this.props.item.url}</span>.

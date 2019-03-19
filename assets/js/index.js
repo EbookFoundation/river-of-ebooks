@@ -5,10 +5,11 @@ import Progress from './components/Progress'
 import UnderlineInput from './components/UnderlineInput'
 import UriListItem from './containers/UriListItem'
 import PublisherListItem from './containers/PublisherListItem'
+import Icon from './components/Icon'
 import IconButton from './components/IconButton'
 import ConfirmIconButton from './containers/ConfirmIconButton'
 import reducer from './reducers'
-import { fetchData, createNewUrl, setEditing, editUser, createNewPublisher, regenerateSigningSecret } from './actions'
+import { fetchData, createNewUrl, setEditing, editUser, createNewPublisher, regenerateSigningSecret, toggleMenu } from './actions'
 
 import '../styles/index.scss'
 
@@ -32,7 +33,8 @@ class App extends React.Component {
       newPublisher: { name: '', url: '' },
       editingUrl: null,
       editingPublisher: null,
-      working: false
+      working: false,
+      navMenu: false
     }
 
     this.dispatch = this.dispatch.bind(this)
@@ -111,21 +113,21 @@ class App extends React.Component {
   render () {
     return (
       <Router>
-        <div className='root-container flex-container' onClick={() => this.dispatch(setEditing(null))}>
+        <div className={'root-container flex-container two-panels' + (this.state.navMenu ? ' nav-active' : '')} onClick={() => this.dispatch(setEditing(null))}>
           <aside className='nav nav-left'>
             <header>
-              <h1>River of Ebooks</h1>
+              <h1 className='flex-container'><IconButton icon='menu' className='menu-small' onClick={() => this.dispatch(toggleMenu())} /><span className='flex'>River of Ebooks</span></h1>
               <h2 className='flex-container'>
                 <span className='flex'>{this.state.user.email}</span>
                 <a href='/logout'>Log out</a>
               </h2>
             </header>
             <ul>
-              <li><NavLink to='/keys'>Publishing keys</NavLink></li>
-              <li><NavLink to='/targets'>Push URIs</NavLink></li>
-              <li><NavLink to='/account'>My account</NavLink></li>
+              <li><NavLink to='/keys' className='flex-container'><Icon icon='key' /><span className='flex'>Publishing keys</span></NavLink></li>
+              <li><NavLink to='/targets' className='flex-container'><Icon icon='transfer-right' /><span className='flex'>Push URIs</span></NavLink></li>
+              <li><NavLink to='/account' className='flex-container'><Icon icon='account' /><span className='flex'>My account</span></NavLink></li>
               {(this.state.user.id === 1 || this.state.user.admin) &&
-                <li><a href='/admin'>Admin</a></li>
+                <li><a href='/admin' className='flex-container'><Icon icon='flash' /><span className='flex'>Admin</span></a></li>
               }
             </ul>
           </aside>
@@ -155,7 +157,7 @@ class App extends React.Component {
                       <h2>If you own a publishing site, generate a publishing key for it here.</h2>
                     </div>
                   </header>
-                  <div className='creator flex-container'>
+                  <div className='creator flex-container cols'>
                     <UnderlineInput
                       className='flex stack-h'
                       placeholder='Website name'
