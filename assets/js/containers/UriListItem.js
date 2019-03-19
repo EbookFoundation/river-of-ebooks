@@ -23,12 +23,12 @@ class UriListItem extends React.Component {
   }
   getView () {
     return (
-      <li className='uri-list-item flex-container' onClick={(e) => this.cancelEvent(e, this.props.item.id)}>
-        <div className='stack flex flex-container flex-vertical'>
+      <li className='cols uri-list-item flex-container' onClick={(e) => this.cancelEvent(e, this.props.item.id)}>
+        <div className='col stack flex flex-container flex-vertical'>
           <span className='label'>Destination URL</span>
           <span className='value'>{this.props.item.url}</span>
         </div>
-        <div className='stack flex flex-container flex-vertical'>
+        <div className='col stack flex flex-container flex-vertical'>
           <span className='label'>Filters</span>
           <span className='value'>{['publisher', 'title', 'author', 'isbn'].reduce((a, x) => a + (this.props.item[x] ? 1 : 0), 0) || 'None'}</span>
         </div>

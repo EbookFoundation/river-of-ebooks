@@ -18,10 +18,15 @@ const ACTIONS = {
   add_publisher: 'add_publisher',
   delete_publisher: 'delete_publisher',
   set_publishers: 'set_publishers',
-  update_publisher: 'update_publisher'
+  update_publisher: 'update_publisher',
+  toggle_menu: 'toggle_menu'
 }
 
 export default ACTIONS
+
+export const toggleMenu = () => ({
+  type: ACTIONS.toggle_menu
+})
 
 export const setWorking = working => ({
   type: ACTIONS.set_working,

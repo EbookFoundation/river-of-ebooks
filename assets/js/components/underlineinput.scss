@@ -28,6 +28,7 @@
       width: 100%;
       height: 46px;
       pointer-events: none;
+      overflow: hidden;
 
       label {
         position: absolute;
@@ -100,5 +101,9 @@
   & + .underlined-input-readonly.stack-h {
     margin-left: 14px;
     margin-top: 0;
+
+    @include break('small') {
+      margin-left: 0;
+    }
   }
 }

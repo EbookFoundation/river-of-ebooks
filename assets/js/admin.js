@@ -7,8 +7,10 @@ import Progress from './components/Progress'
 import appReducer from './reducers'
 import adminReducer from './reducers/admin'
 import { fetchAdminData, patchUser, patchPublisher } from './actions/admin'
+import { toggleMenu } from './actions'
 import Util from './lib/Util'
 import Icon from './components/Icon'
+import IconButton from './components/IconButton'
 
 import '../styles/admin.scss'
 import './containers/listitem.scss'
@@ -28,7 +30,8 @@ class App extends React.Component {
       },
       users: [],
       publishers: [],
-      working: false
+      working: false,
+      navMenu: false
     }
 
     this.dispatch = this.dispatch.bind(this)
@@ -64,10 +67,10 @@ class App extends React.Component {
   getRegisteredUsers () {
     return this.state.users.map(user => {
       return (
-        <li className='uri-list-item flex-container' key={`is-admin-${user.id}`}>
+        <li className='uri-list-item cols flex-container' key={`is-admin-${user.id}`}>
           <span className='flex'>{user.email}</span>
           <span className='flex'>
-            <label for={`is-admin-${user.id}`} className='cb-label'>Admin?</label>
+            <label htmlFor={`is-admin-${user.id}`} className='cb-label'>Admin?</label>
             <input className='checkbox' type='checkbox' checked={user.admin} onChange={() => this.dispatch(patchUser({ id: user.id, admin: !user.admin }))} id={`is-admin-${user.id}`} />
             <label htmlFor={`is-admin-${user.id}`} />
           </span>
@@ -84,7 +87,7 @@ class App extends React.Component {
       return (
         <li className='uri-list-item flex-container flex-vertical' key={`is-whitelisted-${pub.id}`}>
           <header><h3>{pub.name}</h3></header>
-          <div className='flex flex-container'>
+          <div className='cols flex flex-container'>
             <div className='flex flex-container flex-vertical key-value'>
               <span className='flex'><span className='key'>Owner:</span><span className='value'>{pub.user.email}</span></span>
               <span className='flex'><span className='key'>App ID:</span><span className='value'>{pub.appid}</span></span>
@@ -111,19 +114,19 @@ class App extends React.Component {
   render () {
     return (
       <Router basename='/admin'>
-        <div className='root-container flex-container admin-container'>
+        <div className={'root-container flex-container admin-container two-panels' + (this.state.navMenu ? ' nav-active' : '')}>
           <aside className='nav nav-left'>
             <header>
-              <h1>RoE Admin</h1>
+              <h1 className='flex-container'><IconButton icon='menu' className='menu-small' onClick={() => this.dispatch(toggleMenu())} /><span className='flex'>RoE Admin</span></h1>
               <h2 className='flex-container'>
                 <span className='flex'>{this.state.user.email}</span>
                 <a href='/logout'>Log out</a>
               </h2>
             </header>
             <ul>
-              <li><NavLink to='/users'>Users</NavLink></li>
-              <li><NavLink to='/publishers'>Publishers</NavLink></li>
-              <li><a href='/keys'>Exit admin</a></li>
+              <li className='flex-container'><NavLink to='/users'><Icon icon='account' /><span className='flex'>Users</span></NavLink></li>
+              <li className='flex-container'><NavLink to='/publishers'><Icon icon='transfer-right' /><span className='flex'>Publishers</span></NavLink></li>
+              <li className='flex-container'><a href='/keys'><Icon icon='exit' /><span className='flex'>Exit admin</span></a></li>
             </ul>
           </aside>
           <section className={'content flex' + (this.state.working ? ' working' : '')}>
