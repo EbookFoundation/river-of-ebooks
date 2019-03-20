@@ -116,3 +116,13 @@ PASSPORT_GITHUB_ID
 PASSPORT_GITHUB_SECRET
 DATABASE_CONNECTION
 ```
+
+4. Run database migrations
+```
+npm run db:migrate
+```
+
+5. Start server
+```
+npm start
+```
