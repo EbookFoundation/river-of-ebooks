@@ -25,7 +25,7 @@ npm i
 
 2. Create config files
 ```
-touch knexfile.js ecosystem.config.js config/local.js
+touch config/local.js
 ```
 
 3. Add database info to knexfile and pm2 ecosystem
@@ -109,4 +109,20 @@ eb deploy environment_name
 ```
 
 3. Configure environment variables on elastic beanstalk
+```
+PASSPORT_GOOGLE_ID
+PASSPORT_GOOGLE_SECRET
+PASSPORT_GITHUB_ID
+PASSPORT_GITHUB_SECRET
+DATABASE_CONNECTION
+```
 
+4. Run database migrations
+```
+npm run db:migrate
+```
+
+5. Start server
+```
+npm start
+```
