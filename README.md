@@ -18,8 +18,8 @@ a [Sails v1](https://sailsjs.com) application
 
 1. Standard npm install
 ```
-git clone https://github.com/EbookFoundation/RoE-pipe
-cd RoE-pipe
+git clone https://github.com/EbookFoundation/river-of-ebooks
+cd river-of-ebooks
 npm i
 ```
 
@@ -61,12 +61,6 @@ module.exports = {
 ```
 /* -- config/local.js -- */
 module.exports = {
-  skipperConfig: {
-    adapter: require('skipper-s3'),
-    key: 'S3_API_KEY',
-    secret: 'S3_API_SECRET',
-    bucket: 'S3_BUCKET'
-  },
   passport: {
     google: {
       options: {
