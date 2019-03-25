@@ -69,7 +69,7 @@ class App extends React.Component {
         <div className='stack flex'>
           <span className='email'>{this.state.user.email}</span>
         </div>
-        <a href='#' onClick={() => this.dispatch(setCarousel(1))}>Not you?</a>
+        <a onClick={() => this.dispatch(setCarousel(1))}>Not you?</a>
       </section>
     )
   }
