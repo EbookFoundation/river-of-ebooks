@@ -143,7 +143,6 @@ function PassportHelper () {
         if (_.has(q, 'tokens') && q.tokens !== pass.tokens) {
           pass.tokens = q.tokens
         }
-        delete pass.id
         await Passport.update({ id: pass.id }, { tokens: pass.tokens })
         user = await User.find({ id: pass.user }).limit(1)
         next(null, user[0])
