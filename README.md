@@ -23,78 +23,31 @@ cd river-of-ebooks
 npm i
 ```
 
-2. Create config files
+2. Configure environment variables in /etc/environemnt
 ```
-touch config/local.js
-```
-
-3. Add database info to knexfile and pm2 ecosystem
-```js
-/* -- knexfile.js -- */
-module.exports = {
-  client: 'pg',
-  connection: 'postgresql://user:password@example.com:5432/databasename'
-}
-
-/* -- ecosystem.config.js -- */
-
-// Options reference: https://pm2.io/doc/en/runtime/reference/ecosystem-file/
-module.exports = {
-  apps: [{
-    name: 'roe-base',
-    script: 'app.js',
-    instances: 1,
-    autorestart: true,
-    watch: false,
-    env: {
-      NODE_ENV: 'development'
-    },
-    env_production: {
-      NODE_ENV: 'production',
-      SAILS_DATASTORE_URL: 'postgresql://user:password@example.com:5432/databasename'
-    }
-  }]
-}
+PASSPORT_GOOGLE_ID
+PASSPORT_GOOGLE_SECRET
+PASSPORT_GITHUB_ID
+PASSPORT_GITHUB_SECRET
+DATABASE_CONNECTION
 ```
 
-4. Add secrets to config/local.js
-```
-/* -- config/local.js -- */
-module.exports = {
-  passport: {
-    google: {
-      options: {
-        clientID: 'GOOGLE_CLIENT_ID',
-        clientSecret: 'GOOGLE_CLIENT_SECRET'
-      }
-    },
-    github: {
-      options: {
-        clientID: 'GITHUB_CLIENT_ID',
-        clientSecret: 'GITHUB_CLIENT_SECRET'
-      }
-    }
-  }
-}
-```
-
-5. Run database migrations
+3. Run database migrations
 ```
 npm run db:migrate
 ```
 
-6. Start server
+4. Start server
 ```
 npm start
 ```
-
 
 #### Elastic Beanstalk
 
 1. Clone repo
 ```
-git clone https://github.com/EbookFoundation/RoE-pipe
-cd RoE-pipe
+git clone https://github.com/EbookFoundation/river-of-ebooks
+cd river-of-ebooks
 ```
 
 2. Deploy to environment
