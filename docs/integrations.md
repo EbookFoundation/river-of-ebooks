@@ -3,8 +3,12 @@
 
 
 ### - readthedocs.org
-[view on github](https://github.com/ghowardsit/readthedocs.org)
+[view on github](https://github.com/ghowardsit/readthedocs.org)  
 New ebooks published using ReadTheDocs will automatically be sent to the River of Ebooks.
+
+### - Pressbooks
+[view on github](https://github.com/villa7/roe-pressbooks)  
+When exporting books, authors will have the option to also send the book metadata to the River.
 
 
 ## Information on building your own integration
