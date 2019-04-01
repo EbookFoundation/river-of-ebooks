@@ -23,7 +23,8 @@ module.exports = {
     identifier: { type: 'string' },
     version: { type: 'string' },
     hostname: { type: 'string' },
-    opds: { type: 'json' }
+    opds: { type: 'json' },
+    tags: { type: 'string' }
 
     //  ╔═╗╔╦╗╔╗ ╔═╗╔╦╗╔═╗
     //  ║╣ ║║║╠╩╗║╣  ║║╚═╗

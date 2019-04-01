@@ -18,6 +18,7 @@ and opds2 publication body with type `application/json`:
     "title": "Moby-Dick",
     "author": "Herman Melville",
     "identifier": "urn:isbn:978031600000X",
+    "tags": ["story", "classic"],
     "publisher": "Ebook Publisher.com",
     "language": "en",
     "modified": "2015-09-29T17:00:00Z"
@@ -46,6 +47,7 @@ The server will respond with either:
   "id": number,
   "title": string,
   "author": string,
+  "tags": array,
   "publisher": string,
   "identifier": string,
   "version": string,
@@ -72,6 +74,7 @@ title: The ebook's title (optional)
 author: The author (optional)
 version: A version number (optional)
 isbn: The ISBN (optional)
+tags: Comma-separated search tags (optional)
 
 page: The page of results to view (200 results per page)
 ```
@@ -107,6 +110,7 @@ The server will respond with either:
         "@type": "http://schema.org/Book",
         "title": "Moby-Dick",
         "author": "Herman Melville",
+        "tags": ["story", "classic"],
         "publisher": "Ebook Publisher.com",
         "identifier": "urn:isbn:978031600000X",
         "language": "en",
@@ -165,6 +169,7 @@ HTTP Body:
     "@type": "http://schema.org/Book",
     "title": "Moby-Dick",
     "author": "Herman Melville",
+    "tags": ["story", "classic"],
     "publisher": "Ebook Publisher.com",
     "identifier": "urn:isbn:978031600000X",
     "language": "en",
