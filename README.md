@@ -37,7 +37,12 @@ DATABASE_CONNECTION
 npm run db:migrate
 ```
 
-4. Start server
+4. Build public content
+```
+npm run build
+```
+
+5. Start server
 ```
 npm start
 ```
@@ -69,7 +74,12 @@ DATABASE_CONNECTION
 npm run db:migrate
 ```
 
-5. Start server
+5. Build public content
+```
+npm run build
+```
+
+6. Start server
 ```
 npm start
 ```
