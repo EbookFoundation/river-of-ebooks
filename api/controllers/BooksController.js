@@ -22,12 +22,15 @@ module.exports = {
       if (!body.metadata) throw new HttpError(400, 'Missing OPDS metadata')
       if (!body.metadata['@type'] || body.metadata['@type'] !== 'http://schema.org/Book') throw new HttpError(400, 'Invalid \'@type\': expected \'http://schema.org/Book\'')
 
+      let tags = (body.metadata.tags || '').split(/,\s*/)
+      if (!tags.length && body.metadata.title) tags = body.metadata.title.split(/\s+/).filter(x => x.length < 3)
       const query = {
         hostname: host,
         title: body.metadata.title,
         author: body.metadata.author,
         publisher: body.metadata.publisher,
         identifier: body.metadata.identifier,
+        tags: JSON.stringify(tags),
         version: body.metadata.modified.replace(/\D/g, '')
       }
 
@@ -49,7 +52,10 @@ module.exports = {
       }
 
       sendUpdatesAsync(result)
-      return res.json(result)
+      return res.json({
+        ...result,
+        tags: JSON.parse(result.tags || '[]')
+      })
     } catch (e) {
       if (e instanceof HttpError) return e.send(res)
       return res.status(500).json({
@@ -67,15 +73,21 @@ async function sendUpdatesAsync (book) {
     try {
       const item = targets[i]
       const user = await User.findOne({ id: item.user })
-      const { author: fAuthor, publisher: fPublisher, title: fTitle, identifier: fIsbn, url } = item
-      const { author: bAuthor, publisher: bPublisher, title: bTitle, identifier: bIsbn, opds } = book
-      sails.log('sending ' + book.id + ' info to ' + url)
+      const { author: fAuthor, publisher: fPublisher, title: fTitle, identifier: fIsbn, tags: fTags, url } = item
+      const { author: bAuthor, publisher: bPublisher, title: bTitle, identifier: bIsbn, tags: bTags, opds } = book
 
       if (uriRegex.test(url)) {
         if (fAuthor && !((bAuthor || '').includes(fAuthor))) continue
         if (fPublisher && !((bPublisher || '').includes(fPublisher))) continue
         if (fTitle && !((bTitle || '').includes(fTitle))) continue
         if (fIsbn && !((bIsbn || '').includes(fIsbn))) continue
+
+        const filterTags = JSON.parse(fTags || '[]')
+        if (filterTags.length && filterTags[0].length) {
+          const otherSet = new Set(filterTags)
+          if (!([...new Set(JSON.parse(bTags || '[]'))].filter(x => otherSet.has(x)).length)) continue
+        }
+        sails.log('sending ' + book.id + ' info to ' + url)
 
         let content = opds
         const timestamp = Date.now()

@@ -25,13 +25,15 @@ module.exports = {
       const publisher = req.param('publisher') || ''
       const title = req.param('title') || ''
       const isbn = req.param('isbn') || ''
+      const tags = req.param('tags') || ''
       if (value.length) {
         const url = await TargetUrl.update({ id, user: req.user.id }, {
           url: value,
           author,
           publisher,
           title,
-          isbn
+          isbn,
+          tags: JSON.stringify(tags.split(/,\s*/))
         }).fetch()
         return res.json(url)
       } else {
@@ -52,9 +54,13 @@ module.exports = {
   },
   list: async function (req, res) {
     try {
-      const urls = await TargetUrl.find({
+      let urls = await TargetUrl.find({
         user: req.user.id
       })
+      urls = urls.map(url => ({
+        ...url,
+        tags: JSON.parse(url.tags || '[]')
+      }))
       return res.json(urls)
     } catch (e) {
       return (new HttpError(500, e.message)).send(res)

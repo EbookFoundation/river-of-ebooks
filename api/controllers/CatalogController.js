@@ -42,7 +42,17 @@ module.exports = {
         page = Math.abs(+body.page) || 1
         delete body.page
       }
-      let books = await Book.find(body || {}).skip((page * perPage) - perPage).limit(perPage)
+      const searchBody = { ...body }
+      if (searchBody.tags) {
+        const tags = searchBody.tags.split(/,\s*/)
+        searchBody.tags = {
+          or: [
+            ...tags.map(tag => ({ contains: tag })),
+            { in: tags }
+          ]
+        }
+      }
+      let books = await Book.find(body ? searchBody : {}).skip((page * perPage) - perPage).limit(perPage)
 
       if (!books.length) {
         throw new HttpError(404, 'No books matching those parameters were found.')
