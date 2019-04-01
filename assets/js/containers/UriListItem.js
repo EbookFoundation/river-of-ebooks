@@ -30,7 +30,7 @@ class UriListItem extends React.Component {
         </div>
         <div className='col stack flex flex-container flex-vertical'>
           <span className='label'>Filters</span>
-          <span className='value'>{['publisher', 'title', 'author', 'isbn'].reduce((a, x) => a + (this.props.item[x] ? 1 : 0), 0) || 'None'}</span>
+          <span className='value'>{['publisher', 'title', 'author', 'isbn', 'tags'].reduce((a, x) => a + (this.props.item[x] ? 1 : 0), 0) || 'None'}</span>
         </div>
         <ConfirmIconButton icon='delete' onClick={() => this.props.dispatch(removeUrl(this.props.item.id))} />
       </li>
@@ -85,6 +85,15 @@ class UriListItem extends React.Component {
             placeholder='Identifier'
             value={'' + this.props.item.isbn}
             onChange={(e) => this.props.dispatch(changeUrlField(this.props.item.id, 'isbn', e.target.value))}
+            onBlur={(e) => this.props.dispatch(setUrl(this.props.item))} />
+          <UnderlineInput
+            className='uri flex'
+            type='text'
+            name={'tags-' + this.props.item.id}
+            placeholder='Tags'
+            value={this.props.item.tags ? this.props.item.tags.join(', ') : ''}
+            pattern={/^.*?(?:,\s+\S.+?)*$/}
+            onChange={(e) => this.props.dispatch(changeUrlField(this.props.item.id, 'tags', e.target.value.split(/,\s+/)))}
             onBlur={(e) => this.props.dispatch(setUrl(this.props.item))} />
         </div>
       </li>
