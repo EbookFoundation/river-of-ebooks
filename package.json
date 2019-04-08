@@ -55,6 +55,8 @@
     "sails-postgresql": "^1.0.2",
     "showdown": "^1.9.0",
     "ta-json-x": "^2.5.0",
+	"webpack": "^4.23.1",
+    "webpack-cli": "^3.1.2",
     "xmldom": "^0.1.27"
   },
   "devDependencies": {
@@ -77,8 +79,6 @@
     "sass-loader": "^7.1.0",
     "standard": "^12.0.1",
     "style-loader": "^0.23.1",
-    "webpack": "^4.23.1",
-    "webpack-cli": "^3.1.2",
     "webpack-dev-server": "^3.1.10"
   },
   "main": "app.js",
