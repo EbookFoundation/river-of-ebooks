@@ -10,7 +10,7 @@
     "start:debug": "npm-run-all --parallel open:client debug",
     "start:prod": "npm-run-all --parallel build:prod lift",
     "start:client": "webpack-dev-server --mode development",
-	"start:eb": "npm run db:migrate && npm run build && npm start",
+    "start:eb": "npm run db:migrate && npm run build && npm start",
     "lift": "sails lift",
     "build": "npm run build:prod",
     "build:dev": "webpack --mode development",
@@ -55,11 +55,9 @@
     "sails-postgresql": "^1.0.2",
     "showdown": "^1.9.0",
     "ta-json-x": "^2.5.0",
-	"webpack": "^4.23.1",
+    "webpack": "^4.23.1",
     "webpack-cli": "^3.1.2",
-    "xmldom": "^0.1.27"
-  },
-  "devDependencies": {
+    "xmldom": "^0.1.27",
     "@babel/core": "^7.1.2",
     "@babel/plugin-proposal-object-rest-spread": "^7.0.0",
     "@babel/polyfill": "^7.0.0",
