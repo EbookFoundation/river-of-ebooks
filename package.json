@@ -10,7 +10,7 @@
     "start:debug": "npm-run-all --parallel open:client debug",
     "start:prod": "npm-run-all --parallel build:prod lift",
     "start:client": "webpack-dev-server --mode development",
-	"start:eb": "npm run db:migrate && npm run build && npm start"
+	"start:eb": "npm run db:migrate && npm run build && npm start",
     "lift": "sails lift",
     "build": "npm run build:prod",
     "build:dev": "webpack --mode development",
