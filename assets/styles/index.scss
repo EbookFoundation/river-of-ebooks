@@ -204,4 +204,61 @@
       margin: 0;
     }
   }
+  ul.feed {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+
+    li {
+      min-height: 60px;
+      border-bottom: 1px solid $black-5;
+      padding: 20px 0;
+
+      h3 {
+        margin: 0;
+
+        a {
+          text-decoration: none;
+        }
+      }
+
+      h4 {
+        margin: 0;
+        font-size: 1rem;
+        color: $black-2;
+      }
+
+      .timestamp {
+        color: $black-3;
+        font-size: 1rem;
+
+        @include break('small') {
+          display: none;
+        }
+      }
+
+      .tags {
+        font-size: 0;
+        margin-top: 6px;
+
+        span {
+          font-size: 0.9rem;
+          border: 1px solid $black-5;
+          border-radius: 3px;
+          padding: 0 8px;
+          line-height: 20px;
+          color: $black-2;
+          cursor: default;
+
+          & + span {
+            margin-left: 4px;
+          }
+        }
+      }
+
+      &:last-of-type {
+        border: none;
+      }
+    }
+  }
 }

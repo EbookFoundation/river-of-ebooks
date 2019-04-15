@@ -12,6 +12,28 @@
     <main class="flex">
       <section class="paper">
         <%- content %>
+
+        <h2>Recently published ebooks</h2>
+        <% if (feedItems.length) { %>
+          <ul class="feed">
+            <% for(const item of feedItems) { %>
+              <li>
+                <div class="title flex-container">
+                  <div class="stack flex">
+                    <h3><a href="<%= item.opds.links.length ? item.opds.links[0].href : '#' %>"><%= item.title %></a></h3>
+                    <h4><%= item.author %> - <%= item.publisher %></h4>
+                  </div>
+                  <span class="timestamp"><%= new Date(item.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', hour: 'numeric', minute: 'numeric' }) %></span>
+                </div>
+                <div class="tags">
+                  <% for (const tag of JSON.parse(item.tags)) { %>
+                    <span><%= tag %></span>
+                  <% } %>
+                </div>
+              </li>
+            <% } %>
+          </ul>
+        <% } %>
       </section>
     </main>
     <%- partial('../shared/footer.html') %>

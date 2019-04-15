@@ -52,7 +52,7 @@ module.exports = {
           ]
         }
       }
-      let books = await Book.find(body ? searchBody : {}).skip((page * perPage) - perPage).limit(perPage)
+      let books = await Book.find(body ? searchBody : {}).sort('created_at DESC').skip((page * perPage) - perPage).limit(perPage)
 
       if (!books.length) {
         throw new HttpError(404, 'No books matching those parameters were found.')
