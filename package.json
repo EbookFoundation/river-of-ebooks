@@ -1,7 +1,7 @@
 {
   "name": "roe-base",
   "private": true,
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "a Sails application",
   "keywords": [],
   "scripts": {
@@ -10,7 +10,7 @@
     "start:debug": "npm-run-all --parallel open:client debug",
     "start:prod": "npm-run-all --parallel build:prod lift",
     "start:client": "webpack-dev-server --mode development",
-    "start:eb": "npm run db:migrate && npm run build && npm start",
+    "start:eb": "npm run db:migrate && npm run build:prod && npm run forever",
     "lift": "sails lift",
     "build": "npm run build:prod",
     "build:dev": "webpack --mode development",
@@ -103,5 +103,20 @@
       "mocha"
     ],
     "parser": "babel-eslint"
+  },
+  "babel": {
+    "presets": [
+      [
+        "@babel/preset-env",
+        {
+          "useBuiltIns": "usage",
+          "corejs": 2
+        }
+      ],
+      "@babel/preset-react"
+    ],
+    "plugins": [
+      "@babel/plugin-proposal-object-rest-spread"
+    ]
   }
 }
