@@ -13,7 +13,7 @@
       <section class="paper">
         <%- content %>
 
-        <% if (feedItems.length) { %>
+        <% if (feedItems && feedItems.length) { %>
           <h2>Recently published ebooks</h2>
           <ul class="feed">
             <% for(const item of feedItems) { %>
