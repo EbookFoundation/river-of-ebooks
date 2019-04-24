@@ -240,7 +240,7 @@ module.exports = {
     *                                                                          *
     ***************************************************************************/
     onlyAllowOrigins: [
-      'https://ec2-18-219-76-43.us-east-2.compute.amazonaws.com'
+      'https://roe.ebookfoundation.org'
     ]
 
     /***************************************************************************
@@ -348,7 +348,7 @@ module.exports = {
   *                                                                         *
   ***************************************************************************/
   custom: {
-    baseURL: 'http://ec2-18-219-223-27.us-east-2.compute.amazonaws.com',
+    baseURL: 'https://roe.ebookfoundation.org',
     internalEmailAddress: 'support@example.com'
 
     // mailgunDomain: 'mg.example.com',
