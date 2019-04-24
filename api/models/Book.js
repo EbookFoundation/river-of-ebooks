@@ -15,23 +15,25 @@ module.exports = {
     id: {
       type: 'number',
       unique: true,
-      autoIncrement: true,
-      columnName: '_id'
+      autoIncrement: true
     },
-    title: {type: 'string', required: true},
-    author: {type: 'string'},
-    isbn: {type: 'string'},
-    version: {type: 'string'},
+    title: { type: 'string', required: true },
+    author: { type: 'string' },
+    publisher: { type: 'string' },
+    identifier: { type: 'string' },
+    version: { type: 'string' },
+    hostname: { type: 'string' },
+    opds: { type: 'json' },
+    tags: { type: 'string' }
 
     //  ╔═╗╔╦╗╔╗ ╔═╗╔╦╗╔═╗
     //  ║╣ ║║║╠╩╗║╣  ║║╚═╗
     //  ╚═╝╩ ╩╚═╝╚═╝═╩╝╚═╝
 
-
     //  ╔═╗╔═╗╔═╗╔═╗╔═╗╦╔═╗╔╦╗╦╔═╗╔╗╔╔═╗
     //  ╠═╣╚═╗╚═╗║ ║║  ║╠═╣ ║ ║║ ║║║║╚═╗
     //  ╩ ╩╚═╝╚═╝╚═╝╚═╝╩╩ ╩ ╩ ╩╚═╝╝╚╝╚═╝
 
-  },
+  }
 
 }

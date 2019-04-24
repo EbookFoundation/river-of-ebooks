@@ -14,9 +14,25 @@ const rateLimiter = rateLimit({
   windowMs: 10 * 60 * 1000, // 10 minutes
   max: 100, // limit each IP to 100 requests per windowMs
   skip (req, res) {
-    return !req.path.startsWith('/api')
+    return !req.path.startsWith('/api') || req.path.startsWith('/api/publish')
   }
 })
+
+const publishLimiter = rateLimit({
+  windowMs: 1000 * 60 * 60 * 24, // 24 hours
+  max: 1000, // 1000 publish requests per day
+  skip (req, res) {
+    return !req.path.startsWith('/api/publish')
+  }
+})
+
+const allowCrossDomain = function (req, res, next) {
+  res.header('Access-Control-Allow-Origin', 'http://localhost:8080')
+  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,PATCH,DELETE')
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization')
+  res.header('Access-Control-Allow-Credentials', 'true')
+  next()
+}
 
 module.exports.http = {
 
@@ -39,7 +55,9 @@ module.exports.http = {
     ***************************************************************************/
 
     order: [
+      'allowCrossDomain',
       'rateLimit',
+      'publishLimit',
       'cookieParser',
       'session',
       'passportInit',
@@ -52,8 +70,10 @@ module.exports.http = {
       'favicon'
     ],
     rateLimit: rateLimiter,
+    publishLimit: publishLimiter,
     passportInit: require('passport').initialize(),
     passportSession: require('passport').session(),
+    allowCrossDomain: allowCrossDomain,
 
     /***************************************************************************
     *                                                                          *
@@ -63,10 +83,10 @@ module.exports.http = {
     *                                                                          *
     ***************************************************************************/
 
-    // bodyParser: (function _configureBodyParser(){
-    //   var skipper = require('skipper');
-    //   var middlewareFn = skipper({ strict: true });
-    //   return middlewareFn;
-    // })(),
+    bodyParser: (function _configureBodyParser () {
+      const skipper = require('skipper')
+      const middlewareFn = skipper({ strict: true })
+      return middlewareFn
+    })()
   }
 }

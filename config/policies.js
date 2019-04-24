@@ -22,7 +22,8 @@ module.exports.policies = {
   UserController: {
     '*': true,
     update: [ 'sessionAuth' ],
-    me: [ 'sessionAuth' ]
+    me: [ 'sessionAuth' ],
+    regenerateSigningSecret: [ 'sessionAuth' ]
   },
 
   AuthController: {
@@ -33,5 +34,18 @@ module.exports.policies = {
 
   TargetController: {
     '*': [ 'sessionAuth' ]
+  },
+
+  PublishKeyController: {
+    '*': [ 'sessionAuth' ]
+  },
+
+  BooksController: {
+    '*': true,
+    publish: [ 'keyAuth' ]
+  },
+
+  AdminController: {
+    '*': [ 'sessionAuth', 'adminAuth' ]
   }
 }

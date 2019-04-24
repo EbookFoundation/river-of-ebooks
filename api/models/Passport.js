@@ -28,8 +28,7 @@ module.exports = {
     id: {
       type: 'number',
       unique: true,
-      autoIncrement: true,
-      columnName: '_id'
+      autoIncrement: true
     },
     // local, oauth2, etc
     protocol: {
@@ -37,7 +36,7 @@ module.exports = {
       required: true
     },
     password: 'string',
-    accessToken: 'string',
+    accesstoken: 'string',
     provider: 'string',
     identifier: 'string',
     tokens: 'json',

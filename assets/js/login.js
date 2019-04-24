@@ -3,12 +3,12 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import Progress from './components/Progress'
-import Carousel, {CarouselItem} from './containers/Carousel'
+import Carousel, { CarouselItem } from './containers/Carousel'
 import UnderlineInput from './components/UnderlineInput'
 import reducer from './reducers/login'
-import {setEmail, setPassword, setCarousel, checkEmail, checkPassword, signup} from './actions/login'
+import { setEmail, setPassword, setCarousel, checkEmail, checkPassword, signup } from './actions/login'
 
-import STYLE from '../styles/login.scss'
+import '../styles/login.scss'
 
 class App extends React.Component {
   constructor () {
@@ -69,7 +69,7 @@ class App extends React.Component {
         <div className='stack flex'>
           <span className='email'>{this.state.user.email}</span>
         </div>
-        <a href='#' onClick={() => this.dispatch(setCarousel(1))}>Not you?</a>
+        <a onClick={() => this.dispatch(setCarousel(1))}>Not you?</a>
       </section>
     )
   }
@@ -87,7 +87,8 @@ class App extends React.Component {
               onButtonClick={() => this.dispatch(signup(this.state.user.email, this.state.user.password))}
               smallButton='Have an account?'
               onSmallButtonClick={() => this.dispatch(setCarousel(1))}
-              footer='Sign up with your Google account' />
+              footers={['Sign up with Google', 'Sign up with Github']}
+              footerHrefs={['/auth/google', '/auth/github']} />
 
             <CarouselItem
               header='Sign in'
@@ -97,7 +98,8 @@ class App extends React.Component {
               onButtonClick={() => this.dispatch(checkEmail(this.state.user.email))}
               smallButton='Create account'
               onSmallButtonClick={() => this.dispatch(setCarousel(0))}
-              footer='Sign in with your Google account' />
+              footers={['Sign in with Google', 'Sign in with Github']}
+              footerHrefs={['/auth/google', '/auth/github']} />
 
             <CarouselItem
               header='Welcome'
@@ -106,8 +108,8 @@ class App extends React.Component {
               error={this.state.passwordError}
               button='Sign in'
               onButtonClick={() => this.dispatch(checkPassword(this.state.user.email, this.state.user.password))}
-              smallButton='Forgot password?'
-              onSmallButtonClick={() => this.dispatch(setCarousel(3))} />
+              comment={null/*smallButton='Forgot password?'
+              onSmallButtonClick={() => this.dispatch(setCarousel(3))}*/} />
 
             <CarouselItem
               header='Password recovery'

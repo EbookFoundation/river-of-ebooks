@@ -1,4 +1,4 @@
-@import '../lib/vars';
+@import '../../styles/lib/vars';
 
 .carousel-container {
   position: relative;
@@ -83,6 +83,7 @@
         bottom: 20px;
         width: 100%;
         margin: 0;
+        line-height: 30px;
         color: $text-dark-2;
 
         .btn {
@@ -91,6 +92,8 @@
         a {
           color: $accent-2;
           text-decoration: none;
+          display: inline-block;
+          width: 100%;
         }
       }
       .button-row {

@@ -2,6 +2,8 @@
 
 import Ajax from '../lib/Ajax'
 
+const getPath = str => window.location.hostname === 'localhost' ? `http://localhost:3000${str}` : str
+
 const ACTIONS = {
   set_working: 'set_working',
   set_user: 'set_user',
@@ -47,16 +49,16 @@ export const clearError = () => ({
 
 export const setLoggedIn = (data) => (dispatch, getState) => {
   window.localStorage.setItem('roe-token', JSON.stringify(data))
-  window.location.href = '/app'
+  window.location.href = '/keys'
 }
 
 export const checkEmail = email => async (dispatch, getState) => {
   dispatch(setWorking(true))
   dispatch(clearError())
-  if (/^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/.test(email)) {
+  if (/^([a-zA-Z0-9_\-.]+)@([a-zA-Z0-9_\-.]+)\.([a-zA-Z]{2,5})$/.test(email)) {
     try {
-      const res = await Ajax.post({
-        url: '/auth/email_exists',
+      await Ajax.post({
+        url: getPath('/auth/email_exists'),
         data: {
           email
         }
@@ -83,7 +85,7 @@ export const checkPassword = (email, password) => async (dispatch, getState) => 
   // do email + password check
   try {
     const res = await Ajax.post({
-      url: '/auth/local',
+      url: getPath('/auth/local'),
       data: {
         identifier: email,
         password
@@ -94,7 +96,7 @@ export const checkPassword = (email, password) => async (dispatch, getState) => 
   } catch (e) {
     dispatch(setError({
       type: 'password',
-      error: e.toString()
+      error: e.message
     }))
     dispatch(setWorking(false))
   }
@@ -103,16 +105,16 @@ export const checkPassword = (email, password) => async (dispatch, getState) => 
 export const signup = (email, password) => async (dispatch, getState) => {
   dispatch(setWorking(true))
   dispatch(clearError())
-  if (/^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/.test(email)) {
+  if (/^([a-zA-Z0-9_\-.]+)@([a-zA-Z0-9_\-.]+)\.([a-zA-Z]{2,5})$/.test(email)) {
     try {
       await Ajax.post({
-        url: '/auth/email_available',
+        url: getPath('/auth/email_available'),
         data: {
           email
         }
       })
       await Ajax.post({
-        url: '/register',
+        url: getPath('/register'),
         data: {
           email,
           password
@@ -122,7 +124,7 @@ export const signup = (email, password) => async (dispatch, getState) => {
     } catch (e) {
       dispatch(setError({
         type: 'email',
-        error: e.toString()
+        error: e.message
       }))
     }
   } else {

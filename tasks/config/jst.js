@@ -10,8 +10,7 @@
  *
  */
 
-module.exports = function(grunt) {
-
+module.exports = function (grunt) {
   grunt.config.set('jst', {
     dev: {
 
@@ -26,14 +25,13 @@ module.exports = function(grunt) {
       // default interpolation. If you want to parse templates with the default _.template behavior
       // (i.e. using <div><%= this.id %></div>), there's no need to overwrite `templateSettings.interpolate`.
 
-
       files: {
         // e.g.
         // 'relative/path/from/gruntfile/to/compiled/template/destination'  : ['relative/path/to/sourcefiles/**/*.html']
         '.tmp/public/jst.js': require('../pipeline').templateFilesToInject
       }
     }
-  });
+  })
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   // This Grunt plugin is part of the default asset pipeline in Sails,
@@ -58,5 +56,4 @@ module.exports = function(grunt) {
   // grunt.loadNpmTasks('grunt-contrib-jst');
   // ```
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-};
+}

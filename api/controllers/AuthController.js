@@ -115,6 +115,8 @@ module.exports = {
     }
 
     passportHelper.callback(req, res, function (err, user, info, status) {
+      // console.log(err)
+      // console.log(user)
       if (err || !user) {
         sails.log.warn(user, err, info, status)
         if (!err && info) {
@@ -126,6 +128,7 @@ module.exports = {
       req.login(user, function (err) {
         if (err) {
           sails.log.warn(err)
+          // console.log(err)
           return negotiateError(err)
         }
 
@@ -134,6 +137,8 @@ module.exports = {
         // redirect if there is a 'next' param
         if (req.query.next) {
           res.status(302).set('Location', req.query.next)
+        } else if (req.query.code) { // if came from oauth callback
+          res.status(302).set('Location', '/keys')
         }
 
         sails.log.info('user', user, 'authenticated successfully')

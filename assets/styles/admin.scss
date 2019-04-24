@@ -1,0 +1,94 @@
+@import 'index';
+
+.admin-container {
+  .list {
+    li {
+      padding: 5px 0;
+      min-height: 50px;
+      line-height: 50px;
+      padding: 0 14px;
+
+      header {
+        h3 {
+          font-weight: normal;
+          line-height: 30px;
+          margin: 0;
+        }
+      }
+      .stack {
+        line-height: 20px;
+      }
+      .cb-label {
+        display: inline-block;
+        height: 40px;
+        line-height: 40px;
+        margin-right: 14px;
+        cursor: pointer;
+        user-select: none;
+      }
+      input.checkbox[type=checkbox] {
+        display: none;
+
+        + label {
+          display: inline-block;
+          position: relative;
+          height: 20px;
+          width: 20px;
+          margin: 8px 0 12px 0;
+          vertical-align: middle;
+          border: 2px solid $black-1;
+          cursor: pointer;
+        }
+
+        &:checked + label {
+          &:before {
+            position: absolute;
+            content: '';
+            background: $accent-2;
+            height: 14px;
+            width: 14px;
+            left: 1px;
+            top: 1px;
+          }
+        }
+      }
+      .key-value {
+        span {
+          line-height: 30px;
+
+          &.contains-icon {
+            margin-bottom: 10px;
+          }
+        }
+        .icon {
+          padding: 0;
+          height: 20px;
+          width: 20px;
+          vertical-align: middle;
+          margin-left: 10px;
+          svg {
+            height: 20px;
+            width: 20px;
+          }
+          &.verified {
+            path {
+              fill: $green;
+            }
+          }
+          &.unverified {
+            path {
+              fill: $red;
+            }
+          }
+        }
+      }
+      .key {
+        margin-right: 10px;
+      }
+      .value {
+        font-family: monospace;
+        color: $black-3;
+      }
+    }
+  }
+}

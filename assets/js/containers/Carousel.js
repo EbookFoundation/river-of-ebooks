@@ -1,7 +1,7 @@
 'use strict'
 
 import React from 'react'
-import STYLE from '../../styles/shared/carousel.scss'
+import './carousel.scss'
 
 class Carousel extends React.Component {
   constructor () {
@@ -18,7 +18,7 @@ class Carousel extends React.Component {
   render () {
     return (
       <section className='carousel-container'>
-        <div className='carousel' style={{width: this.getWidth(), left: this.getOffset()}}>
+        <div className='carousel' style={{ width: this.getWidth(), left: this.getOffset() }}>
           {this.props.children}
         </div>
       </section>
@@ -40,14 +40,16 @@ const CarouselItem = props => (
     {props.inputs}
     <span className='carousel-error'>{props.error}</span>
     <div className='button-row'>
-      <a href='#' onClick={props.onSmallButtonClick}>{props.smallButton}</a>
+      <a onClick={e => handleClick(e, props.onSmallButtonClick)}>{props.smallButton}</a>
       <button className='btn btn-primary' type='submit' >
         {props.button}
       </button>
     </div>
-    {props.footer &&
+    {props.footers && props.footers.length &&
     <footer className='footer-row'>
-      <a href='#'>{props.footer}</a>
+      {
+        props.footers.map((x, i) => <a key={i} href={props.footerHrefs[i] || '#'}>{x}</a>)
+      }
     </footer>}
   </form>
 )

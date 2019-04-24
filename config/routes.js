@@ -22,16 +22,24 @@ module.exports.routes = {
   *                                                                          *
   ***************************************************************************/
 
-  'GET /': {
-    view: 'pages/index'
-  },
+  'GET /': 'HomeController.show',
+  'GET /docs/:page': 'HomeController.docs',
+
   'GET /login': {
     view: 'pages/login'
   },
   'GET /register': {
     view: 'pages/login'
   },
-  'GET /app': 'TargetController.show',
+  // figure out why proper clientside routing breaks the backend session
+  'GET /account': 'TargetController.show',
+  'GET /targets': 'TargetController.show',
+  'GET /keys': 'TargetController.show',
+  'GET /admin': 'AdminController.show',
+  'GET /admin/*': {
+    action: 'admin/show',
+    skipAssets: true
+  },
 
   /***************************************************************************
   *                                                                          *
@@ -53,8 +61,10 @@ module.exports.routes = {
 
   'POST /auth/email_exists': 'AuthController.emailExists',
   'POST /auth/email_available': 'AuthController.emailAvailable',
-  // 'POST /auth/local': 'AuthController.callback',
-  // 'POST /auth/local/:action': 'AuthController.callback',
+
+  'GET /api/me': 'UserController.me',
+  'PATCH /api/me': 'UserController.edit',
+  'PATCH /api/me/regenerate_signing_secret': 'UserController.regenerateSigningSecret',
 
   'POST /auth/:provider': 'AuthController.callback',
   'POST /auth/:provider/:action': 'AuthController.callback',
@@ -65,18 +75,34 @@ module.exports.routes = {
 
   'POST /api/publish': 'BooksController.publish',
 
-  'GET /api/books': 'BooksController.list',
-  'GET /api/me': 'UserController.me',
+  'GET /api/catalog': 'CatalogController.navigation',
+  'GET /api/catalog/new': 'CatalogController.listNew',
+  'GET /api/catalog/all': 'CatalogController.listAll',
 
+  'POST /api/targets': 'TargetController.create',
+  'GET /api/targets': 'TargetController.list',
+  'PATCH /api/targets/:id': 'TargetController.edit',
+  'DELETE /api/targets/:id': 'TargetController.delete',
+
+  'POST /api/keys': 'PublishKeyController.create',
+  'GET /api/keys': 'PublishKeyController.list',
+  'PATCH /api/keys/:id': 'PublishKeyController.refresh',
+  'DELETE /api/keys/:id': 'PublishKeyController.delete',
+  'POST /api/keys/:id/verify': 'PublishKeyController.verify',
+
+  'GET /admin/api/users': 'AdminController.listUsers',
+  'GET /admin/api/publishers': 'AdminController.listPublishers',
+  'PATCH /admin/api/users/:id': 'AdminController.editUser',
+  'PATCH /admin/api/publishers/:id': 'AdminController.editPublisher',
+  'DELETE /admin/api/users/:id': 'AdminController.deleteUser',
+  'DELETE /admin/api/publishers/:id': 'AdminController.deletePublisher'
 
   //  ╦ ╦╔═╗╔╗ ╦ ╦╔═╗╔═╗╦╔═╔═╗
   //  ║║║║╣ ╠╩╗╠═╣║ ║║ ║╠╩╗╚═╗
   //  ╚╩╝╚═╝╚═╝╩ ╩╚═╝╚═╝╩ ╩╚═╝
 
-
   //  ╔╦╗╦╔═╗╔═╗
   //  ║║║║╚═╗║
   //  ╩ ╩╩╚═╝╚═╝
-
 
 }

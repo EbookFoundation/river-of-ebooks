@@ -1,0 +1,31 @@
+@import '../../styles/lib/vars';
+
+.button.icon {
+  height: 40px;
+  line-height: 40px;
+  width: 40px;
+  // padding: 5px;
+  text-align: center;
+  background: transparent;
+  border: none;
+  outline: none;
+  border-radius: 50%;
+  transition: background 0.2s $transition,
+              box-shadow 0.2s $transition;
+  cursor: pointer;
+
+  &:hover {
+    background: $black-4;
+    box-shadow: $shadow-1;
+  }
+  .icon {
+    padding: 0;
+    height: 30px;
+    line-height: 30px;
+    width: 30px;
+
+    path {
+      fill: $black-2;
+    }
+  }
+}

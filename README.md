@@ -1,29 +1,22 @@
-# roe-base
+# River of Ebooks
+https://github.com/EbookFoundation/river-of-ebooks
 
-a [Sails v1](https://sailsjs.com) application
+## About
+The River of Ebooks serves as an easy-to-use ebook aggregator. Publishers can send metadata from new and updated ebooks through the River where it will be available for any downstream consumers to read, allowing for a more widely available ebook collection. This way, ebooks can be made available on all end user sites, instead of only the site they were published with.
 
+## Use cases
 
-### Links
+### Finding a list of relevant ebooks and keeping them updated
+The River provides a filterable feed of ebook metadata in OPDS2 format. Consumers can use this to find new ebooks to catalogue, and can then choose to receive updates to the metadata when new revisions of the ebook are published.
 
-+ [Get started](https://sailsjs.com/get-started)
-+ [Sails framework documentation](https://sailsjs.com/documentation)
-+ [Version notes / upgrading](https://sailsjs.com/documentation/upgrading)
-+ [Deployment tips](https://sailsjs.com/documentation/concepts/deployment)
-+ [Community support options](https://sailsjs.com/support)
-+ [Professional / enterprise options](https://sailsjs.com/enterprise)
+<!-- > BigLister want to make a big list of software manuals, where people come to get the latest versions of documentation. Or maybe BigLister is making a list of textbooks that can be adopted for high schools. BigLister wants to find relevant books and doesn't want to be constantly updating the list when new versions come out. BigLister doesn't want deal with 18th century novels or academic books; BigLister wants to be able to ignore books that aren't of interest. -->
 
+### Convenient notifications of ebook updates
+Consumers can find books without searching through the feed as well - just enter some filters and get notifications sent to a webhook whenever a book matching your filters is published.
 
-### Version info
+<!-- > UpdateLister isn't so much interested in finding books, UpdateLister just wants to be able to see when a book on UpdateLister's favorites list is updated - because the books get updated irregularly. UpdateLister needs to be able to easily add books to the list. -->
 
-This app was originally generated on Tue Oct 16 2018 01:21:31 GMT+0000 (UTC) using Sails v1.0.2.
+### Propogate ebook revisions quickly across multiple websites
+Whenever a publisher sends ebook metadata through the River, it will be sent to any consumers who have chosen to be notified about changes to the book. This saves the publisher and consumers the trouble of having to worry about everyone having the latest version of the content.
 
-<!-- Internally, Sails used [`sails-generate@1.15.28`](https://github.com/balderdashy/sails-generate/tree/v1.15.28/lib/core-generators/new). -->
-
-
-
-<!--
-Note:  Generators are usually run using the globally-installed `sails` CLI (command-line interface).  This CLI version is _environment-specific_ rather than app-specific, thus over time, as a project's dependencies are upgraded or the project is worked on by different developers on different computers using different versions of Node.js, the Sails dependency in its package.json file may differ from the globally-installed Sails CLI release it was originally generated with.  (Be sure to always check out the relevant [upgrading guides](https://sailsjs.com/upgrading) before upgrading the version of Sails used by your app.  If you're stuck, [get help here](https://sailsjs.com/support).)
--->
-
-[![Build Status](https://travis-ci.org/miacona96/RoE-pipe.svg?branch=master)](https://travis-ci.org/miacona96/RoE-pipe)
-
+<!-- > When TextbookWriter's book is first released, it needs to find adopters, and many of those adopters are scouring BigLister's textbook list. TextbookWriter can work to get the book in well known lists, but it turns out that there are more specialized lists all over the place. A month later TextbookWriter has discovered a terrible error in chapter 3 and hopes that teachers who have adopted the book can be notified about the new version. -->

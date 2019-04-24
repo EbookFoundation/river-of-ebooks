@@ -1,0 +1,264 @@
+@import 'lib/default';
+@import 'shared/twopanels';
+
+.content {
+  padding: 14px 0 42px 0;
+  position: relative;
+  overflow-y: auto;
+
+  .error-box {
+    min-height: 30px;
+    line-height: 30px;
+    background: $red;
+    color: white;
+    padding: 0 14px;
+    margin: -14px 0 8px 0;
+  }
+  & > div {
+    & > header {
+      padding: 0 14px;
+    }
+    h1 {
+      text-shadow: 1px 1px 2px $black-3;
+    }
+    h2 {
+      margin: 0;
+      padding: 0;
+      font-weight: normal;
+      font-size: 16px;
+      margin-top: 4px;
+      color: $text-dark-2;
+      text-shadow: 1px 1px 2px $black-4;
+    }
+    .creator {
+      padding: 0 14px;
+      line-height: 60px;
+
+      .btn {
+        margin: 12px 0 12px 12px;
+
+        @include break('small') {
+          margin: 0 12px;
+        }
+      }
+    }
+  }
+  .list {
+    margin: 20px 14px;
+    padding: 0;
+    list-style: none;
+  }
+  .inputs,
+  .details {
+    padding: 20px 14px;
+
+    .buttons {
+      margin-top: 14px;
+      text-align: right;
+    }
+
+    input[readonly] {
+      background: transparent;
+      border: none;
+      outline: none;
+      font-family: monospace;
+    }
+    .row {
+      h4 {
+        font-size: .8em;
+        font-weight: normal;
+        color: $black-2;
+      }
+      h3,
+      h4 {
+        margin: 10px 0;
+      }
+    }
+  }
+  &.working {
+    & > .progress {
+      top: 0;
+      height: 4px;
+    }
+  }
+}
+
+.home {
+  header {
+    height: 50px;
+    line-height: 50px;
+    flex: none;
+
+    .logo {
+      color: $black-1;
+      text-decoration: none;
+      font-size: 1.2em;
+      padding: 0 20px;
+
+      @include break('small') {
+        display: none;
+      }
+    }
+    nav {
+      a {
+        text-decoration: none;
+        display: inline-block;
+        line-height: 50px;
+        padding: 0 20px;
+        color: $accent-2;
+
+        @include break('small') {
+          padding: 0 5px;
+        }
+        &:hover {
+          text-decoration: underline;
+        }
+        &:last-of-type {
+          line-height: 40px;
+          height: 40px;
+          margin: 5px 20px 5px 0;
+          background: $accent-2;
+          color: $text-light-1;
+          border-radius: 3px;
+
+          @include break('small') {
+            margin: 5px 5px 5px 0;
+          }
+        }
+      }
+    }
+  }
+  footer {
+    min-height: 40px;
+    line-height: 40px;
+    background: $accent-1;
+    color: white;
+    padding: 0 20px;
+    box-shadow: $shadow-3;
+    flex: none;
+
+    a {
+      color: $accent-3;
+      text-decoration: none;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+  .paper {
+    background: white;
+    width: 85%;
+    max-width: 900px;
+    box-shadow: $shadow-1;
+    padding: 100px 60px 140px 60px;
+    margin: 60px auto 100px auto;
+
+    h2,
+    h3,
+    h4 {
+      margin: 40px 0 10px 0;
+      font-weight: normal;
+      color: $black-1;
+    }
+    hr {
+      border: none;
+      border-top: 1px solid $black-3;
+      margin: 40px 80px;
+    }
+    a {
+      color: $accent-2;
+    }
+    pre {
+      background: $black-5;
+      padding: 10px;
+      border-radius: 3px;
+      overflow-x: auto;
+
+      &:before {
+        display: block;
+        content: '';
+        background: $accent-3;
+        height: 100%;
+        width: 2px;
+        top: 0;
+        left: 0;
+      }
+      code {
+        background: transparent;
+        padding: 0;
+      }
+    }
+    code {
+      background: $black-5;
+      padding: 2px 5px;
+      border-radius: 3px;
+    }
+    p {
+      line-height: 1.4em;
+    }
+
+    @include break('small') {
+      width: 100%;
+      padding: 30px 10px;
+      margin: 0;
+    }
+  }
+  ul.feed {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+
+    li {
+      min-height: 60px;
+      border-bottom: 1px solid $black-5;
+      padding: 20px 0;
+
+      h3 {
+        margin: 0;
+
+        a {
+          text-decoration: none;
+        }
+      }
+
+      h4 {
+        margin: 0;
+        font-size: 1rem;
+        color: $black-2;
+      }
+
+      .timestamp {
+        color: $black-3;
+        font-size: 1rem;
+
+        @include break('small') {
+          display: none;
+        }
+      }
+
+      .tags {
+        font-size: 0;
+        margin-top: 6px;
+
+        span {
+          font-size: 0.9rem;
+          border: 1px solid $black-5;
+          border-radius: 3px;
+          padding: 0 8px;
+          line-height: 20px;
+          color: $black-2;
+          cursor: default;
+
+          & + span {
+            margin-left: 4px;
+          }
+        }
+      }
+
+      &:last-of-type {
+        border: none;
+      }
+    }
+  }
+}
