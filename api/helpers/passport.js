@@ -48,7 +48,9 @@ function PassportHelper () {
         const protocol = strategies[key].protocol
         const callbackURL = strategies[key].callback
         let baseURL = ''
-        if (sails.config.custom.baseURL && sails.config.custom.baseURL !== null) {
+        if (process.env.BASE_URL) {
+          baseURL = process.env.BASE_URL
+        } else if (sails.config.custom.baseURL && sails.config.custom.baseURL !== null) {
           baseURL = sails.config.custom.baseURL
         } else {
           sails.log.warn('Please add \'appUrl\' to configuration')
