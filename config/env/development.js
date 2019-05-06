@@ -317,7 +317,7 @@ module.exports = {
   * this, just try deploying without setting it and see if it works.)       *
   *                                                                         *
   ***************************************************************************/
-  port: 80,
+  port: 3000,
 
   /**************************************************************************
   *                                                                         *
@@ -347,7 +347,7 @@ module.exports = {
   *                                                                         *
   ***************************************************************************/
   custom: {
-    baseURL: 'https://roe.ebookfoundation.org',
+    baseURL: 'http://localhost:3000',
     internalEmailAddress: 'support@example.com'
 
     // mailgunDomain: 'mg.example.com',
