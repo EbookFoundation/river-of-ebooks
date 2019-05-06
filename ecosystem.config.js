@@ -10,7 +10,6 @@ module.exports = {
     },
     env_production: {
       NODE_ENV: 'production',
-      SAILS_DATASTORE_URL: process.env.DATABASE_CONNECTION,
       DATABASE_CONNECTION: process.env.DATABASE_CONNECTION,
       PASSPORT_GITHUB_ID: process.env.PASSPORT_GITHUB_ID,
       PASSPORT_GITHUB_SECRET: process.env.PASSPORT_GITHUB_SECRET,

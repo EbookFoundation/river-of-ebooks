@@ -58,7 +58,7 @@ module.exports = {
       //  ```
       // --------------------------------------------------------------------------
       adapter: 'sails-postgresql',
-      url: process.env.SAILS_DATASTORE_URL
+      url: process.env.DATABASE_CONNECTION
 
       /****************************************************************************
       *                                                                           *
@@ -212,7 +212,7 @@ module.exports = {
     *                                                                          *
     ***************************************************************************/
     cookie: {
-      // secure: true,
+      secure: true,
       maxAge: 24 * 60 * 60 * 1000 // 24 hours
     }
 
@@ -240,7 +240,7 @@ module.exports = {
     *                                                                          *
     ***************************************************************************/
     onlyAllowOrigins: [
-      'https://roe.ebookfoundation.org'
+      process.env.BASE_URL || 'https://roe.ebookfoundation.org'
     ]
 
     /***************************************************************************
@@ -288,7 +288,7 @@ module.exports = {
     * (the "max-age" to include in the "Cache-Control" response header)        *
     *                                                                          *
     ***************************************************************************/
-    cache: 365.25 * 24 * 60 * 60 * 1000 // One year
+    cache: 365.25 * 24 * 60 * 60 * 1000, // One year
 
     /***************************************************************************
     *                                                                          *
@@ -305,7 +305,7 @@ module.exports = {
     * (https://sailsjs.com/config/http)                                        *
     *                                                                          *
     ***************************************************************************/
-    // trustProxy: true,
+    trustProxy: true
 
   },
 
@@ -348,7 +348,7 @@ module.exports = {
   *                                                                         *
   ***************************************************************************/
   custom: {
-    baseURL: 'https://roe.ebookfoundation.org',
+    baseURL: process.env.BASE_URL || 'https://roe.ebookfoundation.org',
     internalEmailAddress: 'support@example.com'
 
     // mailgunDomain: 'mg.example.com',
