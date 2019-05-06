@@ -58,7 +58,7 @@ module.exports = {
       //  ```
       // --------------------------------------------------------------------------
       adapter: 'sails-postgresql',
-      url: process.env.SAILS_DATASTORE_URL
+      url: process.env.DATABASE_CONNECTION
 
       /****************************************************************************
       *                                                                           *
@@ -318,7 +318,7 @@ module.exports = {
   * this, just try deploying without setting it and see if it works.)       *
   *                                                                         *
   ***************************************************************************/
-  port: 8081,
+  port: 80,
 
   /**************************************************************************
   *                                                                         *
