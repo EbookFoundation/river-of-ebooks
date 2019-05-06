@@ -23,14 +23,14 @@ module.exports = {
       if (!body.metadata['@type'] || body.metadata['@type'] !== 'http://schema.org/Book') throw new HttpError(400, 'Invalid \'@type\': expected \'http://schema.org/Book\'')
 
       let tags = (body.metadata.tags || '').split(/,\s*/)
-      if (!tags.length && body.metadata.title) tags = body.metadata.title.split(/\s+/).filter(x => x.length < 3)
+      if (!tags.length && body.metadata.title) tags = body.metadata.title.split(/\s+/).filter(x => x.length >= 3)
       const query = {
         hostname: host,
         title: body.metadata.title,
         author: body.metadata.author,
         publisher: body.metadata.publisher,
         identifier: body.metadata.identifier,
-        tags: JSON.stringify(tags),
+        tags: JSON.stringify(tags || []),
         version: body.metadata.modified.replace(/\D/g, '')
       }
 
