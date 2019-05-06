@@ -240,7 +240,7 @@ module.exports = {
     *                                                                          *
     ***************************************************************************/
     onlyAllowOrigins: [
-      'https://roe.ebookfoundation.org'
+      process.env.BASE_URL || 'https://roe.ebookfoundation.org'
     ]
 
     /***************************************************************************
@@ -348,7 +348,7 @@ module.exports = {
   *                                                                         *
   ***************************************************************************/
   custom: {
-    baseURL: 'https://roe.ebookfoundation.org',
+    baseURL: process.env.BASE_URL || 'https://roe.ebookfoundation.org',
     internalEmailAddress: 'support@example.com'
 
     // mailgunDomain: 'mg.example.com',
